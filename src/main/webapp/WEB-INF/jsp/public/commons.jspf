@@ -1,0 +1,25 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<base href="<%=basePath%>">
+<title>微信公众号开发</title>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!-- 公共样式开始 -->
+<!--[if lt IE 9]>
+<script src="js/html5.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/url.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- 公共样式结束 -->
+</head>

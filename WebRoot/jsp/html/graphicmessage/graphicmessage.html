@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../../js/Semantic-UI-1.0/dist/semantic.css">
+		<link rel="stylesheet" type="text/css" href="../../../js/Semantic-UI-1.0/examples/feed.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/graphicmessage.css">
+	</head>
+<body>
+	<section class="rt_wrap content mCustomScrollbar">
+	<div class="rt_content">
+		<div class="page_title">
+			<h2 class="fl" style="line-height: 2.5;margin-top: 0px;font-weight: bold;">图文消息</h2>
+			<a id="addGraphicMessage" href="javascript:;" class="fr top_rt_btn add_icon">新添图文</a>
+		</div>
+		<form action="" method="post"></form>
+		<div class="ui divided padded grid">
+			<div class="seven wide middle column" style="height: 800px;overflow-y: scroll;">
+				<div class="ui tabular filter menu">
+					<a class="active item" data-tab="unread" textShow="-1">全部</a> 
+					<a class="item" data-tab="saved" textShow="1">已发送</a> 
+					<a class="item" data-tab="all" textShow="0">未发送</a>
+				</div>
+				<div class="ui divided very relaxed selection inbox list active tab" data-tab="unread">
+					<div id="showImg" class="wechat-all">
+						
+					</div>
+				</div>
+				<div class="ui divided very relaxed inbox selection list tab" data-tab="saved">
+					<div id="showImgSend" class="wechat-all">
+						
+					</div>
+				</div>
+				<div class="ui divided very relaxed inbox selection list tab" data-tab="all">
+					<div id="showImgNoSend" class="wechat-all">
+						
+					</div>
+				</div>
+			</div>
+			<div id="content" style="height: 800px;overflow-y: scroll;" class="nine wide right column">
+				<h1 class="ui header" id="messageTitle" style="width: 80%;float: left;"></h1>
+				<div class="ui basic button" id="send" rowId="">发送</div>
+				<h5 class="ui header" id="messageUrl"></h5>
+				<div class="ui basic button update" id="edit" rowId="">编辑</div>
+				<div class="ui basic button" id="delete" rowId="">删除</div>
+				<div class="ui divider"></div>
+				<div id="messageContent">
+					
+				</div>
+				<div class="ui divider"></div>
+			</div>
+		</div>
+		<div class="div-H60"></div>
+	</div>
+	</section>
+	<script id="select-ol" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			{{#if graphicMessageTitle}}
+　　　　			{{#compare childSize 0}}
+						<div class="pub-wechat fn-clear">
+							<div class="top" style="height:170px">
+								<a href="javascript:;" class="itemClick" rowId="{{id}}">
+									<img src="{{#comparePic graphicMessageJieshaoPic}}{{/comparePic}}" />
+									<font>{{graphicMessageTitle}}</font>
+								</a>
+							</div>
+							<div class="bottom">
+								{{#each child}}
+									<ul class="bot-ul">
+										<li>
+											<a href="javascript:;" class="itemClick" rowId="{{id}}">
+												<p>{{graphicMessageTitle}}</p>
+												<img src="{{#comparePic graphicMessageJieshaoPic}}{{/comparePic}}" />
+											</a>
+										</li>
+									</ul>
+								{{/each}}
+							</div>
+						</div>
+　　　　				{{else}}
+						<div class="pub-wechat fn-clear">
+							<div class="top" style="height:170px">
+								<a href="javascript:;" class="itemClick" rowId={{id}}>
+									<img src="{{#comparePic graphicMessageJieshaoPic}}{{/comparePic}}" />
+									<font>{{graphicMessageTitle}}</font>
+								</a>
+							</div>
+							<div class="bottom">
+								<font>
+									{{graphicMessageTitle}}
+								</font>
+							</div>
+						</div>
+　　　　			{{/compare}}
+　　　		{{/if}}
+		{{/each}}
+	</script>
+	<script src="../../../js/jquery.js"></script>
+	<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../../js/bootstrap/qiao.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/html5.js"></script>
+	<![endif]-->
+	<script src="../../../js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="../../../js/Semantic-UI-1.0/examples/feed.js"></script>
+	<script src="../../../js/Semantic-UI-1.0/examples/jquery.address.js"></script>
+	<script src="../../../js/Semantic-UI-1.0/dist/semantic.js"></script>
+	
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/graphicmessage/graphicmessage.js"></script>
+</body>
+</html>

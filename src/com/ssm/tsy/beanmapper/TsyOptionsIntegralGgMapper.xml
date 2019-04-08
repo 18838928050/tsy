@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyOptionsIntegralGgMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.TsyOptionsIntegralGg" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="options_integral" property="optionsIntegral" jdbcType="INTEGER" />
+    <result column="options_integral_type" property="optionsIntegralType" jdbcType="VARCHAR" />
+    <result column="options_integral_type_cont" property="optionsIntegralTypeCont" jdbcType="VARCHAR" />
+    <result column="options_integral_time" property="optionsIntegralTime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, options_integral, options_integral_type, options_integral_type_cont, options_integral_time, 
+    user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from tsy_options_integral_gg
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查询积分规格列表 -->
+  <select id="queryTsyOptionsIntegralGg" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from tsy_options_integral_gg where user_id = #{userId}
+     order by options_integral_time desc
+  </select>
+  
+  <!-- 根据积分规格类型查找积分信息 -->
+  <select id="queryTsyOptionsIntegralGgByoptionsIntegralType" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from tsy_options_integral_gg
+    where options_integral_type = #{optionsIntegralType}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from tsy_options_integral_gg
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="java.util.Map" >
+    insert into tsy_options_integral_gg (id, options_integral, options_integral_type, 
+      options_integral_type_cont, options_integral_time, 
+      user_id)
+    values (#{id,jdbcType=INTEGER}, #{optionsIntegral,jdbcType=INTEGER}, #{optionsIntegralType,jdbcType=VARCHAR}, 
+      #{optionsIntegralTypeCont,jdbcType=VARCHAR}, #{optionsIntegralTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="java.util.Map" >
+    insert into tsy_options_integral_gg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="optionsIntegral != null" >
+        options_integral,
+      </if>
+      <if test="optionsIntegralType != null" >
+        options_integral_type,
+      </if>
+      <if test="optionsIntegralTypeCont != null" >
+        options_integral_type_cont,
+      </if>
+      <if test="optionsIntegralTime != null" >
+        options_integral_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="optionsIntegral != null" >
+        #{optionsIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="optionsIntegralType != null" >
+        #{optionsIntegralType,jdbcType=VARCHAR},
+      </if>
+      <if test="optionsIntegralTypeCont != null" >
+        #{optionsIntegralTypeCont,jdbcType=VARCHAR},
+      </if>
+      <if test="optionsIntegralTime != null" >
+        #{optionsIntegralTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    update tsy_options_integral_gg
+    <set >
+      <if test="optionsIntegral != null" >
+        options_integral = #{optionsIntegral},
+      </if>
+      <if test="optionsIntegralType != null" >
+        options_integral_type = #{optionsIntegralType},
+      </if>
+      <if test="optionsIntegralTypeCont != null" >
+        options_integral_type_cont = #{optionsIntegralTypeCont},
+      </if>
+      <if test="optionsIntegralTime != null" >
+        options_integral_time = #{optionsIntegralTime},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java.util.Map" >
+    update tsy_options_integral_gg
+    set options_integral = #{optionsIntegral,jdbcType=INTEGER},
+      options_integral_type = #{optionsIntegralType,jdbcType=VARCHAR},
+      options_integral_type_cont = #{optionsIntegralTypeCont,jdbcType=VARCHAR},
+      options_integral_time = #{optionsIntegralTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.UserDao">
+	<resultMap type="com.ssm.tsy.bean.UserBean" id="ssm">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="no" property="no" jdbcType="VARCHAR"></id>
+		<id column="password" property="password" jdbcType="VARCHAR"></id>
+		<id column="name" property="name" jdbcType="VARCHAR"></id>
+		<id column="quanxian" property="quanxian" jdbcType="INTEGER"></id>
+		<id column="redata" property="redata" jdbcType="VARCHAR"></id>
+		<id column="appid" property="appid" jdbcType="INTEGER"></id>
+	</resultMap>
+
+	<!-- 查询所有用户 -->
+	<select id="SelectAll" resultType="com.ssm.tsy.bean.UserBean">
+		select * from user
+	</select>
+	
+	<!-- 查询所有用户 -->
+	<select id="SelectAllByNameAndQuanxian" resultType="com.ssm.tsy.bean.UserBean">
+		select * from user c
+		where 1 = 1
+		<if test="quanxian!=-1">and c.quanxian = #{quanxian}</if>
+		<if test="name != null and name != ''">and c.name like "%"#{name}"%"</if>
+		<if test="no != null and no != ''">and c.no like "%"#{no}"%"</if>
+		;
+	</select>
+
+	<!-- 根据账号查询用户 -->
+	<select id="getUserByNo" parameterType="String"
+		resultType="com.ssm.tsy.bean.UserBean">
+		select * from user where no = #{value}
+	</select>
+	
+	<!-- 添加新用户 -->
+	<insert id="setUserBean" parameterType="com.ssm.tsy.bean.UserBean">
+		insert into user
+		(no,password,name,quanxian,redata)
+		value(#{no},#{password},#{name},#{quanxian},#{redata});
+	</insert>
+	
+	<!-- 修改用户信息->1.修改密码2.修改权限3.修改关联公众号 -->
+	<update id="Update" parameterType="com.ssm.tsy.bean.UserBean">
+		update user
+		<set>
+			<if test="no != null and no != ''">no = #{no},</if>
+			<if test="password != null and password != ''">password = #{password},</if>
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="quanxian != null and quanxian != '' or quanxian == 0">quanxian = #{quanxian},</if>
+			<if test="redata != null and redata != ''">redata = #{redata},</if>
+			<if test="appid != null and appid != ''">appid = #{appid}</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 创建请求日志表 -->
+	<insert id="CopyAopTable">
+		CREATE TABLE ${_parameter} like tsy_aop_log;
+	</insert>
+	
+	<!-- 创建登陆日志表 -->
+	<insert id="CopyLoginTable">
+		CREATE TABLE ${_parameter} like tsy_user_login_log;
+	</insert>
+	
+	<!-- 查询登陆人信息 -->
+	 <select id="selectLoginMessage" resultType="java.util.Map" parameterType="java.util.Map" >
+     SELECT a.* FROM role a WHERE a.id=#{roleId}
+  </select>
+  	<!-- 修改登陆人信息 -->
+  <update id="updateLoginMessage"  parameterType="java.util.Map">
+		update role 
+		<set>
+			realname = #{realname},
+			sex = #{sex},
+			age = #{age},
+			work_time = #{work_time},
+			csri = #{csri},
+			education = #{education},
+			major = #{major},
+			email = #{email},
+			whether_graduate = #{whether_graduate},
+			bysj = #{bysj},
+			nation = #{nation},
+			political_landscape = #{political_landscape},
+			qq = #{qq},
+			idcard = #{idcard},
+			now_address = #{now_address},
+			home_address = #{home_address},
+			work_address = #{work_address},
+			message = #{message},
+			headpiont = #{headpiont},
+			update_time = #{date},
+		</set>
+		where id = #{roleId}
+  </update>
+</mapper>          

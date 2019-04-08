@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../../js/jquery-fileupload/css/jquery.fileupload.css">  
+		<link rel="stylesheet" href="../../../js/jquery-fileupload/css/jquery.fileupload-ui.css">  
+        <link rel="stylesheet" type="text/css" href="../../../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/vedio.css">
+        <link href="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../../js/bootstrap/bootstrap-select/css/bootstrap-multiselect.css">
+        <link rel="stylesheet" type="text/css" href="../../../js/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	</head>
+  
+  <body>
+    <section class="rt_wrap content mCustomScrollbar">
+		<div class="rt_content">
+			<div class="page_title">
+				<h2 class="fl">微信视频专区</h2>   
+			</div>
+			<form id="addMain">
+				<div class="panel panel-default" style="width:80%;margin-left: 10%;">
+					<div class="panel-heading">
+						视频
+					</div>
+					<div class="row fileupload-buttonbar">  
+						<div class="form-group btstp-div">
+					        <label for="firstname" class="col-sm-2 control-label btstp-label">标题</label>
+					        <div class="col-sm-10">
+					           <input type="text" class="form-control" id="option_title" name="option_title" placeholder="请输入视频标题">
+					        </div>
+					    </div>
+					    <div class="form-group btstp-div-sec"> 
+					    	<label for="firstname" class="col-sm-2 control-label btstp-label">简介</label>
+					    	<div class="form-group">
+						    	<textarea class="form-control" id="option_introduce" name="option_introduce" rows="3"></textarea> 
+						    </div>
+						</div>
+						<div class="form-group btstp-div-sec"> 
+					    	<label for="firstname" class="col-sm-2 control-label btstp-label class">所属<br/>模块</label>
+					    	<div class="form-group">
+						    	<select id="sel_search_orderstatus5" name="sel_search_orderstatus5" class="select2">
+						    		
+	                            </select>
+	                            <button type="button" class="btn btn-default cla-btn addModel">新添模块</button> 
+						    </div>
+						</div>
+						<div class="form-group btstp-div-sec"> 
+					    	<label for="firstname" class="col-sm-2 control-label btstp-label">标签</label>
+					    	<div class="form-group">
+						    	<select id="sel_search_orderstatus6" name="sel_search_orderstatus6" class="select2" multiple>
+							    	
+	                            </select>
+	                            <button type="button" class="btn btn-default cla-btn addBq">新添标签</button> 
+						    </div>
+						</div>
+					    <div class="thumbnail upload-vedio vedio-boder vedio-main-div">  
+							<div class="items-vedio">
+								<div class="item-po-vedio">
+									<font><img src="../../../images/item-po-img.png">  请选择要上传的内容</font><br/>
+									<font>仅支持 .mp4   .avi   .rmvb   .3gp</font>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default" style="width:80%;margin-left: 10%;">
+					<div class="panel-heading">
+						附件
+						<button type="button" id="optionsList" class="btn btn-info" style="float: right;margin-top: -10px">附件列表</button> 
+					</div>
+					<div class="row fileupload-buttonbar">  
+						<div class="thumbnail upload-vedio vedio-boder">  
+							<div class="option">
+								<div class="caption" align="center">  
+									<span id="weixin_upload" class="btn btn-primary fileinput-button">  
+										<span>上传附件</span>  
+										<input type="file" id="files" name="files" class="file-loading"/>  
+									</span>
+								</div> 
+								<div class="progress progress-striped active progress-main" role="progressbar" aria-valuemin="10" aria-valuemax="100" aria-valuenow="0">
+									<div id="weixin_progress" class="progress-bar progress-bar-success" style="width:0%;">
+									</div>
+								</div>  
+							</div>
+							<div class="items">
+								<div class="item-po">
+									<font><img src="../../../images/item-po-img.png">  请选择要上传的内容</font>
+									<font>仅支持 .mp4   .avi   .rmvb   .3gp   .gif   .png   .jpg   .pptx   .docx   .xls   .zip   .pdf   .rar</font>
+								</div>
+							</div>
+						</div>  
+					</div>  
+				</div>
+				<div class="panel panel-default" style="width:80%;margin-left: 10%;text-align: center;border: 0px">
+				    <button type="button" id="cancle" class="btn btn-warning">取消</button> 
+					<button type="submit" id="add" class="btn btn-info">修改</button> 
+			    </div>
+			</form>
+		</div>
+		
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				    	<h4 class="modal-title" id="myModalLabel">新增模块</h4>
+					</div>
+				    <div class="modal-body">
+				    	<div class="form-group">
+				    		<label for="txt_departmentname">模块名称</label>
+				    		<input type="text" name="customTitle" class="form-control" id="customTitle" placeholder="模块名称">
+				    	</div>
+				    </div>
+				    <div class="modal-body">
+				    	<div class="form-group">
+				    		<label for="txt_departmentname">模块类型</label>
+				    		<select id="customType" name="customType" class="select2">
+						    	<option value="2">公开</option>
+						    	<option value="1">私有</option>
+                            </select>
+				    	</div>
+				    </div>
+				    <div class="modal-footer">
+				    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+				    	<button type="button" id="model_submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>保存</button>
+				    </div>
+				</div>
+		 	</div>
+		</div>
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				    	<h4 class="modal-title" id="myModalLabel1">新增标签</h4>
+					</div>
+				    <div class="modal-body">
+				    	<div class="form-group">
+				    		<label for="txt_departmentname">标签名称</label>
+				    		<input type="text" name="labelTitle" class="form-control" id="labelTitle" placeholder="标签名称">
+				    	</div>
+				    </div>
+				    <div class="modal-footer">
+				    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+				    	<button type="button" id="Bq_submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>保存</button> 
+				    </div>
+				</div>
+		 	</div>
+		</div>
+		<div class="modal fade" id="optionsAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document" style="width:800px;height: 600px">
+				<div class="modal-content">
+				    <div class="modal-header" style="height: 400px">
+				    	<table id="massage" class="table">
+						</table>
+					</div>
+				    <div class="modal-footer">
+				    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+				    </div>
+				</div>
+		 	</div>
+		</div>
+		<div class="div-H60"></div>
+	</section>
+	<script src="../../../js/jquery.js"></script>
+	<script src="../../../js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../../js/bootstrap/qiao.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-select/js/bootstrap-multiselect.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-table-develop/src/locale/bootstrap-table-zh-CN.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+	
+	<script src="../../../js/jquery-fileupload/js/vendor/jquery.ui.widget.js"></script>  
+	<script src="../../../js/jquery-fileupload/js/jquery.iframe-transport.js"></script>
+	<script src="../../../js/jquery-fileupload/js/jquery.fileupload.js"></script>  
+	
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/wechatVedio/updatewechatVedio.js"></script>
+  </body>
+</html>

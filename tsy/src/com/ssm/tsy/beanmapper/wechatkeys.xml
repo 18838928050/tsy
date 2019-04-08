@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.WeChatKeysDao">
+	<resultMap type="com.ssm.tsy.bean.WeChatKeys" id="WeChatKeys">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="keyvalue" property="keyvalue" jdbcType="VARCHAR"></id>
+		<id column="context" property="context" jdbcType="VARCHAR"></id>
+		<id column="judge" property="judge" jdbcType="INTEGER"></id>
+		<id column="keyclass" property="keyclass" jdbcType="INTEGER"></id>
+	</resultMap>
+
+	<!-- 添加新的关键字 -->
+	<insert id="AddWeChatKeys" parameterType="com.ssm.tsy.bean.WeChatKeys">
+		insert into wechat_keys
+		(keyvalue,context,judge,keyclass)
+		value(#{keyvalue},#{context},#{judge},#{keyclass});
+	</insert>
+
+	<!-- 修改关键字信息 -->
+	<update id="UpdateWeChatKeys" parameterType="com.ssm.tsy.bean.WeChatKeys">
+		update wechat_keys
+		<set>
+			<if test="keyvalue != null and keyvalue != ''">keyvalue = #{keyvalue},</if>
+			<if test="context != null and context != ''">context = #{context},</if>
+			judge = #{judge},
+			<if test="keyclass != null and keyclass != ''">keyclass = #{keyclass}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 查询所有的关键字 -->
+	<select id="SelectAll" resultType="com.ssm.tsy.bean.WeChatKeys">
+		select * from wechat_keys ORDER BY id desc;
+	</select>
+
+	<!-- 根据类别查询关键字 -->
+	<select id="SelectAllByKeyClass" resultType="com.ssm.tsy.bean.WeChatKeys">
+		select * from wechat_keys c
+		where 1 = 1
+		<if test="keyclass!=0">and c.keyclass = #{keyclass}</if>
+		<if test="keyvalue != null and keyvalue != ''">and c.keyvalue like "%"#{keyvalue}"%"</if>
+		ORDER BY id desc;
+	</select>
+
+	<!-- 根据关键字的'键'查询关键字 -->
+	<select id="SelectAllByKey" resultType="com.ssm.tsy.bean.WeChatKeys">
+		select * from wechat_keys
+		where keyvalue = #{keyvalue};
+	</select>
+
+	<!-- 删除列表菜单 -->
+	<delete id="DeleteWeChatKeys" parameterType="Integer">
+		delete from
+		wechat_keys where id =
+		#{id}
+	</delete>
+
+</mapper>          

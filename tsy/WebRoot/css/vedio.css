@@ -1,0 +1,182 @@
+/************************************视频上传*************************************/
+.upload-vedio{
+	width:97%;
+	margin-left: 1%;
+}
+.caption{
+	width: 60%;
+	float: left;
+}
+.progress-main{
+	width: 40%;
+	float: left;
+	margin-top: 15px;
+}
+.progress-item{
+	margin-top: 55px;
+}
+.btn{
+	margin-right: 30px;
+}
+.fileupload-buttonbar{
+	padding-left:15px;
+}
+.vedio-boder{
+	border: 0px;
+}
+.option{
+	width: 100%;
+	height: 100%;
+	float: left;
+}
+.items-vedio{
+	width: 100%;
+	height: 100%;
+	margin-top: 80px;
+}
+.item-po-vedio{
+	width: 100%;
+	height: 60px;
+	margin-top: 30px;
+	margin-bottom: 10px; 
+	text-align: center;
+}
+.item-po-vedio font{
+	font-size: 25px;
+	line-height: 25px;
+	color: #afd49b;
+	font-family: "Microsoft YaHei";
+}
+.item-po-vedio font img{
+	width: 30px;
+}
+.items{
+	width: 100%;
+	height: 100%;
+	margin-top: 80px;
+}
+.item{
+	width: 100%;
+	height: 125px;
+	margin-top: 10px;
+	margin-bottom: 10px; 
+	border:1px solid #000;
+}
+.item-po{
+	width: 100%;
+	height: 60px;
+	margin-top: 30px;
+	margin-bottom: 10px; 
+	text-align: center;
+}
+.item-po font{
+	font-size: 25px;
+	line-height: 25px;
+	color: #afd49b;
+	font-family: "Microsoft YaHei";
+}
+.item-po font img{
+	width: 30px;
+}
+.item .item-first-div{
+	width: 15%;
+	height: 100%;
+	float: left;
+}
+.item .item-first-div .item-first-div-img{
+	height: 75px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    width: 70px;
+    margin-left: 26px;
+}
+.item .item-second-div{
+	width: 20%;
+	height: 100%;
+	float: left;
+	text-align: center;
+}
+.item .item-second-div .item-second-div-name{
+	line-height: 4.5;
+}
+.item .item-third-div{
+	width: 10%;
+	height: 100%;
+	float: left;
+	text-align: center;
+}
+.item .item-third-div .item-third-div-name{
+	line-height: 4.5;
+}
+.item .item-fourth-div{
+	width: 20%;
+	height: 100%;
+	float: left;
+}
+.item .item-fifth-div{
+	width: 25%;
+	height: 100%;
+	float: left;
+	text-align: center;
+	margin-left: 5%;
+}
+.item .item-fifth-div .item-fifth-div-btn{
+	margin-top: 0px;
+}
+.item .item-fifth-div .ts{
+	line-height: 13.5;
+}
+/************************************视频上传*************************************/
+
+/**********************************bootstrap样式*************************************/
+.btstp-div{
+	width: 70%;
+	margin-left:15%;
+	margin-top:20px;
+	height: 20px;
+}
+.btstp-div i{
+	margin-right: 15px;
+}
+.btstp-div-sec{
+	width: 70%;
+	margin-left:15%;
+	margin-top:40px;
+	height: auto;
+}
+.btstp-div-sec i{
+	margin-right: 40px;
+	margin-top: -10px;
+}
+.btstp-div-sec small{
+	margin-left: 15%;
+}
+.btstp-div-sec>.form-group>textarea{
+	width: 80%;
+	margin-left: 115px;
+	max-width: 80%;
+}
+.class{
+	line-height: 20px;
+	margin-top: -5px;
+}
+.cla-btn{
+	float: left;
+    position: absolute;
+}
+.vedio-main-div{
+	width: 70%;
+	margin-left:15%;
+	margin-top:20px;
+	border:1px #d2d2d2 solid;
+}
+.vedio-main-btn{
+	margin-left: 0px;
+}
+.form-group label{
+	font-size: 12px;
+}
+.modal-title{
+	font-size: 14px;
+}
+/*********************************bootstrap样式***********************************/

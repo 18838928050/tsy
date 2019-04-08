@@ -1,0 +1,54 @@
+/* 标签重定义 */
+img{border:none;}
+a{text-decoration:none;color:#444;}
+a:hover{color:#999;}
+/* 定义关键帧 */
+@-webkit-keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+@-moz-keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+@-ms-keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+@-o-keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+@keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+/* wrap */
+#wrap{
+	margin-left:5%;
+	width: 100%;
+	height: 85%;
+	position: relative;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	}
+#wrap .box{width:280px;height:auto;padding:10px;border:none;float:left;}
+#wrap .box:HOVER{
+	cursor: pointer;
+}
+#wrap .box .info{width:280px;height:auto;border-radius:8px;box-shadow:0 0 11px #666;background:#fff;}
+#wrap .box .info .pic{width:260px;height:auto;margin:0 auto;padding-top:10px;}
+#wrap .box .info .pic:hover{
+	-webkit-animation:shade 3s ease-in-out 1;
+	-moz-animation:shade 3s ease-in-out 1;
+	-ms-animation:shade 3s ease-in-out 1;
+	-o-animation:shade 3s ease-in-out 1;
+	animation:shade 3s ease-in-out 1;
+}
+#wrap .box .info .pic img{width:260px;border-radius:3px;}
+#wrap .box .info .title{width:260px;height:auto;margin:0 auto;text-align:left;color:#666;font-size:15px;overflow:hidden;margin-top: 10px}

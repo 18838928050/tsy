@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>微信公众号开发</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link href="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.css" rel="stylesheet" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../../../js/bootstrap/bootstrap-select/css/bootstrap-multiselect.css">
+        <link rel="stylesheet" type="text/css" href="../../../js/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+        <link rel="stylesheet" type="text/css" href="../../../js/bootstrap/spinner/spinner.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+	</head>
+<body>
+	<section class="rt_wrap content mCustomScrollbar">
+		<div class="rt_content">
+			<div class="page_title">
+				<h2 class="fl">积分标准管理</h2>
+				<a href="javaScript:return void(0);" id="addBz" class="fr top_rt_btn add_icon">添加标准</a>
+			</div>
+			<div class="div-H50"></div>
+			<table id="massage" class="table">
+			</table>
+		</div>
+		<div class="div-H60"></div>
+	</section>
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="myModalLabel">新增标准</h4>
+				</div>
+			    <div class="modal-body">
+			    	<div class="form-group">
+			    		<label for="txt_departmentname">积分标准</label>
+			    		<div class="input-group spinner">
+						    <input type="text" class="form-control" id="optionsIntegral" name="optionsIntegral" value="0">
+						    <div class="input-group-btn-vertical">
+						      <button id="jadd" class="btn btn-default" type="button"><img src="../../../images/shang.png"/></button>
+						      <button id="jiadd" class="btn btn-default" type="button"><img src="../../../images/xia.png"/></button>
+						    </div>
+						</div>
+			    	</div>
+			    </div>
+			    <div class="modal-body">
+			    	<div class="form-group">
+			    		<label for="txt_departmentname">积分类型描述</label>
+			    		<div class="form-group">
+					    	<textarea class="form-control" id="optionsIntegralTypeCont" name="optionsIntegralTypeCont" rows="3" style="width: 568px;max-width: 568px;"></textarea> 
+					    </div>
+			    	</div>
+			    </div>
+			    <div class="modal-body">
+			    	<div class="form-group">
+			    		<label for="txt_departmentname">积分标准类型</label>
+			    		<select id="optionsIntegralType" name="optionsIntegralType" class="select2">
+					    	<option value="1">新添</option>
+					    	<option value="2">评价</option>
+					    	<option value="3">违规</option>
+                        </select>
+			    	</div>
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+			    	<button type="button" id="model_submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>保存</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+	
+	<div class="modal fade" id="myModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="myModalLabel">修改标准</h4>
+				</div>
+			    <div class="modal-body">
+			    	<div class="form-group">
+			    		<label for="txt_departmentname">积分标准</label>
+			    		<div class="input-group spinner">
+			    			<input type="hidden" id="OptionsId" name="OptionsId" value="-1">
+						    <input type="text" class="form-control" id="optionsIntegralUpdate" name="optionsIntegralUpdate" value="0">
+						    <div class="input-group-btn-vertical">
+						      <button id="jupdate" class="btn btn-default" type="button"><img src="../../../images/shang.png"/></button>
+						      <button id="jiupdate" class="btn btn-default" type="button"><img src="../../../images/xia.png"/></button>
+						    </div>
+						</div>
+			    	</div>
+			    </div>
+			    <div class="modal-body">
+			    	<div class="form-group">
+			    		<label for="txt_departmentname">积分类型描述</label>
+			    		<div class="form-group">
+					    	<textarea class="form-control" id="optionsIntegralTypeContUpdate" name="optionsIntegralTypeContUpdate" rows="3" style="width: 568px;max-width: 568px;"></textarea> 
+					    </div>
+			    	</div>
+			    </div>
+			    <div class="modal-body">
+			    	<div class="form-group">
+			    		<label for="txt_departmentname">积分标准类型</label>
+			    		<select id="optionsIntegralTypeUpdate" name="optionsIntegralTypeUpdate">
+                        </select>
+			    	</div>
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+			    	<button type="button" id="model_submit_update" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>保存并修改</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+	
+	<script src="../../../js/jquery.js"></script>
+	<script src="../../../js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../../js/bootstrap/qiao.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-select/js/bootstrap-multiselect.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.js"></script>
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/locale/bootstrap-table-zh-CN.js"></script>
+    
+    <script src="../../../js/jquery-fileupload/js/vendor/jquery.ui.widget.js"></script>  
+    <script src="../../../js/jquery-ui/development-bundle/ui/jquery.ui.spinner.js"></script>  
+	<script src="../../../js/jquery-fileupload/js/jquery.iframe-transport.js"></script>
+	<script src="../../../js/jquery-fileupload/js/jquery.fileupload.js"></script>
+	
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/tsyoptionsintegralgg/tsyoptionsintegralggList.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<link rel="stylesheet" type="text/css" href="css/phonemodel/index.css">
+<link rel="stylesheet" type="text/css" href="css/phonemodel/style.css">
+<style type="text/css">
+.gong {
+	float: left;
+	font-size: 12px;
+	margin-top: 10px;
+	margin-left: 50px;
+}
+
+.xscolor {
+	color: black;
+}
+
+.nxscolor {
+	color: #a9b7b7;
+}
+
+font {
+	margin-left: 5px;
+}
+</style>

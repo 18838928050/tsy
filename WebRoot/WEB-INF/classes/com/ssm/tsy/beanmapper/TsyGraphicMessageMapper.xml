@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyGraphicMessageDao" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.TsyGraphicMessage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="graphic_message_no_title" property="graphicMessageNoTitle" jdbcType="VARCHAR" />
+    <result column="graphic_message_no_pic_s" property="graphicMessageNoPicS" jdbcType="VARCHAR" />
+    <result column="graphic_message_no_url" property="graphicMessageNoUrl" jdbcType="VARCHAR" />
+    <result column="graphic_message_type" property="graphicMessageType" jdbcType="INTEGER" />
+    <result column="graphic_message_title" property="graphicMessageTitle" jdbcType="VARCHAR" />
+    <result column="graphic_message_jieshao_pic" property="graphicMessageJieshaoPic" jdbcType="VARCHAR" />
+    <result column="graphic_message_fatherid" property="graphicMessageFatherid" jdbcType="INTEGER" />
+    <result column="graphic_message_judge_send" property="graphicMessageJudgeSend" jdbcType="INTEGER" />
+    <result column="graphic_message_send_date" property="graphicMessageSendDate" jdbcType="VARCHAR" />
+    <result column="graphic_message_send_userid" property="graphicMessageSendUserid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ssm.tsy.bean.TsyGraphicMessage" extends="BaseResultMap" >
+    <result column="graphic_message_content" property="graphicMessageContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, graphic_message_no_title, graphic_message_no_pic_s, graphic_message_no_url, graphic_message_type, 
+    graphic_message_title, graphic_message_jieshao_pic, graphic_message_fatherid, graphic_message_judge_send, 
+    graphic_message_send_date, graphic_message_send_userid
+  </sql>
+  <sql id="Blob_Column_List" >
+    graphic_message_content
+  </sql>
+  
+  <update id="updateSendStateByRowId" parameterType="java.util.Map" >
+  update tsy_graphic_message
+    set   graphic_message_send_date = #{graphicMessageSendDate},
+	      graphic_message_send_userid = #{userId},
+	      graphic_message_judge_send = '1'
+	 where id = #{rowId} or graphic_message_fatherid = #{rowId}
+  </update>
+  
+  <select id="insertMessageAndSelectById" resultType="java.util.Map" parameterType="java.util.Map" >
+  	SELECT
+		a.id id,
+		a.graphic_message_title,
+		a.graphic_message_jieshao_pic,
+		a.graphic_message_type,
+		a.graphic_message_fatherid,
+		a.graphic_message_judge_send,
+		a.graphic_message_send_date,
+		a.graphic_message_send_userid
+	FROM
+		tsy_graphic_message a
+	WHERE
+		a.id = #{rowId}
+	UNION ALL
+	SELECT
+			b.id id,
+			b.graphic_message_title,
+			b.graphic_message_jieshao_pic,
+			b.graphic_message_type,
+			b.graphic_message_fatherid,
+			b.graphic_message_judge_send,
+			b.graphic_message_send_date,
+			b.graphic_message_send_userid
+		FROM
+			tsy_graphic_message b
+		WHERE
+			b.graphic_message_fatherid = #{rowId}
+	ORDER BY graphic_message_fatherid
+  </select>
+  
+  <select id="queryGraphicMessageByRowId" resultType="java.util.Map" parameterType="java.util.Map" >
+  	SELECT
+		a.id id,
+		a.graphic_message_title graphicMessageTitle,
+		a.graphic_message_jieshao_pic graphicMessageJieshaoPic,
+		a.graphic_message_type graphicMessageType,
+		a.graphic_message_fatherid graphicMessageFatherid,
+		a.graphic_message_judge_send graphicMessageJudgeSend,
+		a.graphic_message_send_date graphicMessageSendDate,
+		a.graphic_message_send_userid graphicMessageSendUserid
+	FROM
+		tsy_graphic_message a
+	WHERE
+		a.id = #{rowId}
+  </select>
+  
+  <select id="queryGraphicMessageByFatherId" resultType="java.util.Map" parameterType="java.util.Map" >
+  SELECT
+		a.id id,
+		a.graphic_message_title graphicMessageTitle,
+		a.graphic_message_jieshao_pic graphicMessageJieshaoPic,
+		a.graphic_message_type graphicMessageType,
+		a.graphic_message_fatherid graphicMessageFatherid,
+		a.graphic_message_judge_send graphicMessageJudgeSend,
+		a.graphic_message_send_date graphicMessageSendDate,
+		a.graphic_message_send_userid graphicMessageSendUserid
+	FROM
+		tsy_graphic_message a
+	WHERE
+		a.graphic_message_fatherid = #{rowId}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		a.id,
+		a.graphic_message_title,
+		a.graphic_message_content,
+		a.graphic_message_jieshao_pic,
+		a.graphic_message_type,
+		a.graphic_message_fatherid
+	FROM
+	tsy_graphic_message a
+    where a.id = #{id}
+  </select>
+  
+  <select id="queryGraphicMessage" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		a.id id,
+		a.graphic_message_title graphicMessageTitle,
+		a.graphic_message_jieshao_pic graphicMessageJieshaoPic,
+		a.graphic_message_type graphicMessageType,
+		a.graphic_message_fatherid graphicMessageFatherid,
+		a.graphic_message_judge_send graphicMessageJudgeSend,
+		a.graphic_message_send_date graphicMessageSendDate,
+		a.graphic_message_send_userid graphicMessageSendUserid
+	FROM
+	tsy_graphic_message a
+	where a.graphic_message_fatherid = '0'
+	<if test="graphicMessageJudgeSend != null and graphicMessageJudgeSend != '' and graphicMessageJudgeSend != -1" >
+		and a.graphic_message_judge_send = #{graphicMessageJudgeSend}
+	</if>
+	order by id desc
+   </select>
+   
+   <select id="queryGraphicMessageByGraphicMessageFatherid" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		a.id id,
+		a.graphic_message_title graphicMessageTitle,
+		a.graphic_message_jieshao_pic graphicMessageJieshaoPic,
+		a.graphic_message_type graphicMessageType,
+		a.graphic_message_fatherid graphicMessageFatherid,
+		a.graphic_message_judge_send graphicMessageJudgeSend,
+		a.graphic_message_send_date graphicMessageSendDate,
+		a.graphic_message_send_userid graphicMessageSendUserid
+	FROM
+	tsy_graphic_message a
+	where a.graphic_message_fatherid = #{GraphicMessageFatherid}
+	<if test="graphicMessageJudgeSend != null and graphicMessageJudgeSend != '' and graphicMessageJudgeSend != -1" >
+		and a.graphic_message_judge_send = #{graphicMessageJudgeSend}
+	</if>
+   </select>
+   
+   <delete id="deleteByMessageId" parameterType="java.util.Map" >
+    delete from tsy_graphic_message
+    where id = #{id}
+  </delete>
+  
+  <delete id="deleteByMessageFatherId" parameterType="java.util.Map" >
+    delete from tsy_graphic_message
+    where graphic_message_fatherid = #{id}
+  </delete>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from tsy_graphic_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="java.util.Map" >
+    insert into tsy_graphic_message (id, graphic_message_no_title, graphic_message_no_pic_s, 
+      graphic_message_no_url, graphic_message_type, 
+      graphic_message_title, graphic_message_jieshao_pic, 
+      graphic_message_fatherid, graphic_message_judge_send, 
+      graphic_message_send_date, graphic_message_send_userid, 
+      graphic_message_content)
+    values (#{id,jdbcType=INTEGER}, #{graphicMessageNoTitle,jdbcType=VARCHAR}, #{graphicMessageNoPicS,jdbcType=VARCHAR}, 
+      #{graphicMessageNoUrl,jdbcType=VARCHAR}, #{graphicMessageType,jdbcType=INTEGER}, 
+      #{graphicMessageTitle,jdbcType=VARCHAR}, #{graphicMessageJieshaoPic,jdbcType=VARCHAR}, 
+      #{graphicMessageFatherid,jdbcType=INTEGER}, #{graphicMessageJudgeSend,jdbcType=INTEGER}, 
+      #{graphicMessageSendDate,jdbcType=VARCHAR}, #{graphicMessageSendUserid,jdbcType=INTEGER}, 
+      #{graphicMessageContent,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <insert id="insertGraphicMessage" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map" >
+    insert into tsy_graphic_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="graphicMessageNoTitle != null" >
+        graphic_message_no_title,
+      </if>
+      <if test="graphicMessageNoPicS != null" >
+        graphic_message_no_pic_s,
+      </if>
+      <if test="graphicMessageNoUrl != null" >
+        graphic_message_no_url,
+      </if>
+      <if test="graphicMessageType != null" >
+        graphic_message_type,
+      </if>
+      <if test="graphicMessageTitle != null" >
+        graphic_message_title,
+      </if>
+      <if test="graphicMessageJieshaoPic != null" >
+        graphic_message_jieshao_pic,
+      </if>
+      <if test="graphicMessageFatherid != null" >
+        graphic_message_fatherid,
+      </if>
+      <if test="graphicMessageJudgeSend != null" >
+        graphic_message_judge_send,
+      </if>
+      <if test="graphicMessageContent != null" >
+        graphic_message_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="graphicMessageNoTitle != null" >
+        #{graphicMessageNoTitle},
+      </if>
+      <if test="graphicMessageNoPicS != null" >
+        #{graphicMessageNoPicS},
+      </if>
+      <if test="graphicMessageNoUrl != null" >
+        #{graphicMessageNoUrl},
+      </if>
+      <if test="graphicMessageType != null" >
+        #{graphicMessageType},
+      </if>
+      <if test="graphicMessageTitle != null" >
+        #{graphicMessageTitle},
+      </if>
+      <if test="graphicMessageJieshaoPic != null" >
+        #{graphicMessageJieshaoPic},
+      </if>
+      <if test="graphicMessageFatherid != null" >
+        #{graphicMessageFatherid},
+      </if>
+      <if test="graphicMessageJudgeSend != null" >
+        #{graphicMessageJudgeSend},
+      </if>
+      <if test="graphicMessageContent != null" >
+        #{graphicMessageContent},
+      </if>
+    </trim>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="java.util.Map" >
+    insert into tsy_graphic_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="graphicMessageNoTitle != null" >
+        graphic_message_no_title,
+      </if>
+      <if test="graphicMessageNoPicS != null" >
+        graphic_message_no_pic_s,
+      </if>
+      <if test="graphicMessageNoUrl != null" >
+        graphic_message_no_url,
+      </if>
+      <if test="graphicMessageType != null" >
+        graphic_message_type,
+      </if>
+      <if test="graphicMessageTitle != null" >
+        graphic_message_title,
+      </if>
+      <if test="graphicMessageJieshaoPic != null" >
+        graphic_message_jieshao_pic,
+      </if>
+      <if test="graphicMessageFatherid != null" >
+        graphic_message_fatherid,
+      </if>
+      <if test="graphicMessageJudgeSend != null" >
+        graphic_message_judge_send,
+      </if>
+      <if test="graphicMessageSendDate != null" >
+        graphic_message_send_date,
+      </if>
+      <if test="graphicMessageSendUserid != null" >
+        graphic_message_send_userid,
+      </if>
+      <if test="graphicMessageContent != null" >
+        graphic_message_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageNoTitle != null" >
+        #{graphicMessageNoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageNoPicS != null" >
+        #{graphicMessageNoPicS,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageNoUrl != null" >
+        #{graphicMessageNoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageType != null" >
+        #{graphicMessageType,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageTitle != null" >
+        #{graphicMessageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageJieshaoPic != null" >
+        #{graphicMessageJieshaoPic,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageFatherid != null" >
+        #{graphicMessageFatherid,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageJudgeSend != null" >
+        #{graphicMessageJudgeSend,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageSendDate != null" >
+        #{graphicMessageSendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageSendUserid != null" >
+        #{graphicMessageSendUserid,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageContent != null" >
+        #{graphicMessageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateGraphicMessage" parameterType="java.util.Map" >
+	   update tsy_graphic_message
+	    <set >
+	      <if test="graphicMessageTitle != null" >
+	        graphic_message_title = #{graphicMessageTitle},
+	      </if>
+	      <if test="graphicMessageContent != null" >
+	        graphic_message_content = #{graphicMessageContent},
+	      </if>
+	      <if test="graphicMessageJieshaoPic != null" >
+	        graphic_message_jieshao_pic = #{graphicMessageJieshaoPic},
+	      </if>
+	  </set>
+  	 where id = #{id}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    update tsy_graphic_message
+    <set >
+      <if test="graphicMessageNoTitle != null" >
+        graphic_message_no_title = #{graphicMessageNoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageNoPicS != null" >
+        graphic_message_no_pic_s = #{graphicMessageNoPicS,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageNoUrl != null" >
+        graphic_message_no_url = #{graphicMessageNoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageType != null" >
+        graphic_message_type = #{graphicMessageType,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageTitle != null" >
+        graphic_message_title = #{graphicMessageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageJieshaoPic != null" >
+        graphic_message_jieshao_pic = #{graphicMessageJieshaoPic,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageFatherid != null" >
+        graphic_message_fatherid = #{graphicMessageFatherid,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageJudgeSend != null" >
+        graphic_message_judge_send = #{graphicMessageJudgeSend,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageSendDate != null" >
+        graphic_message_send_date = #{graphicMessageSendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="graphicMessageSendUserid != null" >
+        graphic_message_send_userid = #{graphicMessageSendUserid,jdbcType=INTEGER},
+      </if>
+      <if test="graphicMessageContent != null" >
+        graphic_message_content = #{graphicMessageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="java.util.Map" >
+    update tsy_graphic_message
+    set graphic_message_no_title = #{graphicMessageNoTitle,jdbcType=VARCHAR},
+      graphic_message_no_pic_s = #{graphicMessageNoPicS,jdbcType=VARCHAR},
+      graphic_message_no_url = #{graphicMessageNoUrl,jdbcType=VARCHAR},
+      graphic_message_type = #{graphicMessageType,jdbcType=INTEGER},
+      graphic_message_title = #{graphicMessageTitle,jdbcType=VARCHAR},
+      graphic_message_jieshao_pic = #{graphicMessageJieshaoPic,jdbcType=VARCHAR},
+      graphic_message_fatherid = #{graphicMessageFatherid,jdbcType=INTEGER},
+      graphic_message_judge_send = #{graphicMessageJudgeSend,jdbcType=INTEGER},
+      graphic_message_send_date = #{graphicMessageSendDate,jdbcType=VARCHAR},
+      graphic_message_send_userid = #{graphicMessageSendUserid,jdbcType=INTEGER},
+      graphic_message_content = #{graphicMessageContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java.util.Map" >
+    update tsy_graphic_message
+    set graphic_message_no_title = #{graphicMessageNoTitle,jdbcType=VARCHAR},
+      graphic_message_no_pic_s = #{graphicMessageNoPicS,jdbcType=VARCHAR},
+      graphic_message_no_url = #{graphicMessageNoUrl,jdbcType=VARCHAR},
+      graphic_message_type = #{graphicMessageType,jdbcType=INTEGER},
+      graphic_message_title = #{graphicMessageTitle,jdbcType=VARCHAR},
+      graphic_message_jieshao_pic = #{graphicMessageJieshaoPic,jdbcType=VARCHAR},
+      graphic_message_fatherid = #{graphicMessageFatherid,jdbcType=INTEGER},
+      graphic_message_judge_send = #{graphicMessageJudgeSend,jdbcType=INTEGER},
+      graphic_message_send_date = #{graphicMessageSendDate,jdbcType=VARCHAR},
+      graphic_message_send_userid = #{graphicMessageSendUserid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

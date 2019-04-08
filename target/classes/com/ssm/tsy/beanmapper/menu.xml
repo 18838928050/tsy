@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.MenuDao">
+	<resultMap type="com.ssm.tsy.bean.MenuBean" id="MenuBean">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="menuname" property="menuname" jdbcType="VARCHAR"></id>
+		<id column="menutype" property="menutype" jdbcType="VARCHAR"></id>
+		<id column="menukey" property="menukey" jdbcType="VARCHAR"></id>
+		<id column="menulevel" property="menulevel" jdbcType="INTEGER"></id>
+		<id column="menubolong" property="menubolong" jdbcType="INTEGER"></id>
+		<id column="haschild" property="haschild" jdbcType="INTEGER"></id>
+		<id column="rebackint" property="rebackint" jdbcType="INTEGER"></id>
+		<id column="rebackcontext" property="rebackcontext" jdbcType="VARCHAR"></id>
+	</resultMap>
+	
+	<select id="queryGraphicMessageByFirst" resultType="java.util.Map">
+		SELECT
+			a.id id,
+			a.graphic_message_title graphicMessageTitle,
+			a.graphic_message_jieshao_pic graphicMessageJieshaoPic,
+			a.graphic_message_type graphicMessageType,
+			a.graphic_message_fatherid graphicMessageFatherid,
+			a.graphic_message_judge_send graphicMessageJudgeSend,
+			a.graphic_message_send_date graphicMessageSendDate,
+			a.graphic_message_send_userid graphicMessageSendUserid
+		FROM
+		tsy_graphic_message a
+		where a.graphic_message_fatherid = '0'
+		order by a.id desc
+	</select>
+
+	<!-- 查询所有自定义菜单 -->
+	<select id="SelectAll" resultType="com.ssm.tsy.bean.MenuBean">
+		select * from menubean;
+	</select>
+	
+	<select id="SelectItemByMenuKey" resultType="java.util.Map" parameterType="java.util.Map" >
+		select * from menubean where menuKey = #{menuKey};
+	</select>
+
+	<!-- 查询单项自定义菜单 -->
+	<select id="SelectItemById" resultType="com.ssm.tsy.bean.MenuBean">
+		select * from menubean
+		where id = #{id};
+	</select>
+
+	<!-- 根据一级菜单查询子菜单 -->
+	<select id="SelectAllByBolong" resultType="com.ssm.tsy.bean.MenuBean">
+		select * from menubean
+		where menubolong = #{bolong};
+	</select>
+
+	<!-- 根据菜单名称查询菜单 -->
+	<select id="SelectAllByName" resultType="com.ssm.tsy.bean.MenuBean">
+		select * from menubean
+		where menuname = #{menuname};
+	</select>
+
+	<!-- 查询所有的一级菜单或者二级菜单 -->
+	<select id="SelectAllByLevel" resultType="com.ssm.tsy.bean.MenuBean">
+		select * from menubean
+		where menulevel = #{level};
+	</select>
+
+	<!-- 添加自定义菜单 -->
+	<insert id="AddMenuBean" parameterType="com.ssm.tsy.bean.MenuBean">
+		insert into menubean
+		(menuname,menutype,menukey,menulevel,menubolong,haschild,rebackint,rebackcontext)
+		value(#{menuname},#{menutype},#{menukey},#{menulevel},#{menubolong},#{haschild},#{rebackint},#{rebackcontext});
+	</insert>
+
+	<!-- 修改自定义菜单 -->
+	<update id="UpdateMenuBean" parameterType="com.ssm.tsy.bean.MenuBean">
+		update menubean
+		<set>
+			<if test="menuname != null and menuname != ''">menuname = #{menuname},</if>
+			menutype = #{menutype},
+			menukey = #{menukey},
+			<if test="menulevel != null and menulevel != ''">menulevel = #{menulevel},</if>
+			menubolong = #{menubolong},
+			haschild = #{haschild},
+			rebackint =
+			#{rebackint},
+			rebackcontext = #{rebackcontext}
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 删除自定义菜单 -->
+	<delete id="DeleteMenuBean" parameterType="Integer">
+		delete from menubean
+		where id =
+		#{id}
+	</delete>
+
+
+</mapper>          

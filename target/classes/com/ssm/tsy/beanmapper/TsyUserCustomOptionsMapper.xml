@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyUserCustomOptionsMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.TsyUserCustomOptions" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="option_title" property="optionTitle" jdbcType="VARCHAR" />
+    <result column="option_vedio" property="optionVedio" jdbcType="VARCHAR" />
+    <result column="option_id" property="optionId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="option_time" property="optionTime" jdbcType="TIMESTAMP" />
+    <result column="option_introduce" property="optionIntroduce" jdbcType="VARCHAR" />
+    <result column="option_type" property="optionType" jdbcType="INTEGER" />
+    <result column="option_state" property="optionState" jdbcType="INTEGER" />
+    <result column="option_class" property="optionClass" jdbcType="INTEGER" />
+    <result column="option_label" property="optionLabel" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ssm.tsy.bean.TsyUserCustomOptions" extends="BaseResultMap" >
+    <result column="option_context" property="optionContext" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, option_title, option_vedio, option_id, user_id, option_time, option_introduce, 
+    option_type, option_state, option_class,option_label
+  </sql>
+  <sql id="Blob_Column_List" >
+    option_context
+  </sql>
+  
+  <select id="queryVedioList" resultType="java.util.Map" parameterType="java.util.Map" >
+  		SELECT
+			a.id,
+			a.option_title,
+			a.option_time,
+			a.option_state,
+			a.option_type,
+			(
+				SELECT
+					c.option_pic_path
+				FROM
+					tsy_options c
+				WHERE
+					a.option_vedio = c.id
+			) 'optionPicPath',
+			(
+				SELECT
+					d.custom_title
+				FROM
+					tsy_user_custom_options_class d
+				WHERE
+					a.option_class = d.id
+			) 'customTitle',
+			(
+				SELECT
+					group_concat(b.label_title)
+				FROM
+					tsy_user_custom_options_label b
+				WHERE
+					instr(
+						CONCAT(',', a.option_label, ','),
+						CONCAT(',', b.id, ',')
+					) > 0
+			) 'labalTitle',
+			(
+				SELECT
+					group_concat(e.option_name)
+				FROM
+					tsy_options e
+				WHERE
+					instr(
+						CONCAT(',', a.option_id, ','),
+						CONCAT(',', e.id, ',')
+					) > 0
+			) 'optionName',
+			(
+				SELECT
+					COUNT(b.label_title)
+				FROM
+					tsy_user_custom_options_label b
+				WHERE
+					instr(
+						CONCAT(',', a.option_label, ','),
+						CONCAT(',', b.id, ',')
+					) > 0
+			) 'labalTitleSize',
+			(
+				SELECT
+					COUNT(e.option_name)
+				FROM
+					tsy_options e
+				WHERE
+					instr(
+						CONCAT(',', a.option_id, ','),
+						CONCAT(',', e.id, ',')
+					) > 0
+			) 'optionNameSize',
+			g.no
+		FROM
+			tsy_user_custom_options a,
+			`user` g
+		WHERE
+			1 = 1
+			and g.id = a.user_id
+		<if test="id != null and id  != ''" >
+			AND a.id = #{id}
+		</if>
+		<if test="optionSte != null and optionSte != ''" >
+			AND a.option_state = #{optionSte}
+		</if>
+		<if test="optionTitle != null and optionTitle  != ''" >
+			AND a.option_title LIKE '%' #{optionTitle} '%'
+		</if>
+  </select>
+  
+    <select id="queryVedioListById" resultType="java.util.Map" parameterType="java.util.Map" >
+  		SELECT
+			a.id,
+			a.option_title,
+			a.option_time,
+			a.option_state,
+			a.option_type,
+			a.option_introduce,
+			a.option_vedio,
+			a.option_label,
+			a.option_class,
+			a.option_id,
+			(
+				SELECT
+					c.option_pic_path
+				FROM
+					tsy_options c
+				WHERE
+					a.option_vedio = c.id
+			) 'optionPicPath',
+			(
+				SELECT
+					c.option_name
+				FROM
+					tsy_options c
+				WHERE
+					a.option_vedio = c.id
+			) 'fileName',
+			(
+				SELECT
+					c.option_size
+				FROM
+					tsy_options c
+				WHERE
+					a.option_vedio = c.id
+			) 'fileSize',
+			(
+				SELECT
+					c.option_type
+				FROM
+					tsy_options c
+				WHERE
+					a.option_vedio = c.id
+			) 'fileType',
+			(
+				SELECT
+					d.custom_title
+				FROM
+					tsy_user_custom_options_class d
+				WHERE
+					a.option_class = d.id
+			) 'customTitle',
+			(
+				SELECT
+					group_concat(b.label_title)
+				FROM
+					tsy_user_custom_options_label b
+				WHERE
+					instr(
+						CONCAT(',', a.option_label, ','),
+						CONCAT(',', b.id, ',')
+					) > 0
+			) 'labalTitle',
+			(
+				SELECT
+					group_concat(e.option_name)
+				FROM
+					tsy_options e
+				WHERE
+					instr(
+						CONCAT(',', a.option_id, ','),
+						CONCAT(',', e.id, ',')
+					) > 0
+			) 'optionName',
+			(
+				SELECT
+					group_concat(e.option_type)
+				FROM
+					tsy_options e
+				WHERE
+					instr(
+						CONCAT(',', a.option_id, ','),
+						CONCAT(',', e.id, ',')
+					) > 0
+			) 'optionType',
+			(
+				SELECT
+					group_concat(e.option_size)
+				FROM
+					tsy_options e
+				WHERE
+					instr(
+						CONCAT(',', a.option_id, ','),
+						CONCAT(',', e.id, ',')
+					) > 0
+			) 'optionSize',
+			(
+				SELECT
+					COUNT(b.label_title)
+				FROM
+					tsy_user_custom_options_label b
+				WHERE
+					instr(
+						CONCAT(',', a.option_label, ','),
+						CONCAT(',', b.id, ',')
+					) > 0
+			) 'labalTitleSize',
+			(
+				SELECT
+					COUNT(e.option_name)
+				FROM
+					tsy_options e
+				WHERE
+					instr(
+						CONCAT(',', a.option_id, ','),
+						CONCAT(',', e.id, ',')
+					) > 0
+			) 'optionNameSize'
+		FROM
+			tsy_user_custom_options a
+		WHERE
+			1 = 1
+			AND a.user_id = #{userId}
+			AND a.id = #{id}
+  </select>
+  
+  <update id="updateVedioState" parameterType="java.util.Map" >
+    update tsy_user_custom_options set
+    	option_state = #{updateState}
+    where id = #{id}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tsy_user_custom_options
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from tsy_user_custom_options
+    where id = #{id}
+  </delete>
+  <insert id="insertSelective" parameterType="java.util.Map" >
+    insert into tsy_user_custom_options
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="optionTitle != null" >
+        option_title,
+      </if>
+      <if test="optionVedio != null" >
+        option_vedio,
+      </if>
+      <if test="optionId != null" >
+        option_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="optionTime != null" >
+        option_time,
+      </if>
+      <if test="optionIntroduce != null" >
+        option_introduce,
+      </if>
+      <if test="optionType != null" >
+        option_type,
+      </if>
+      <if test="optionState != null" >
+        option_state,
+      </if>
+      <if test="optionClass != null" >
+        option_class,
+      </if>
+      <if test="optionContext != null" >
+        option_context,
+      </if>
+      <if test="optionLabel != null" >
+        option_label,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="optionTitle != null" >
+        #{optionTitle},
+      </if>
+      <if test="optionVedio != null" >
+        #{optionVedio},
+      </if>
+      <if test="optionId != null" >
+        #{optionId},
+      </if>
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="optionTime != null" >
+        #{optionTime},
+      </if>
+      <if test="optionIntroduce != null" >
+        #{optionIntroduce},
+      </if>
+      <if test="optionType != null" >
+        #{optionType},
+      </if>
+      <if test="optionState != null" >
+        #{optionState},
+      </if>
+      <if test="optionClass != null" >
+        #{optionClass},
+      </if>
+      <if test="optionContext != null" >
+        #{optionContext},
+      </if>
+      <if test="optionLabel != null" >
+        #{optionLabel},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    update tsy_user_custom_options
+    <set >
+      <if test="optionTitle != null" >
+        option_title = #{optionTitle},
+      </if>
+      <if test="optionVedio != null" >
+        option_vedio = #{optionVedio},
+      </if>
+      <if test="optionId != null" >
+        option_id = #{optionId},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId},
+      </if>
+      <if test="optionTime != null" >
+        option_time = #{optionTime},
+      </if>
+      <if test="optionIntroduce != null" >
+        option_introduce = #{optionIntroduce},
+      </if>
+      <if test="optionType != null" >
+        option_type = #{optionType},
+      </if>
+      <if test="optionState != null" >
+        option_state = #{optionState},
+      </if>
+      <if test="optionClass != null" >
+        option_class = #{optionClass},
+      </if>
+      <if test="optionContext != null" >
+        option_context = #{optionContext},
+      </if>
+      <if test="optionLabel != null" >
+        option_label = #{optionLabel},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateVedioById" parameterType="java.util.Map" >
+    update tsy_user_custom_options
+    <set >
+    	option_id = #{optionId},
+        option_title = #{optionTitle},
+        option_vedio = #{optionVedio},
+        option_introduce = #{optionIntroduce},
+        option_class = #{optionClass},
+        option_label = #{optionLabel},
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="java.util.Map" >
+    update tsy_user_custom_options
+    set option_title = #{optionTitle},
+      option_vedio = #{optionVedio},
+      option_id = #{optionId},
+      user_id = #{userId},
+      option_time = #{optionTime},
+      option_introduce = #{optionIntroduce},
+      option_type = #{optionType},
+      option_state = #{optionState},
+      option_class = #{optionClass},
+      option_context = #{optionContext},
+      option_label = #{optionLabel}
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java.util.Map" >
+    update tsy_user_custom_options
+    set option_title = #{optionTitle},
+      option_vedio = #{optionVedio},
+      option_id = #{optionId},
+      user_id = #{userId},
+      option_time = #{optionTime},
+      option_introduce = #{optionIntroduce},
+      option_type = #{optionType},
+      option_state = #{optionState},
+      option_class = #{optionClass},
+      option_label = #{optionLabel}
+    where id = #{id}
+  </update>
+</mapper>

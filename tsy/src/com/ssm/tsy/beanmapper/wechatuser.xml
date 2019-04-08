@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.WeChatDao">
+	<resultMap type="com.ssm.tsy.bean.WeChatUser" id="WeChatUser">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="openid" property="openid" jdbcType="VARCHAR"></id>
+		<id column="nickname" property="nickname" jdbcType="VARCHAR"></id>
+		<id column="city" property="city" jdbcType="VARCHAR"></id>
+		<id column="country" property="country" jdbcType="VARCHAR"></id>
+		<id column="subscribe_time" property="subscribe_time" jdbcType="VARCHAR"></id>
+		<id column="sex" property="sex" jdbcType="INTEGER"></id>
+		<id column="province" property="province" jdbcType="VARCHAR"></id>
+		<id column="groupid" property="groupid" jdbcType="INTEGER"></id>
+		<id column="headimgurl" property="headimgurl" jdbcType="VARCHAR"></id>
+		<id column="subscribe" property="subscribe" jdbcType="VARCHAR"></id>
+		<id column="remark" property="remark" jdbcType="VARCHAR"></id>
+		<id column="user_id" property="user_id" jdbcType="INTEGER"></id>
+		<id column="frozen" property="frozen" jdbcType="INTEGER"></id>
+		<id column="appId" property="appId" jdbcType="INTEGER"></id>
+	</resultMap>
+
+	<!-- 添加新的关注人 -->
+	<insert id="AddWeChat" parameterType="com.ssm.tsy.bean.WeChatUser">
+		insert into wechat_user
+		(openid,nickname,city,country,subscribe_time,sex,province,groupid,
+		headimgurl,subscribe,remark,user_id,frozen,appId)
+		value(#{openid},#{nickname},#{city},#{country},#{subscribe_time},
+		#{sex},#{province},#{groupid},#{headimgurl},#{subscribe},#{remark},#{user_id},#{frozen},#{appId});
+	</insert>
+
+	<!-- 修改关注人信息 -->
+	<update id="UpdateWeChat" parameterType="com.ssm.tsy.bean.WeChatUser">
+		update wechat_user
+		<set>
+			<if test="openid != null and openid != ''">openid = #{openid},</if>
+			<if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+			<if test="city != null and city != ''">city = #{city},</if>
+			<if test="country != null and country != ''">country = #{country},</if>
+			<if test="subscribe_time != null and subscribe_time != ''">subscribe_time = #{subscribe_time},</if>
+			<if test="sex != null and sex != ''">sex = #{sex},</if>
+			<if test="province != null and province != ''">province = #{province},</if>
+			<if test="groupid != null and groupid != ''">groupid = #{groupid},</if>
+			<if test="headimgurl != null and headimgurl != ''">headimgurl = #{headimgurl},</if>
+			<if test="subscribe != null and subscribe != ''">subscribe = #{subscribe},</if>
+			<if test="remark != null and remark != ''">remark = #{remark},</if>
+			user_id = #{user_id},
+			frozen = #{frozen}
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 查询所有的关注人 -->
+	<select id="SelectAll" resultType="com.ssm.tsy.bean.WeChatUser">
+		select * from wechat_user;
+	</select>
+	<!-- 查询所有的关注人 -->
+	<select id="SelectAllToMap" resultType="java.util.Map">
+		SELECT
+			id,
+			openid
+		FROM
+			wechat_user
+			where frozen = '1' 
+		and subscribe = '1';
+	</select>
+
+	<!-- 根据昵称查询关注人 -->
+	<select id="SelectAllByNickName" resultType="com.ssm.tsy.bean.WeChatUser"
+		parameterType="String">
+		select * from wechat_user c where 1 = 1
+		<if test="_parameter != null and _parameter != ''">and c.nickname like "%"#{_parameter}"%"</if>
+		;
+	</select>
+
+	<!-- 根据用户的标识来查询该用户是否存在 -->
+	<select id="SelectByOpenId" resultType="com.ssm.tsy.bean.WeChatUser">
+		select * from wechat_user
+		where openid = #{openid};
+	</select>
+
+</mapper>          

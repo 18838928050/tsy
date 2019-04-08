@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyOptionsIntegralMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.TsyOptionsIntegral" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+    <result column="options_id" property="optionsId" jdbcType="INTEGER" />
+    <result column="integral_time" property="integralTime" jdbcType="TIMESTAMP" />
+    <result column="integral_type" property="integralType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, integral, options_id, integral_time, integral_type
+  </sql>
+  
+  <select id="queryVedioFjByRowId" resultType="java.util.Map" parameterType="java.util.Map" >
+   SELECT
+		b.id,
+		b.option_name,
+		b.option_path,
+		b.option_size,
+		b.option_type
+	FROM
+		tsy_user_custom_options a,
+		tsy_options b
+	WHERE
+		instr(
+			CONCAT(',', a.option_id, ','),
+			CONCAT(',', b.id, ',')
+		) > 0
+	AND b.option_state = '1'
+	AND a.id = #{rowId}
+  </select>
+  
+  <select id="queryWechatKnowledgeNewFifth" resultType="java.util.Map" parameterType="java.util.Map" >
+  SELECT k.id,k.`name` from (SELECT
+		a.id,
+		a.`name`
+	FROM
+		wechatknowledge a 
+	WHERE
+		a.fatherid != '0'
+	AND '1' = (
+		SELECT
+			b.upordown
+		FROM
+			wechatknowledge b
+		WHERE
+			a.fatherid = b.id
+	))k ORDER BY k.id DESC LIMIT 0,5
+  </select>
+  
+  <select id="queryWechatKnowledgeByRowId" resultType="java.util.Map" parameterType="java.util.Map" >
+  	SELECT
+		a.id,
+		a.`name`,
+		a.content
+	FROM
+		wechatknowledge a
+	WHERE
+		a.id = #{rowId}
+  </select>
+  
+  <select id="queryWechatKnowledge" resultType="java.util.Map" parameterType="java.util.Map" >
+	SELECT k.id,k.`name`,SUM(c.evaluate_start) integar from (SELECT
+		a.id,
+		a.`name`
+	FROM
+		wechatknowledge a 
+	WHERE
+		a.fatherid != '0'
+	AND '1' = (
+		SELECT
+			b.upordown
+		FROM
+			wechatknowledge b
+		WHERE
+			a.fatherid = b.id
+	)
+	AND a.`name` LIKE "%"#{searchContent}"%")k
+	LEFT JOIN tys_options_evaluate c ON c.options_id = k.id
+	GROUP BY k.id
+  </select>
+  
+  <select id="wechatSearch" resultType="java.util.Map" parameterType="java.util.Map" >
+  	SELECT
+		t.id searchId,
+		t.option_title searchTitle,
+		'vedio' searchType,
+		t.option_state searchState
+	FROM
+		tsy_user_custom_options t
+	WHERE
+		t.option_state = '1'
+	AND  t.option_title LIKE "%"#{searchContent}"%"
+	UNION ALL
+		(SELECT
+			m.id searchId,
+			m.`name` searchTitle,
+			'article' searchType,
+			g.upordown searchState
+		FROM
+			wechatknowledge g,
+			wechatknowledge m
+		WHERE
+			m.fatherid = g.id
+	AND g.upordown = '1'
+	AND m.`name`  LIKE "%"#{searchContent}"%")
+  </select>
+  
+  <select id="wechatSearchFatherIdById" resultType="java.util.Map" parameterType="java.util.Map" >
+  SELECT g.fatherid from wechatknowledge g where g.id = #{id}
+  </select>
+  
+  <select id="queryMaxStarTopTenPeople" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		COUNT(a.evaluate_userid) 'maxNumber',
+		b.id,
+		b.mh_user_number,
+		c.headpiont
+	FROM
+		tsy_mh_user b
+	LEFT JOIN tys_options_evaluate a ON a.evaluate_userid = b.id
+	AND a.evaluate_time BETWEEN date_sub(now(), INTERVAL 6 MONTH)
+	AND now(),
+	 role c
+	WHERE
+		b.mh_user_role_id = c.id
+	GROUP BY
+		a.evaluate_userid
+	ORDER BY
+		COUNT(a.evaluate_userid) DESC
+		LIMIT 0,25
+  </select>
+  
+  <select id="queryMaxIntegralTopTen" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		sum(B.integral) 'integral',
+		a.id,
+		a.`name`,
+		a.fatherid
+	FROM
+		wechatknowledge a
+	LEFT JOIN tsy_options_integral b ON b.options_id = a.id
+	GROUP BY
+		b.options_id
+	ORDER BY
+		sum(B.integral) DESC
+	LIMIT 0,10
+  </select>
+  
+  <select id="queryVedioClassTopThree" resultType="java.util.Map" parameterType="java.util.Map" >
+  	SELECT
+		b.custom_title classTitle,
+		b.id classId
+	FROM
+		tsy_user_custom_options a,
+		tsy_user_custom_options_class b
+	WHERE
+		a.option_type = '1'
+	AND a.option_time BETWEEN date_sub(now(), INTERVAL 6 MONTH) AND now()
+	AND a.option_class = b.id
+	GROUP BY a.option_class
+	LIMIT 0,3
+  </select>
+  
+  <select id="queryVedioTopForuth" resultType="java.util.Map" parameterType="java.util.Map" >
+	SELECT
+		a.id optionId,
+		a.option_title optionTitle,
+		a.option_time uploadTime,
+		b.custom_title classTitle,
+		b.id classId,
+		c.`no` uploadUserNum,
+		d.option_pic_path vedioPic
+	FROM
+		tsy_user_custom_options a,
+		tsy_user_custom_options_class b,
+		`user` c,
+		tsy_options d
+	WHERE
+		a.option_type = '1'
+	AND a.option_time BETWEEN date_sub(now(), INTERVAL 6 MONTH) AND now()
+	AND a.option_class = b.id
+	AND c.id = b.user_id
+	AND d.id = a.option_vedio
+	AND a.option_class = #{optionClass}
+	AND a.option_state = #{optionState}
+	ORDER BY a.option_time DESC
+	LIMIT 0,4
+  </select>
+  
+  <select id="queryVedioTopFifteen" resultType="java.util.Map" parameterType="java.util.Map" >
+  	SELECT
+		a.id,
+		a.option_title
+	FROM
+		tsy_user_custom_options a
+	WHERE
+		a.option_state = #{optionState}
+		and a.option_type = '1'
+	ORDER BY
+		a.option_time DESC
+	LIMIT 0,15
+  </select>
+  
+  <select id="queryVedioByOptionClassAndUser" resultType="java.util.Map" parameterType="java.util.Map" >
+	  SELECT
+		b.option_path,
+		b.option_pic_path,
+		a.option_title,
+		a.id
+	FROM
+		tsy_user_custom_options a,
+		tsy_options b
+	WHERE
+	a.option_vedio = b.id
+	AND a.option_type = '1'
+	AND a.option_state = #{optionState}
+	AND	a.option_class = (
+			SELECT
+				option_class
+			FROM
+				tsy_user_custom_options
+			WHERE
+				id = #{rowId}
+		)
+	AND a.user_id = (
+		SELECT
+			user_id
+		FROM
+			tsy_user_custom_options
+		WHERE
+			id = #{rowId}
+	)
+  </select>
+  
+  <select id="queryVedioByOptionClassAndNotequalUser" resultType="java.util.Map" parameterType="java.util.Map" >
+  	SELECT
+		b.option_path,
+		b.option_pic_path,
+		a.option_title,
+		a.id,
+		a.option_time,
+		c.`no`
+	FROM
+		tsy_user_custom_options a,
+		tsy_options b,
+		`user` c
+	WHERE
+		a.user_id = c.id
+	AND a.option_vedio = b.id
+	AND a.option_type = '1'
+	AND a.option_state = #{optionState}
+	AND a.option_class = (
+		SELECT
+			option_class
+		FROM
+			tsy_user_custom_options
+		WHERE
+			id = #{rowId}
+	)
+	AND a.user_id != (
+		SELECT
+			user_id
+		FROM
+			tsy_user_custom_options
+		WHERE
+			id = #{rowId}
+	)
+	limit 0,8
+  </select>
+  
+  <select id="queryVedio" resultType="java.util.Map" parameterType="java.util.Map" >
+	  SELECT
+		a.id,
+		a.option_time,
+		a.option_title,
+		b.`no`,
+		c.option_pic_path
+	FROM
+		tsy_user_custom_options a,
+		`user` b,
+		tsy_options c
+	WHERE
+		a.option_state = #{optionState}
+	AND a.user_id = b.id 
+	AND a.option_type = '1'
+	AND a.option_vedio = c.id
+	order by a.option_time desc
+  </select>
+  
+  <select id="queryVedioByRand" resultType="java.util.Map" parameterType="java.util.Map" >
+	  SELECT
+		b.option_path,
+		b.option_pic_path,
+		a.option_title,
+		a.id,
+		a.option_time,
+		c.`no`
+	FROM
+		tsy_user_custom_options a,
+		tsy_options b,
+		`user` c
+	WHERE
+		a.user_id = c.id
+	AND a.option_vedio = b.id
+	AND a.option_type = '1'
+	AND a.option_state = #{optionState}
+	ORDER BY RAND() LIMIT 8
+  </select>
+  
+  <select id="queryVedioByRandEleven" resultType="java.util.Map" parameterType="java.util.Map" >
+	  SELECT
+		b.option_path,
+		b.option_pic_path,
+		a.option_title,
+		a.id,
+		a.option_time,
+		c.`no`
+	FROM
+		tsy_user_custom_options a,
+		tsy_options b,
+		`user` c
+	WHERE
+		a.user_id = c.id
+	AND a.option_vedio = b.id
+	AND a.option_type = '1'
+	AND a.option_state = #{optionState}
+	ORDER BY RAND() LIMIT 11
+  </select>
+  
+  <select id="selectByPrimaryKey" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from tsy_options_integral
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from tsy_options_integral
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="java.util.Map" >
+    insert into tsy_options_integral (id, integral, options_id, 
+      integral_time, integral_type)
+    values (#{id,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, #{optionsId,jdbcType=INTEGER}, 
+      #{integralTime,jdbcType=TIMESTAMP}, #{integralType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="java.util.Map" >
+    insert into tsy_options_integral
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+      <if test="optionsId != null" >
+        options_id,
+      </if>
+      <if test="integralTime != null" >
+        integral_time,
+      </if>
+      <if test="integralType != null" >
+        integral_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="optionsId != null" >
+        #{optionsId,jdbcType=INTEGER},
+      </if>
+      <if test="integralTime != null" >
+        #{integralTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="integralType != null" >
+        #{integralType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    update tsy_options_integral
+    <set >
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="optionsId != null" >
+        options_id = #{optionsId,jdbcType=INTEGER},
+      </if>
+      <if test="integralTime != null" >
+        integral_time = #{integralTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="integralType != null" >
+        integral_type = #{integralType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java.util.Map" >
+    update tsy_options_integral
+    set integral = #{integral,jdbcType=INTEGER},
+      options_id = #{optionsId,jdbcType=INTEGER},
+      integral_time = #{integralTime,jdbcType=TIMESTAMP},
+      integral_type = #{integralType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectEvaluateuserIdOptionsId" resultType="java.util.Map"  parameterType="java.util.Map" >
+  
+  </select>
+  
+  
+</mapper>

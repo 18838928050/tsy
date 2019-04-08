@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="tsy"
+  id="myeclipse.1470024671505"
+  context-root="/tsy"
+  j2ee-spec="6.0"
+  archive="tsy.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

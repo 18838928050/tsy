@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyOptionsEvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.TsyOptionsEvaluate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="options_id" property="optionsId" jdbcType="INTEGER" />
+    <result column="evaluate_time" property="evaluateTime" jdbcType="TIMESTAMP" />
+    <result column="evaluate_start" property="evaluateStart" jdbcType="DOUBLE" />
+    <result column="evaluate_userid" property="evaluateUserid" jdbcType="INTEGER" />
+    <result column="evaluate_parent_id" property="evaluateParentId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ssm.tsy.bean.TsyOptionsEvaluate" extends="BaseResultMap" >
+    <result column="evaluate_content" property="evaluateContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, options_id, evaluate_time, evaluate_start, evaluate_userid, evaluate_parent_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    evaluate_content
+  </sql>
+  <select id="selectByPrimaryKey" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tys_options_evaluate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from tys_options_evaluate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="java.util.Map" >
+    insert into tys_options_evaluate (id, options_id, evaluate_time, 
+      evaluate_start, evaluate_userid, evaluate_parent_id, 
+      evaluate_content)
+    values (#{id,jdbcType=INTEGER}, #{optionsId,jdbcType=INTEGER}, #{evaluateTime,jdbcType=TIMESTAMP}, 
+      #{evaluateStart,jdbcType=DOUBLE}, #{evaluateUserid,jdbcType=INTEGER}, #{evaluateParentId,jdbcType=INTEGER}, 
+      #{evaluateContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="java.util.Map" >
+    insert into tys_options_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="optionsId != null" >
+        options_id,
+      </if>
+      <if test="evaluateTime != null" >
+        evaluate_time,
+      </if>
+      <if test="evaluateStart != null" >
+        evaluate_start,
+      </if>
+      <if test="evaluateUserid != null" >
+        evaluate_userid,
+      </if>
+      <if test="evaluateParentId != null" >
+        evaluate_parent_id,
+      </if>
+      <if test="evaluateContent != null" >
+        evaluate_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="optionsId != null" >
+        #{optionsId,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateTime != null" >
+        #{evaluateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluateStart != null" >
+        #{evaluateStart,jdbcType=DOUBLE},
+      </if>
+      <if test="evaluateUserid != null" >
+        #{evaluateUserid,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateParentId != null" >
+        #{evaluateParentId,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateContent != null" >
+        #{evaluateContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    update tys_options_evaluate
+    <set >
+      <if test="optionsId != null" >
+        options_id = #{optionsId,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateTime != null" >
+        evaluate_time = #{evaluateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluateStart != null" >
+        evaluate_start = #{evaluateStart,jdbcType=DOUBLE},
+      </if>
+      <if test="evaluateUserid != null" >
+        evaluate_userid = #{evaluateUserid,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateParentId != null" >
+        evaluate_parent_id = #{evaluateParentId,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateContent != null" >
+        evaluate_content = #{evaluateContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="java.util.Map" >
+    update tys_options_evaluate
+    set options_id = #{optionsId,jdbcType=INTEGER},
+      evaluate_time = #{evaluateTime,jdbcType=TIMESTAMP},
+      evaluate_start = #{evaluateStart,jdbcType=DOUBLE},
+      evaluate_userid = #{evaluateUserid,jdbcType=INTEGER},
+      evaluate_parent_id = #{evaluateParentId,jdbcType=INTEGER},
+      evaluate_content = #{evaluateContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java.util.Map" >
+    update tys_options_evaluate
+    set options_id = #{optionsId,jdbcType=INTEGER},
+      evaluate_time = #{evaluateTime,jdbcType=TIMESTAMP},
+      evaluate_start = #{evaluateStart,jdbcType=DOUBLE},
+      evaluate_userid = #{evaluateUserid,jdbcType=INTEGER},
+      evaluate_parent_id = #{evaluateParentId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="addContentAndNumStar" parameterType="java.util.Map" >
+    insert into tys_options_evaluate (options_id, 
+      evaluate_time, evaluate_start,evaluate_content,evaluate_userid,evaluate_parent_id)
+    values (#{id}, #{date}, #{starNum}, #{content}, #{evaluate_userid}, '0')
+  </insert>
+    
+  <select id="selectStraNum" resultType="java.util.Map" parameterType="java.util.Map" >
+  		SELECT evaluate_start FROM tys_options_evaluate WHERE evaluate_userid=#{evaluate_userid} and evaluate_start!='0' and options_id = #{id}
+  </select>
+  
+   <select id="selectTsyOptionsIntegralGg" resultType="java.util.Map" parameterType="java.util.Map" >
+ 	   SELECT * FROM tsy_options_integral_gg WHERE options_integral_type=#{options_integral_type}
+  </select>
+  <select id="selectTsyOptionsIntegral" resultType="java.util.Map" parameterType="java.util.Map" >
+  SELECT * FROM tsy_options_integral WHERE options_id=#{id,jdbcType=INTEGER}
+  </select>
+   <select id="selectLoginMessage" resultType="java.util.Map" parameterType="java.util.Map" >
+     SELECT * FROM role WHERE username=#{username,jdbcType=INTEGER}
+  </select>
+  
+   <insert id="addTsyoptionsintegral" parameterType="java.util.Map" >
+    insert into tsy_options_integral  (integral, 
+      options_id, integral_time,integral_type)
+    values (#{integral,jdbcType=VARCHAR}, #{options_id,jdbcType=INTEGER}, 
+      #{integral_time,jdbcType=VARCHAR},#{integral_type,jdbcType=INTEGER})
+  </insert>
+  
+   <insert id="insertContentAndParentid" parameterType="java.util.Map" >
+   insert into tys_options_evaluate (options_id, 
+      evaluate_time, evaluate_start,evaluate_content,evaluate_userid,evaluate_parent_id)
+    values (#{optionid}, #{date},'0', #{content}, #{evaluate_userid}, #{parentId})
+  </insert>
+  
+   <update id="updateTsyoptionsintegral" parameterType="java.util.Map" >
+    update tsy_options_integral
+    set integral = #{integral,jdbcType=INTEGER},
+      integral_time = #{integral_time,jdbcType=DOUBLE},
+      integral_type = #{integral_type,jdbcType=INTEGER}
+    where options_id = #{options_id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryTsyoptionsStar" resultType="java.util.Map" parameterType="java.util.Map" >
+	  SELECT
+			avg(a.evaluate_start) star
+			<if test="userId != null" >
+			,(
+				SELECT
+					b.evaluate_start
+				FROM
+					tys_options_evaluate b
+				WHERE
+					b.options_id = #{optionId}
+				AND b.evaluate_start != '0'
+				AND b.evaluate_userid = #{userId}
+			) 'userStar'
+			</if>
+			<if test="userId == null" >
+				,'0' userStar
+			</if>
+		FROM
+			tys_options_evaluate a
+		WHERE
+			a.evaluate_start != '0'
+		AND a.options_id = #{optionId}
+  </select>
+  
+  <select id="queryTsyoptionsEvaluate" resultType="java.util.Map" parameterType="java.util.Map" >
+	SELECT
+		a.id,
+		a.options_id,
+		a.evaluate_time,
+		a.evaluate_start,
+		a.evaluate_content,
+		c.username,
+		c.headpiont
+	FROM
+		tys_options_evaluate a,
+		tsy_mh_user b,
+		role c
+	WHERE
+		a.evaluate_parent_id = '0'
+	AND a.options_id = #{optionId}
+	AND a.evaluate_userid = b.id
+	AND b.mh_user_role_id = c.id
+	ORDER BY
+		a.evaluate_time DESC
+  </select>
+  
+  <select id="queryTsyoptionsEvaluateReply" resultType="java.util.Map" parameterType="java.util.Map" >
+	SELECT
+		a.id,
+		a.options_id,
+		a.evaluate_time,
+		a.evaluate_start,
+		a.evaluate_content,
+		a.evaluate_parent_id,
+		c.username,
+		c.headpiont
+	FROM
+		tys_options_evaluate a,
+		tsy_mh_user b,
+		role c
+	WHERE
+		a.evaluate_parent_id = #{parentId}
+	AND a.options_id = #{optionId}
+	AND a.evaluate_userid = b.id
+	AND b.mh_user_role_id = c.id
+	ORDER BY
+		a.evaluate_time DESC
+  </select>
+  
+</mapper>

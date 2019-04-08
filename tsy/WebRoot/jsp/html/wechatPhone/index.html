@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lange="ZH">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-touch-fullscreen" content="yes"> <!--  一会试验下是否有必要存在 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>首页</title>
+    <link rel="stylesheet" href="../../../css/wechatPhone/layout.css">
+    <link rel="stylesheet" href="../../../css/wechatPhone/widget.css">
+    <link rel="stylesheet" href="../../../css/wechatPhone/index.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="page_hd">
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html" class="onclick">首页</a></li>
+                    <li><a href="list.html">查找</a></li>
+                    <li><a href="about.html">关于</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div>
+            <article>
+                <!--scroll-->
+                <div class="scroll relative">
+                    <div class="scroll_box" id="scroll_img">
+                        <ul id="scollorId" class="scroll_wrap" style="height: 200px">
+                        </ul>
+                    </div>
+                    <span class="scroll_position_bg opacity6"></span>
+                    <ul class="scroll_position" id='scroll_position'>
+                    </ul>
+                </div>
+                <!--scroll-->
+            </article>
+        </div>
+        <section class="content">
+            <ul class="raiders" id="newFive">
+            </ul>
+            <div class="gameevaluation">
+                <div class="title clearfix">
+                    <h2>热门推荐</h2>
+                </div>
+                <ul class="ge_content" id="topTen">
+                    
+                </ul>
+            </div>
+
+        </section>
+    </div>
+    <footer class="footbottom">
+        <p>
+           <a href="javascript:;">微识</a>
+           <a href="javascript:;">系统</a>
+        </p>
+        <p>Copyright &copy; 2017 微识</p>
+    </footer>
+    
+    <script id="select-temp" type="text/x-handlebars-template"> 
+	{{#each rows}}
+		<li>
+			<a href="javascript:;" rowId="{{id}}">
+				<img src="{{#compare2 scollor_pic_path}}{{/compare2}}" width="100%" />
+				<font style="position: absolute;width: 100%;text-align: center;height: 40px; top: 30px;font-size:30px;color:cadetblue;font-family:monospace">{{scollor_pic_name}}</font>
+			</a>
+		</li>
+	{{/each}}
+	</script>
+	
+	<script id="select-temp-ol" type="text/x-handlebars-template"> 
+	{{#each rows}}
+		<li class="{{#compareOn @index}}{{/compareOn}}"><a href="javascript:void(0);">{{#compareIndex @index}}{{/compareIndex}}</a></li>
+	{{/each}}
+	</script>
+	
+	<script id="select-Top" type="text/x-handlebars-template"> 
+	{{#each rows}}
+		<li>
+           <a href="javascript:;" class="con" rowId="{{id}}">
+                <div class="g_con">
+                   <h3 class="tt">{{name}}</h3>
+                </div>
+                <span class="rightclick">
+                    <em>总评分</em>
+                    <i>{{integral}}</i>
+                </span>
+            </a>
+        </li>
+	{{/each}}
+	</script>
+	
+	<script id="select-New" type="text/x-handlebars-template"> 
+	{{#each rows}}
+		<li>
+            <span>最新</span>
+            <p><a href="javascript:;" rowId="{{id}}">{{name}}</a></p>
+        </li>
+	{{/each}}
+	</script>
+    
+    <script type="text/javascript" src="../../../js/jquery.js"></script>
+    <script src='../../../js/wechatPhone/hhSwipe.js'></script>
+    <script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/wechatPhone/index.js"></script>
+</body>
+</html>

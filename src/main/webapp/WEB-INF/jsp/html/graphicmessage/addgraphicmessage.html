@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/graphicmessage.css">
+		<link rel="stylesheet" href="../../../css/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css">
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link rel="stylesheet" href="../../../js/jquery-fileupload/css/jquery.fileupload.css">  
+		<link rel="stylesheet" href="../../../js/jquery-fileupload/css/jquery.fileupload-ui.css">  
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link href="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.css" rel="stylesheet" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<title></title>
+	</head>
+<body>
+	<section class="rt_wrap content mCustomScrollbar">
+		<div class="rt_content">
+			<div class="page_title">
+				<h2 class="fl">
+					图文消息
+				</h2>
+			</div>
+			<div style="width: 90%;margin-left: 5%">
+				<div class="wechat-all">
+					<div class="pub-wechat fn-clear" style="position: fixed;width: 18%;margin-left: 3%">
+						<div class="top" style="height: 170px">
+							<a id="topOne" href="javascript:;" rowId="">
+								<img src="" />
+								<font style="width: 95%">标题内容</font>
+							</a>
+						</div>
+						<div class="bottom">
+							<ul class="bot-ul">
+								<li id="addItemLi">
+									<a id="addItem" href="javascript:;">
+										<div style="width: 50%;height: 100%;margin-left: 25%;">
+											<img alt="" src="../../../images/tianjia.png" style="width: 50%;height: 70%;margin-left: 25%;margin-top: 6%;float: left;"/>
+										</div>
+									</a>
+								</li>
+							</ul>
+				
+						</div>
+					</div>
+				</div>
+				<div style="width: 60%;margin-left: 30%">
+					<ul>
+						<li style="margin-top: 10px">
+							<span>标题</span>
+							<input type="hidden" id="NowConsoleId"  ConsoleId="topOne"/ >  
+							<input type="text" id="titleName" class="form-control"placeholder="请在这里输入标题,字数不得超过64" / >  
+						</li>
+						<li style="margin-top: 10px">
+							<span>作者</span>
+							<select class="selectpicker" data-style="btn-primary" style="width: 100%">
+								<option>官方推送</option>
+   							</select>
+						</li>
+						<li style="margin-top: 10px">
+							<span class="ttl">内容</span> 
+							<script id="editor" type="text/plain" style="width:100%;height:400px;margin-top:0;"></script>
+						</li>
+						<li style="margin-top: 10px">
+							<span class="ttl">封面</span> 
+							<div class="thumbnail upload-vedio vedio-boder vedio-main-div">  
+								<div class="option">
+									<div class="caption">  
+										<span id="weixin_vedio" class="btn btn-primary fileinput-button">  
+											<span>上传</span>  
+											<input type="file" id="imgFm" name="imgFm" class="file-loading"/>  
+											<!-- accept="image/gif,image/jpg,image/png,application/*,video/mp4" -->
+										</span>
+									</div> 
+								</div>
+								<div class="items-vedio">
+									<div class="item-po-vedio" id="imghide" style="text-align: center;">
+										<font><img src="../../../images/item-po-img.png">  请选择要上传的内容</font><br/>
+										<font>仅支持 .jpg   .png   .jpeg</font>
+									</div>
+									<div class="item-po-vedio" id="imgshow" style="text-align: center;display: none;height: 150px;">
+										<font><img id="imgshowON" src="../../../images/item-po-img.png" style="clip: rect(0px 310px 120px 40px);position: absolute;width: 310px;float: right;right: 590px;"/></font><br/>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li style="margin-top: 10px;text-align: center;">
+							<button id="cancle" class="btn btn-info btn-warning">返回</button>  
+							<button id="save" class="btn btn-info btn-success">保存</button>  
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="div-H60"></div>
+		</div>
+	</section>
+	<script src="../../../js/jquery.js"></script>
+	<!--[if lt IE 9]>
+	<script src="js/html5.js"></script>
+	<![endif]-->
+	<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../../js/bootstrap/qiao.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-select/js/bootstrap-multiselect.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.js"></script>
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/locale/bootstrap-table-zh-CN.js"></script>
+	<script src="../../../js/ueditor.config.js"></script>
+	<script src="../../../js/ueditor.all.min.js"></script>
+	<script src="../../../js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="../../../js/Semantic-UI-1.0/examples/feed.js"></script>
+	<script src="../../../js/Semantic-UI-1.0/examples/jquery.address.js"></script>
+	<script src="../../../js/Semantic-UI-1.0/dist/semantic.js"></script>
+	
+	<script src="../../../js/jquery-fileupload/js/vendor/jquery.ui.widget.js"></script>  
+	<script src="../../../js/jquery-fileupload/js/jquery.iframe-transport.js"></script>
+	<script src="../../../js/jquery-fileupload/js/jquery.fileupload.js"></script>  
+	
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/graphicmessage/addgraphicmessage.js"></script>
+</body>
+</html>

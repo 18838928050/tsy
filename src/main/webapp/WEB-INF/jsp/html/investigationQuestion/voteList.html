@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>微信公众号开发</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link href="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.css" rel="stylesheet" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+	</head>
+<body>
+	<section class="rt_wrap content mCustomScrollbar">
+		<div class="rt_content">
+			<div class="page_title">
+				<h2 class="fl">投票管理</h2>
+				<button id="addVote" type="button" class="btn btn-default" style="float: right;">新建投票</button>
+			</div>
+			<div style="margin-top: 50px">
+				<table id="massage" class="table">
+				</table>
+			</div>
+		</div>
+		<div class="div-H60"></div>
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				    	<h4 class="modal-title" id="myModalLabel1">投票时间</h4>
+					</div>
+				    <div class="modal-body">
+				    	<div class="form-group">
+				    		<label for="txt_departmentname">起始时间</label>
+				    		<input type="hidden" id="voteRowId"/>
+				    		<input type="text" name="tsyVoteStartTime" class="form-control" onClick="laydate()" readonly id="tsyVoteStartTime" placeholder="起始时间">
+				    	</div>
+				    	<div class="form-group">
+				    		<label for="txt_departmentname">结束时间</label>
+				    		<input type="text" name="tsyVoteEndTime" class="form-control" onClick="laydate()" readonly id="tsyVoteEndTime" placeholder="结束时间">
+				    	</div>
+				    </div>
+				    <div class="modal-footer">
+				    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+				    	<button type="button" id="Bq_submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>开始</button> 
+				    </div>
+				</div>
+		 	</div>
+		</div>
+		
+		<div class="modal fade" id="selectSee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				    	<h4 class="modal-title" id="myModalLabel1">投票时间</h4>
+					</div>
+				    <div class="modal-body">
+				    	<div class="form-group">
+				    		<label for="txt_departmentname">起始时间</label>
+				    		<input type="hidden" id="seeRowId"/>
+				    		<input type="text" name="tsyVoteStartTime" class="form-control" onClick="laydate()" readonly id="tsyVoteStartTime" placeholder="起始时间">
+				    	</div>
+				    	<div class="form-group">
+				    		<label for="txt_departmentname">结束时间</label>
+				    		<input type="text" name="tsyVoteEndTime" class="form-control" onClick="laydate()" readonly id="tsyVoteEndTime" placeholder="结束时间">
+				    	</div>
+				    </div>
+				    <div class="modal-footer">
+				    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+				    	<button type="button" id="Bq_submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>开始</button> 
+				    </div>
+				</div>
+		 	</div>
+		</div>
+		
+		<div class="modal fade" id="selectSeeMation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				    	<h4 class="modal-title" id="myModalLabel1">投票相关问题</h4>
+				    	<input type="hidden" id="seeRowIdMation"/>
+					</div>
+				    <div class="modal-body" id="selectSeeMationBody" style="height: 400px;overflow-y: scroll;">
+				    	
+				    </div>
+				    <div class="modal-footer">
+				    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+				    </div>
+				</div>
+		 	</div>
+		</div>
+		
+		<div class="modal fade" id="selectSeeMap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+				    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				    	<h4 class="modal-title" id="myModalLabel1">投票饼状图</h4>
+					</div>
+				    <div class="modal-body" style="height: 250px">
+				    	<div style="width: 100%; height: 20px;">
+							<font id="zrs"></font>
+						</div>
+				    	<div id="bzt" class="fl" style="width: 100%; height: 200px; border: 1px solid #ccc; margin: 0 auto; overflow: hidden">
+							<div id="pie" style="width:100%; height: 200px; "></div>
+						</div>
+						<div id="bztNone" class="fl" style="width: 100%; height: 200px; border: 1px solid #ccc; margin: 0 auto; overflow: hidden;text-align: center;line-height: 100px;">
+							<font>暂无投票数据</font>
+						</div>
+				    </div>
+				    <div class="modal-footer">
+				    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>确定</button>
+				    </div>
+				</div>
+		 	</div>
+		</div>
+	</section>
+	
+	<script id="select-temp" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<div class="form-group" style="height: 50px;">
+				<label for="txt_departmentname" style="height: 50px;line-height:50px">问题{{#compareIndex @index}}{{/compareIndex}}</label>
+				<font style="height: 50px;line-height:50px">{{investigation_name}}</font>
+				<button type="button" rowId="{{id}}" style="float:right;margin-top:8px" class="btn btn-warning selectMap">查看</button>
+			</div>
+		{{/each}}
+	</script>
+	
+	<script src="../../../js/jquery.js"></script>
+	<script src="../../../js/amcharts.js" type="text/javascript"></script>
+	<script src="../../../js/serial.js" type="text/javascript"></script>
+	<script src="../../../js/pie.js" type="text/javascript"></script>
+	<script src="../../../js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../../js/bootstrap/qiao.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-select/js/bootstrap-multiselect.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+    <script src="../../../js/bootstrap/bootstrap-datetimepicker/laydate/laydate.js"></script>
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.js"></script>
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/locale/bootstrap-table-zh-CN.js"></script>
+	
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/investigationQuestion/voteList.js"></script>
+</body>
+</html>

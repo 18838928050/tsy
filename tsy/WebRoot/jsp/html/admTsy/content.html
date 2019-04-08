@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel2.css" />
+		<link href="../../../js/bootstrap/bootstrap-star/css/star-rating.min.css" rel="stylesheet">
+		<link rel="icon" href="../../../images/admTsy.png" type="image/x-icon" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/dashboard/dashboardindex.css" />
+		<title>微识系统</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">切换导航</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+					<a class="navbar-brand" href="#">网页主题</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					
+				</div>
+			</div>
+		</nav>
+		<!-- 描述：左侧  -->
+		<div class="sidebar" style="margin-top: -40px">
+			官方推送
+		</div>
+		<div class="col-sm-3 col-md-2 sidebar">
+			<ul class="nav nav-sidebar" id="nameUl">
+				
+			</ul>
+		</div>
+		<!-- 描述：内容 -->
+		<div id="cont" class="panel panel-success ml-r-30">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<font id="title"></font>
+					<font id="start" style="float: right;margin-right: 20px"></font>
+				</h3>
+			</div>
+			<div class="panel-body">
+				<!-- 描述：嵌套页面  -->
+				<div id="content" class="embed-responsive embed-responsive-16by9" style="width: 100%;">
+					<iframe id="index-iframe" name="index-iframe"  class="embed-responsive-item" scrolling="no" src="text.html" 
+						style="padding: 0px; width: 100%; height: 100%;"></iframe>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						评论
+					</h3>
+				</div>
+				<div class="panel-body">
+					<font id="evaluateFont">暂无评价</font>
+					<ul id="evaluateUl" class="list-group">
+					    
+					</ul>
+				</div>
+			</div>
+			<div class="panel-body">
+				<label for="input-7-sm" class="control-label">文章星级</label>
+				<input id="input-7-sm" class="rating rating-loading" value="0" data-min="0" data-max="5" data-step="1" data-size="sm"><hr/>
+				<textarea id="input-7-sms"  class="form-control" rows="10" style="max-width: 500px;max-height: 200px;"></textarea>
+				<button type="button" id="starSubmit" class="btn btn-info btn-sm" style="margin-top: 10px;margin-left: 220px">提交</button>   
+			</div>
+		</div>
+		<div id="ts" class="container ml-r-30">
+			<div class="jumbotron" style="width: 100%;height: 400px;">
+				<h1>温馨提示</h1>
+				<p>该栏目官方暂时还未开放，请耐心等待</p>
+			</div>
+		</div>
+		<!-- 描述：尾部 -->
+		<div class="footer">
+			<div class="container">
+				<p class="text-muted">微识官方提供</p>
+			</div>
+		</div>
+		<script id="select-ol" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li>
+				<a style="width: 200px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" href="javascript:;" rowId="{{id}}" title="{{name}}" class="rowLi">{{name}}<span style="float: right;font-size: 13px;color: limegreen;"></br>{{#comparestar star}}{{/comparestar}}</span></a>
+			</li>
+		{{/each}}
+		</script>
+		<script id="evaluate" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li class="list-group-item">
+				<div>
+					<a href="javascript:;" class="list-group-item">
+						<div>
+							 <img src="{{#compareImg headpiont}}{{/compareImg}}" class="img-circle" style="width: 45px;height: 45px;position: absolute;"/>
+						</div>
+						<h4 class="list-group-item-heading" style="width: 80%;margin-left: 50px">
+						{{username}}
+						</h4>
+						<p class="list-group-item-text" style="width: 80%;margin-left: 50px">
+						{{evaluate_content}}
+						</p>
+						<span style="margin-top: -40px;float: right;font-size: 10px;color: cadetblue;">{{#compareTime evaluate_time}}{{/compareTime}}</span>
+						<span class="badge" style="margin-top: -20px;float: right;cursor:pointer;margin-right:0px">回复</span>
+						<div class="con-panel-body panel-body" style="display:none">
+							<label class="control-label">回复</label>
+							<textarea class="form-control" rows="10" style="max-width: 300px;max-height: 150px;"></textarea>
+							<button type="button" option="{{evaluate_parent_id}}" class="btn btn-info btn-sm sqevaluateReply" style="margin-top: 10px;">收起</button>   
+							<button type="button" option="{{id}}" class="btn btn-info btn-sm sqevaluateReplysubmit" style="margin-top: 10px;margin-left: 220px">提交</button>   
+						</div>
+						<div class="fn-clear"></div>
+					</a>
+				</div>
+			</li>
+			{{#each evaluateReply}}
+				<li class="list-group-item">
+					<div>
+						<a href="javascript:;" class="list-group-item" style="margin-left: 45px">
+							<div>
+								 <img src="{{#compareImg headpiont}}{{/compareImg}}" class="img-circle" style="width: 45px;height: 45px;position: absolute;"/>
+							</div>
+							<h4 class="list-group-item-heading" style="width: 80%;margin-left: 50px">
+							{{username}}
+							</h4>
+							<p class="list-group-item-text" style="width: 80%;margin-left: 50px">
+							{{evaluate_content}}
+							</p>
+							<span style="margin-top: -40px;float: right;font-size: 10px;color: cadetblue;">{{#compareTime evaluate_time}}{{/compareTime}}</span>
+							<span class="badge" style="margin-top: -20px;float: right;cursor:pointer;margin-right:0px">回复</span>
+							<div class="con-panel-body panel-body" style="display:none">
+								<label class="control-label">回复</label>
+								<textarea class="form-control" rows="10" style="max-width: 300px;max-height: 150px;"></textarea>
+								<button type="button" option="{{evaluate_parent_id}}" class="btn btn-info btn-sm sqevaluateReply" style="margin-top: 10px;">收起</button>   
+								<button type="button" option="{{evaluate_parent_id}}" class="btn btn-info btn-sm sqevaluateReplysubmit" style="margin-top: 10px;margin-left: 220px">提交</button>   
+							</div>
+							<div class="fn-clear"></div>
+						</a>
+					</div>
+				</li>
+			{{/each}}
+		{{/each}}
+		</script>
+		<script type="text/javascript" src="../../../js/jquery.js"></script>
+		<script src="../../../js/autoHeight.js"></script>
+		<script src="../../../js/bootstrap/qiao.js"></script>
+		<script src="../../../js/bootstrap/bootstrap-star/js/star-rating.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+		<!--[if lt IE 9]>
+			<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+		<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+		
+		<script type="text/javascript" src="../../js/util/main.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/login.js"></script>
+		<script src="../../js/util/handlebars-v4.0.5.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/content.js"></script>
+	</body>
+</html>

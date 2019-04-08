@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyOptionsMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.TsyOptions" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="option_name" property="optionName" jdbcType="VARCHAR" />
+    <result column="option_path" property="optionPath" jdbcType="VARCHAR" />
+    <result column="option_type" property="optionType" jdbcType="VARCHAR" />
+    <result column="option_size" property="optionSize" jdbcType="BIGINT" />
+    <result column="option_size_unit" property="optionSizeUnit" jdbcType="VARCHAR" />
+    <result column="option_remarks" property="optionRemarks" jdbcType="VARCHAR" />
+    <result column="option_state" property="optionState" jdbcType="INTEGER" />
+    <result column="option_pic_path" property="optionPicPath" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, option_name, option_path, option_type, option_size, option_size_unit, option_remarks, 
+    option_state, option_pic_path, user_id
+  </sql>
+  
+  <select id="queryOptionsList" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		a.id,
+		a.option_name,
+		a.option_pic_path,
+		a.option_size,
+		a.option_type
+	FROM
+		tsy_options a
+	WHERE
+		a.user_id = #{userId}
+		and a.option_state = '1'
+		order by id desc
+  </select>
+  
+  <select id="selectByPrimaryKey" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from tsy_options
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from tsy_options
+    where id = #{id}
+  </delete>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map" >
+    insert into tsy_options
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="optionName != null" >
+        option_name,
+      </if>
+      <if test="optionPath != null" >
+        option_path,
+      </if>
+      <if test="optionType != null" >
+        option_type,
+      </if>
+      <if test="optionSize != null" >
+        option_size,
+      </if>
+      <if test="optionSizeUnit != null" >
+        option_size_unit,
+      </if>
+      <if test="optionRemarks != null" >
+        option_remarks,
+      </if>
+      <if test="optionState != null" >
+        option_state,
+      </if>
+      <if test="optionPicPath != null" >
+        option_pic_path,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="optionTime != null" >
+        option_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="optionName != null" >
+        #{optionName},
+      </if>
+      <if test="optionPath != null" >
+        #{optionPath},
+      </if>
+      <if test="optionType != null" >
+        #{optionType},
+      </if>
+      <if test="optionSize != null" >
+        #{optionSize},
+      </if>
+      <if test="optionSizeUnit != null" >
+        #{optionSizeUnit},
+      </if>
+      <if test="optionRemarks != null" >
+        #{optionRemarks},
+      </if>
+      <if test="optionState != null" >
+        #{optionState},
+      </if>
+      <if test="optionPicPath != null" >
+        #{optionPicPath},
+      </if>
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="optionTime != null" >
+        #{optionTime},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    update tsy_options
+    <set >
+      <if test="optionName != null" >
+        option_name = #{optionName},
+      </if>
+      <if test="optionPath != null" >
+        option_path = #{optionPath},
+      </if>
+      <if test="optionType != null" >
+        option_type = #{optionType},
+      </if>
+      <if test="optionSize != null" >
+        option_size = #{optionSize},
+      </if>
+      <if test="optionSizeUnit != null" >
+        option_size_unit = #{optionSizeUnit},
+      </if>
+      <if test="optionRemarks != null" >
+        option_remarks = #{optionRemarks},
+      </if>
+      <if test="optionState != null" >
+        option_state = #{optionState},
+      </if>
+      <if test="optionPicPath != null" >
+        option_pic_path = #{optionPicPath},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java.util.Map" >
+    update tsy_options
+    set option_name = #{optionName},
+      option_path = #{optionPath},
+      option_type = #{optionType},
+      option_size = #{optionSize},
+      option_size_unit = #{optionSizeUnit},
+      option_remarks = #{optionRemarks},
+      option_state = #{optionState},
+      option_pic_path = #{optionPicPath},
+      user_id = #{userId}
+    where id = #{id}
+  </update>
+</mapper>

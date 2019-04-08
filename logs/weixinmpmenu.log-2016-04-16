@@ -1,0 +1,3 @@
+[ERROR] 2016-04-16 19:22:33,215      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:48001 errmsg:api unauthorized hint: [QXPDjA0084vr22]
+  [INFO ] 2016-04-16 19:22:33,219     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：48001
+  

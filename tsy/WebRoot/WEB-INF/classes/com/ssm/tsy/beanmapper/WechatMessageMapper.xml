@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.WechatMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.WechatMessage" >
+    <id column="wechat_message_id" property="wechatMessageId" jdbcType="INTEGER" />
+    <result column="wechat_message_from_user" property="wechatMessageFromUser" jdbcType="VARCHAR" />
+    <result column="wechat_message" property="wechatMessage" jdbcType="VARCHAR" />
+    <result column="wechat_message_time" property="wechatMessageTime" jdbcType="TIMESTAMP" />
+    <result column="wechat_message_res" property="wechatMessageRes" jdbcType="INTEGER" />
+    <result column="wechat_message_res_time" property="wechatMessageResTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wechat_message_id, wechat_message_from_user, wechat_message, wechat_message_time, 
+    wechat_message_res, wechat_message_res_time
+  </sql>
+  <select id="selectByPrimaryKey" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from wechat_message
+    where wechat_message_id = #{wechatMessageId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectWechatMessage" resultType="java.util.Map">
+	  SELECT
+			a.wechat_message_id,
+			a.wechat_message,
+			a.wechat_message_from_user,
+			a.wechat_message_res,
+			a.wechat_message_time,
+			b.frozen,
+			b.nickname
+		FROM
+			wechat_message a,
+			wechat_user b
+		WHERE a.wechat_message_from_user = b.openid
+		<if test="wechatMessageFromUser != null and wechatMessageFromUser != ''" >
+			AND a.wechat_message_from_user = #{wechatMessageFromUser}
+		</if>
+		order by wechat_message_time desc;
+	</select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from wechat_message
+    where wechat_message_id = #{wechatMessageId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="java.util.Map" >
+    insert into wechat_message (wechat_message_id, wechat_message_from_user, 
+      wechat_message, wechat_message_time, wechat_message_res, 
+      wechat_message_res_time)
+    values (#{wechatMessageId,jdbcType=INTEGER}, #{wechatMessageFromUser,jdbcType=VARCHAR}, 
+      #{wechatMessage,jdbcType=VARCHAR}, #{wechatMessageTime,jdbcType=TIMESTAMP}, #{wechatMessageRes,jdbcType=INTEGER}, 
+      #{wechatMessageResTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="wechat_message_id" parameterType="java.util.Map" >
+    insert into wechat_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wechatMessageId != null" >
+        wechat_message_id,
+      </if>
+      <if test="wechatMessageFromUser != null" >
+        wechat_message_from_user,
+      </if>
+      <if test="wechatMessage != null" >
+        wechat_message,
+      </if>
+      <if test="wechatMessageTime != null" >
+        wechat_message_time,
+      </if>
+      <if test="wechatMessageRes != null" >
+        wechat_message_res,
+      </if>
+      <if test="wechatMessageResTime != null" >
+        wechat_message_res_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wechatMessageId != null" >
+        #{wechatMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="wechatMessageFromUser != null" >
+        #{wechatMessageFromUser,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatMessage != null" >
+        #{wechatMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatMessageTime != null" >
+        #{wechatMessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wechatMessageRes != null" >
+        #{wechatMessageRes,jdbcType=INTEGER},
+      </if>
+      <if test="wechatMessageResTime != null" >
+        #{wechatMessageResTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    update wechat_message
+    <set >
+      <if test="wechatMessageFromUser != null" >
+        wechat_message_from_user = #{wechatMessageFromUser},
+      </if>
+      <if test="wechatMessage != null" >
+        wechat_message = #{wechatMessage},
+      </if>
+      <if test="wechatMessageTime != null" >
+        wechat_message_time = #{wechatMessageTime},
+      </if>
+      <if test="wechatMessageRes != null" >
+        wechat_message_res = #{wechatMessageRes},
+      </if>
+      <if test="wechatMessageResTime != null" >
+        wechat_message_res_time = #{wechatMessageResTime},
+      </if>
+    </set>
+    where wechat_message_id = #{wechatMessageId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java.util.Map" >
+    update wechat_message
+    set wechat_message_from_user = #{wechatMessageFromUser,jdbcType=VARCHAR},
+      wechat_message = #{wechatMessage,jdbcType=VARCHAR},
+      wechat_message_time = #{wechatMessageTime,jdbcType=TIMESTAMP},
+      wechat_message_res = #{wechatMessageRes,jdbcType=INTEGER},
+      wechat_message_res_time = #{wechatMessageResTime,jdbcType=TIMESTAMP}
+    where wechat_message_id = #{wechatMessageId,jdbcType=INTEGER}
+  </update>
+</mapper>

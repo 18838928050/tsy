@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.LiebiaoDao">
+	<resultMap type="com.ssm.tsy.bean.Liebiao" id="Liebiao">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="name" property="name" jdbcType="VARCHAR"></id>
+		<id column="nameurl" property="nameurl" jdbcType="VARCHAR"></id>
+		<id column="nameicon" property="nameicon" jdbcType="VARCHAR"></id>
+		<id column="belongto" property="belongto" jdbcType="INTEGER"></id>
+		<id column="jibie" property="jibie" jdbcType="INTEGER"></id>
+	</resultMap>
+
+	<!-- 查询所有菜单 -->
+	<select id="SelectAll" resultType="com.ssm.tsy.bean.Liebiao">
+		select * from liebiao;
+	</select>
+
+	<!-- 根据名称查询菜单 -->
+	<select id="SelectAllByName" resultType="com.ssm.tsy.bean.Liebiao">
+		select * from liebiao
+		where name = #{name};
+	</select>
+
+	<!-- 根据条件查询菜单 -->
+	<select id="SelectAllByTiaojian" resultType="com.ssm.tsy.bean.Liebiao">
+		select * from
+		liebiao c
+		where 1 = 1
+		<if test="jibie!=0">and c.jibie = #{jibie}</if>
+		<if test="name != null and name != ''">and c.name like "%"#{name}"%"</if>
+		;
+	</select>
+
+	<!-- 只查询一级或二级菜单 -->
+	<select id="SelectAllByjibie" resultType="com.ssm.tsy.bean.Liebiao">
+		select * from liebiao
+		where jibie = #{jibie};
+	</select>
+
+	<!-- 根据id查询菜单列表 -->
+	<select id="SelectLiebiaoById" resultType="com.ssm.tsy.bean.Liebiao">
+		select * from liebiao
+		where id = #{id};
+	</select>
+
+	<!-- 根据一级菜单查询所有的二级菜单 -->
+	<select id="SelectAllBybolongto" resultType="com.ssm.tsy.bean.Liebiao">
+		select * from
+		liebiao
+		where belongto = #{bolongto} ORDER BY id;
+	</select>
+
+	<!-- 插入新菜单列表 -->
+	<insert id="add" parameterType="com.ssm.tsy.bean.Liebiao">
+		insert into liebiao
+		(belongto,jibie,name,nameicon,nameurl)
+		value(#{belongto},#{jibie},#{name},#{nameicon},#{nameurl});
+	</insert>
+
+	<!-- 修改列表菜单 -->
+	<update id="update" parameterType="com.ssm.tsy.bean.Liebiao">
+		update liebiao
+		<set>
+			<if test="belongto != null and belongto != ''">belongto = #{belongto},</if>
+			<if test="jibie != null and jibie != ''">jibie = #{jibie},</if>
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="nameicon != null and nameicon != ''">nameicon = #{nameicon},</if>
+			<if test="nameurl != null and nameurl != ''">nameurl = #{nameurl},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 删除列表菜单 -->
+	<delete id="delete" parameterType="Integer">
+		delete from liebiao where id =
+		#{id}
+	</delete>
+
+
+</mapper>          

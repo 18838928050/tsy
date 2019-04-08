@@ -1,0 +1,37 @@
+[INFO ] 2016-08-02 09:05:58,117     com.weixin.input.main.MenuManager     - 菜单创建成功！
+  [ERROR] 2016-08-02 10:57:56,011      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [5__2ta0114vr22]
+  [INFO ] 2016-08-02 10:57:56,013     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 10:58:32,749      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [2_aDoa0150vr20]
+  [INFO ] 2016-08-02 10:58:32,751     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 10:59:08,727      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [WsEj60186vr19]
+  [INFO ] 2016-08-02 10:59:08,729     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 10:59:28,580      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [IyXvNa0206vr20]
+  [INFO ] 2016-08-02 10:59:28,582     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 11:00:54,616      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [q_wEoa0292vr23]
+  [INFO ] 2016-08-02 11:00:54,661     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 11:01:24,817      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [8al8QA0322vr21]
+  [INFO ] 2016-08-02 11:01:24,819     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 11:01:40,279      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [z6NvCa0338vr20]
+  [INFO ] 2016-08-02 11:01:40,281     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [INFO ] 2016-08-02 11:02:43,718     com.weixin.input.main.MenuManager     - 菜单创建成功！
+  [ERROR] 2016-08-02 11:03:25,386      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [VAkFMa0443vr23]
+  [INFO ] 2016-08-02 11:03:25,388     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 11:03:41,676      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [S9B_Ea0459vr22]
+  [INFO ] 2016-08-02 11:03:41,678     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 11:03:52,402      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [_gPCAA0470vr22]
+  [INFO ] 2016-08-02 11:03:52,404     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 11:04:56,594      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40023 errmsg:invalid sub button size hint: [3kUPia0534vr20]
+  [INFO ] 2016-08-02 11:04:56,596     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40023
+  [ERROR] 2016-08-02 11:05:16,181      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40023 errmsg:invalid sub button size hint: [vMrVQa0554vr23]
+  [INFO ] 2016-08-02 11:05:16,183     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40023
+  [INFO ] 2016-08-02 11:05:41,718     com.weixin.input.main.MenuManager     - 菜单创建成功！
+  [ERROR] 2016-08-02 11:08:36,877      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40023 errmsg:invalid sub button size hint: [etsgVa0754vr19]
+  [INFO ] 2016-08-02 11:08:36,879     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40023
+  [INFO ] 2016-08-02 11:08:48,805     com.weixin.input.main.MenuManager     - 菜单创建成功！
+  [ERROR] 2016-08-02 11:09:14,936      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40016 errmsg:invalid button size hint: [P2E4.a0792vr22]
+  [INFO ] 2016-08-02 11:09:14,937     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40016
+  [ERROR] 2016-08-02 11:10:52,833      com.weixin.input.base.WeixinUtil     - 创建菜单失败 errcode:40023 errmsg:invalid sub button size hint: [2iBZua0890vr18]
+  [INFO ] 2016-08-02 11:10:52,835     com.weixin.input.main.MenuManager     - 菜单创建失败，错误码：40023
+  [INFO ] 2016-08-02 11:11:11,444     com.weixin.input.main.MenuManager     - 菜单创建成功！
+  [INFO ] 2016-08-02 11:11:30,756     com.weixin.input.main.MenuManager     - 菜单创建成功！
+  

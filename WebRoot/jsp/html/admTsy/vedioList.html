@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link rel="icon" href="../../../images/admTsy.png" type="image/x-icon" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel2.css" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<title>微识系统</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">切换导航</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+					<a class="navbar-brand" href="#">网页主题</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					
+				</div>
+			</div>
+		</nav>
+		
+		<div class="container ml-r-10">
+			<div class="suiyi2">
+				<div class="first">
+					<div class="all-content" style="border: 0px">
+						<div class="fn-clear"></div>
+						<div class="div-first" id="content" style="display: block;height: auto">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button id="loadmoreVedio" class="btn btn-info" style="text-align: center;margin-left: 940px">加载更多</button>  
+		
+		<!-- 描述：尾部 -->
+		<div class="footer">
+			<div class="container">
+				<p class="text-muted">微识官方提供</p>
+			</div>
+		</div>
+		
+		<script id="vedio-content" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<dl style="height: 240px;">
+				<dd style="border:1px solid rgba(167, 169, 168, 0.28);height:140px">
+					<img src="{{#vedioPic option_pic_path}}{{/vedioPic}}" title="{{option_title}}"/>
+				</dd>
+				<dt>
+					<p><a href="javascript:;" title="{{option_title}}" vedioId="{{id}}">标题：{{option_title}}</a></p>
+					<p>上传人：<span>{{#vedioUploadUser no}}{{/vedioUploadUser}}</span></p>
+					<p>上传日期：<span>{{#vadioUploadTime option_time}}{{/vadioUploadTime}}</span></p>
+				</dt>
+			</dl>
+		{{/each}}
+		</script>
+
+		<script type="text/javascript" src="../../../js/jquery.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+		<!--[if lt IE 9]>
+			<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script src="../../../js/bootstrap/qiao.js"></script>
+		<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+		
+		<script type="text/javascript" src="../../js/util/main.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/login.js"></script>
+		<script src="../../js/util/handlebars-v4.0.5.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/vedioList.js"></script>
+	</body>
+</html>

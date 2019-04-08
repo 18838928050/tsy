@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel2.css" />
+		<link href="../../../js/bootstrap/bootstrap-star/css/star-rating.min.css" rel="stylesheet">
+		<link rel="icon" href="../../../images/admTsy.png" type="image/x-icon" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/dashboard/dashboardindex.css" />
+		<title>微识系统</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">切换导航</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+					<a class="navbar-brand" href="#">网页主题</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					
+				</div>
+			</div>
+		</nav>
+		<!-- 描述：内容 -->
+		<div id="cont" class="panel panel-success ml-r-30" style="margin-left: 20%">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<font id="title">微识系统搜索</font>
+				</h3>
+			</div>
+			<div class="panel-body">
+				<ul style="width: 100%;height: 100%" id="rowIdUrl">
+					
+				</ul>
+			</div>
+		</div>
+		<!-- 描述：尾部 -->
+		<div class="footer">
+			<div class="container">
+				<p class="text-muted">微识官方提供</p>
+			</div>
+		</div>
+		
+		<script id="search-tab" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li style="width: 94%;height: 100px;margin-left: 3%;margin-top: 10px">
+				<div style="width: 100%;height: 100%;border: 1px solid #eee;border-radius:8px">
+					<div style="width: 40%;height: 100%;float: left;line-height: 100px;">
+						<font style="margin-left: 10px">{{#compareTitle searchTitle}}{{/compareTitle}}</font>
+					</div>
+					<div style="width: 40%;height: 100%;text-align: left;float: left;line-height: 100px;">
+						<font style="margin-left: 30px">{{#compareType searchType}}{{/compareType}}</font>
+					</div>
+					<div style="width: 20%;height: 100%;float: left;line-height: 100px;">
+						<input class="btn  btn-primary btn-block" type="button" rowId="{{searchId}}" searchFatherId="{{searchFatherId}}" searchToType="{{searchType}}" value="查看" style="margin-top: 30px;width: 60px;margin-left: 120px"/>
+					</div>
+				</div>
+			</li>
+		{{/each}}
+		<li style="width: 94%;height: 50px;margin-left: 3%;margin-top: 10px" id="moreLoad">
+			<div style="width: 100%;height: 100%;border: 1px solid #eee;border-radius:8px;text-align:center">
+				<input class="btn  btn-primary btn-block" id="loadMoreZl" type="button" value="加载更多" style="width:120px;margin-top:5px;margin-left:450px"/>
+			</div>
+		</li>
+		</script>
+		
+		<script type="text/javascript" src="../../../js/jquery.js"></script>
+		<script src="../../../js/autoHeight.js"></script>
+		<script src="../../../js/bootstrap/qiao.js"></script>
+		<script src="../../../js/bootstrap/bootstrap-star/js/star-rating.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+		<!--[if lt IE 9]>
+			<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+		<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+		
+		<script type="text/javascript" src="../../js/util/main.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/login.js"></script>
+		<script src="../../js/util/handlebars-v4.0.5.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/search.js"></script>
+	</body>
+</html>

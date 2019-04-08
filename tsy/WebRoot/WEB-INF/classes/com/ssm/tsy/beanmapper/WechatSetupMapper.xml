@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.WechatSetupMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.WechatSetup" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="setup_name" property="setupName" jdbcType="VARCHAR" />
+    <result column="setup_type" property="setupType" jdbcType="INTEGER" />
+    <result column="setup_state" property="setupState" jdbcType="INTEGER" />
+    <result column="appid" property="appid" jdbcType="INTEGER" />
+    <result column="setup_smart" property="setupSmart" jdbcType="VARCHAR" />
+    <result column="firstval" property="firstval" jdbcType="VARCHAR" />
+    <result column="secondval" property="secondval" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, setup_name, setup_type, setup_state, appid, setup_smart, firstval, secondval
+  </sql>
+  <select id="selectByPrimaryKey" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from wechat_setup
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryWechatSetupList" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		a.id,
+		a.setup_name,
+		a.setup_type,
+		a.setup_state
+	FROM
+		wechat_setup a,
+		user b
+	WHERE
+		b.appid = a.appid
+	AND b.id = #{userId}
+  </select>
+  <select id="queryWechatSetupListByAppId" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		a.id,
+		a.setup_name,
+		a.setup_type,
+		a.setup_state
+	FROM
+		wechat_setup a
+	WHERE
+		a.appid = #{appId}
+	and a.setup_type = #{setupType}
+  </select>
+  
+  <update id="updateWechatSetupList" parameterType="java.util.Map" >
+    update wechat_setup
+    <set >
+      <if test="setupState != null" >
+        setup_state = #{setupState},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from wechat_setup
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="java.util.Map" >
+    insert into wechat_setup (id, setup_name, setup_type, 
+      setup_state, appid, setup_smart, 
+      firstval, secondval)
+    values (#{id,jdbcType=INTEGER}, #{setupName,jdbcType=VARCHAR}, #{setupType,jdbcType=INTEGER}, 
+      #{setupState,jdbcType=INTEGER}, #{appid,jdbcType=INTEGER}, #{setupSmart,jdbcType=VARCHAR}, 
+      #{firstval,jdbcType=VARCHAR}, #{secondval,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="java.util.Map" >
+    insert into wechat_setup
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="setupName != null" >
+        setup_name,
+      </if>
+      <if test="setupType != null" >
+        setup_type,
+      </if>
+      <if test="setupState != null" >
+        setup_state,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="setupSmart != null" >
+        setup_smart,
+      </if>
+      <if test="firstval != null" >
+        firstval,
+      </if>
+      <if test="secondval != null" >
+        secondval,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="setupName != null" >
+        #{setupName,jdbcType=VARCHAR},
+      </if>
+      <if test="setupType != null" >
+        #{setupType,jdbcType=INTEGER},
+      </if>
+      <if test="setupState != null" >
+        #{setupState,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="setupSmart != null" >
+        #{setupSmart,jdbcType=VARCHAR},
+      </if>
+      <if test="firstval != null" >
+        #{firstval,jdbcType=VARCHAR},
+      </if>
+      <if test="secondval != null" >
+        #{secondval,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    update wechat_setup
+    <set >
+      <if test="setupName != null" >
+        setup_name = #{setupName,jdbcType=VARCHAR},
+      </if>
+      <if test="setupType != null" >
+        setup_type = #{setupType,jdbcType=INTEGER},
+      </if>
+      <if test="setupState != null" >
+        setup_state = #{setupState,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="setupSmart != null" >
+        setup_smart = #{setupSmart,jdbcType=VARCHAR},
+      </if>
+      <if test="firstval != null" >
+        firstval = #{firstval,jdbcType=VARCHAR},
+      </if>
+      <if test="secondval != null" >
+        secondval = #{secondval,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java.util.Map" >
+    update wechat_setup
+    set setup_name = #{setupName,jdbcType=VARCHAR},
+      setup_type = #{setupType,jdbcType=INTEGER},
+      setup_state = #{setupState,jdbcType=INTEGER},
+      appid = #{appid,jdbcType=INTEGER},
+      setup_smart = #{setupSmart,jdbcType=VARCHAR},
+      firstval = #{firstval,jdbcType=VARCHAR},
+      secondval = #{secondval,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

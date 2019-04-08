@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.UserLiebiaoDao">
+	<resultMap type="com.ssm.tsy.bean.User_Liebiao" id="User_Liebiao">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="liebiaoid" property="liebiaoid" jdbcType="INTEGER"></id>
+		<id column="userid" property="userid" jdbcType="INTEGER"></id>
+	</resultMap>
+
+	<!-- 根据用户userid查询用户拥有的所有菜单 -->
+	<select id="SelectAll" resultType="com.ssm.tsy.bean.User_Liebiao">
+		select * from user_liebiao
+		where userid = #{userid} ORDER BY liebiaoid;
+	</select>
+
+	<!-- 查询菜单权限 -->
+	<select id="SelectItemForBean" resultType="com.ssm.tsy.bean.User_Liebiao">
+		select * from
+		user_liebiao
+		where userid = #{userid} and liebiaoid=#{liebiaoid} ORDER
+		BY id;
+	</select>
+
+	<!-- 插入新菜单列表权限 -->
+	<insert id="add" parameterType="com.ssm.tsy.bean.User_Liebiao">
+		insert into user_liebiao
+		(userid,liebiaoid)
+		value(#{userid},#{liebiaoid});
+	</insert>
+
+	<!-- 查看用户是否已经拥有该权限 -->
+	<select id="SelectItem" parameterType="com.ssm.tsy.bean.User_Liebiao"
+		resultType="int">
+		select count(*) from user_liebiao where liebiaoid
+		=
+		#{liebiaoid} and userid = #{userid};
+	</select>
+
+	<!-- 查看该菜单是否有人在使用 -->
+	<select id="SelectItembyliebiaoid" parameterType="com.ssm.tsy.bean.User_Liebiao"
+		resultType="int">
+		select count(*) from user_liebiao where liebiaoid
+		=#{id};
+	</select>
+
+	<!-- 移除列表菜单权限 -->
+	<delete id="delete" parameterType="Integer">
+		delete from user_liebiao where
+		id = #{id}
+	</delete>
+
+</mapper>          

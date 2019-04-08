@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyScillorPicDao" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.TsyScillorPic" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="scollor_pic_name" property="scollorPicName" jdbcType="VARCHAR" />
+    <result column="scollor_pic_path" property="scollorPicPath" jdbcType="VARCHAR" />
+    <result column="scollor_pic_data" property="scollorPicData" jdbcType="VARCHAR" />
+    <result column="scollor_pic_userid" property="scollorPicUserid" jdbcType="INTEGER" />
+    <result column="scollor_pic_display" property="scollorPicDisplay" jdbcType="INTEGER" />
+    <result column="scollor_pic_fb" property="scollorPicFb" jdbcType="INTEGER" />
+    <result column="scollor_pic_introduce" property="scollorPicIntroduce" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ssm.tsy.bean.TsyScillorPic" extends="BaseResultMap" >
+    <result column="scollor_pic_content" property="scollorPicContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, scollor_pic_name, scollor_pic_path, scollor_pic_data, scollor_pic_userid, scollor_pic_display, 
+    scollor_pic_introduce,scollor_pic_fb
+  </sql>
+  <sql id="Blob_Column_List" >
+    scollor_pic_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tsy_scollor_pic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryTsyScillorItemsByIdToTen" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		id,
+		scollor_pic_name 'name',
+		scollor_pic_data
+	FROM
+		tsy_scollor_pic
+	WHERE
+		scollor_pic_fb = #{scollorPicFb}
+	ORDER BY
+		scollor_pic_data DESC
+	LIMIT #{top},#{limit};
+  </select>
+  
+  <select id="queryTsyScillorItemsAll" resultType="java.util.Map" parameterType="java.util.Map">
+    select 
+    id,
+	scollor_pic_name 'name',
+	scollor_pic_data 'data'
+    from 
+    tsy_scollor_pic 
+    where 1=1
+    AND scollor_pic_fb = #{scollorPicFb}
+    ORDER BY
+		scollor_pic_data DESC
+  </select>
+  
+  <select id="queryTsyScillorItemsContentById" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		id,
+		scollor_pic_name 'name',
+		scollor_pic_data 'data',
+		scollor_pic_content 'content',
+		scollor_pic_path 'picPath',
+		scollor_pic_ydl 'ydl'
+	FROM
+		tsy_scollor_pic
+	WHERE
+		scollor_pic_fb = #{scollorPicFb}
+	AND id = #{id};
+  </select>
+  
+  <select id="queryTsyScillorlist" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		scollor_pic_name,
+		scollor_pic_path,
+		scollor_pic_introduce,
+		id
+	FROM
+		tsy_scollor_pic
+	WHERE
+		scollor_pic_display = #{scollorPicDisplay}
+	AND scollor_pic_fb = #{scollorPicFb};
+  </select>
+  
+  <update id="updateTsyScillorYdl" parameterType="java.util.Map" >
+    update tsy_scollor_pic
+    <set >
+      <if test="ydl != null" >
+        scollor_pic_ydl = #{ydl},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <select id="queryTsyScillorTablelist" resultType="java.util.Map" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from tsy_scollor_pic where 1=1
+    <if test="display != null and display !='-1' and display != ''" >
+        and scollor_pic_display = #{display}
+    </if>
+    <if test="name != null and name != ''" >
+        and scollor_pic_name = #{name}
+    </if>
+  </select>
+  
+  <select id="SelectAll" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    from tsy_scollor_pic
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tsy_scollor_pic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.tsy.bean.TsyScillorPic" >
+    insert into tsy_scollor_pic (id, scollor_pic_name, scollor_pic_path, 
+      scollor_pic_data, scollor_pic_userid, scollor_pic_display, 
+      scollor_pic_introduce, scollor_pic_content
+      )
+    values (#{id,jdbcType=INTEGER}, #{scollorPicName,jdbcType=VARCHAR}, #{scollorPicPath,jdbcType=VARCHAR}, 
+      #{scollorPicData,jdbcType=VARCHAR}, #{scollorPicUserid,jdbcType=INTEGER}, #{scollorPicDisplay,jdbcType=INTEGER}, 
+      #{scollorPicIntroduce,jdbcType=VARCHAR}, #{scollorPicContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.tsy.bean.TsyScillorPic" >
+    insert into tsy_scollor_pic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="scollorPicName != null" >
+        scollor_pic_name,
+      </if>
+      <if test="scollorPicPath != null" >
+        scollor_pic_path,
+      </if>
+      <if test="scollorPicData != null" >
+        scollor_pic_data,
+      </if>
+      <if test="scollorPicUserid != null" >
+        scollor_pic_userid,
+      </if>
+      <if test="scollorPicDisplay != null" >
+        scollor_pic_display,
+      </if>
+      <if test="scollorPicIntroduce != null" >
+        scollor_pic_introduce,
+      </if>
+      <if test="scollorPicContent != null" >
+        scollor_pic_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="scollorPicName != null" >
+        #{scollorPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="scollorPicPath != null" >
+        #{scollorPicPath,jdbcType=VARCHAR},
+      </if>
+      <if test="scollorPicData != null" >
+        #{scollorPicData,jdbcType=VARCHAR},
+      </if>
+      <if test="scollorPicUserid != null" >
+        #{scollorPicUserid,jdbcType=INTEGER},
+      </if>
+      <if test="scollorPicDisplay != null" >
+        #{scollorPicDisplay,jdbcType=INTEGER},
+      </if>
+      <if test="scollorPicIntroduce != null" >
+        #{scollorPicIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="scollorPicContent != null" >
+        #{scollorPicContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <update id="updateTsyScillorPicFb" parameterType="java.util.Map" >
+    update tsy_scollor_pic
+    <set >
+      <if test="scollorPicName != null" >
+        scollor_pic_name = #{scollorPicName},
+      </if>
+      <if test="scollorPicPath != null" >
+        scollor_pic_path = #{scollorPicPath},
+      </if>
+      <if test="scollorPicData != null" >
+        scollor_pic_data = #{scollorPicData},
+      </if>
+      <if test="scollorPicUserid != null" >
+        scollor_pic_userid = #{scollorPicUserid},
+      </if>
+      <if test="scollorPicDisplay != null" >
+        scollor_pic_display = #{scollorPicDisplay},
+      </if>
+      <if test="scollorPicIntroduce != null" >
+        scollor_pic_introduce = #{scollorPicIntroduce},
+      </if>
+      <if test="scollorPicContent != null" >
+        scollor_pic_content = #{scollorPicContent},
+      </if>
+      <if test="scollorPicFb != null" >
+        scollor_pic_fb = #{scollorPicFb},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.tsy.bean.TsyScillorPic" >
+    update tsy_scollor_pic
+    <set >
+      <if test="scollorPicName != null" >
+        scollor_pic_name = #{scollorPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="scollorPicPath != null" >
+        scollor_pic_path = #{scollorPicPath,jdbcType=VARCHAR},
+      </if>
+      <if test="scollorPicData != null" >
+        scollor_pic_data = #{scollorPicData,jdbcType=VARCHAR},
+      </if>
+      <if test="scollorPicUserid != null" >
+        scollor_pic_userid = #{scollorPicUserid,jdbcType=INTEGER},
+      </if>
+      <if test="scollorPicDisplay != null" >
+        scollor_pic_display = #{scollorPicDisplay,jdbcType=INTEGER},
+      </if>
+      <if test="scollorPicIntroduce != null" >
+        scollor_pic_introduce = #{scollorPicIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="scollorPicContent != null" >
+        scollor_pic_content = #{scollorPicContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ssm.tsy.bean.TsyScillorPic" >
+    update tsy_scollor_pic
+    set scollor_pic_name = #{scollorPicName,jdbcType=VARCHAR},
+      scollor_pic_path = #{scollorPicPath,jdbcType=VARCHAR},
+      scollor_pic_data = #{scollorPicData,jdbcType=VARCHAR},
+      scollor_pic_userid = #{scollorPicUserid,jdbcType=INTEGER},
+      scollor_pic_display = #{scollorPicDisplay,jdbcType=INTEGER},
+      scollor_pic_introduce = #{scollorPicIntroduce,jdbcType=VARCHAR},
+      scollor_pic_content = #{scollorPicContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.tsy.bean.TsyScillorPic" >
+    update tsy_scollor_pic
+    set scollor_pic_name = #{scollorPicName,jdbcType=VARCHAR},
+      scollor_pic_path = #{scollorPicPath,jdbcType=VARCHAR},
+      scollor_pic_data = #{scollorPicData,jdbcType=VARCHAR},
+      scollor_pic_userid = #{scollorPicUserid,jdbcType=INTEGER},
+      scollor_pic_display = #{scollorPicDisplay,jdbcType=INTEGER},
+      scollor_pic_introduce = #{scollorPicIntroduce,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

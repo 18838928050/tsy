@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link rel="icon" href="../../../images/admTsy.png" type="image/x-icon" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel2.css" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<link href="../../../js/jPlayer-2.9.2/dist/skin/blue.monday/css/jplayer.blue.monday.min.css" rel="stylesheet" type="text/css" />
+		<title>微识系统</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">切换导航</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+					<a class="navbar-brand" href="#">网页主题</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					
+				</div>
+			</div>
+		</nav>
+		<!-- 描述：视频 -->
+		<div id="jp_container_1" class="jp-video jp-video-270p" role="application" aria-label="media player">
+			<div class="jp-type-playlist audio-po">
+				<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+				<div class="jp-gui">
+					<div class="jp-video-play">
+						<button class="jp-video-play-icon" role="button" tabindex="0">play</button>
+					</div>
+					<div class="jp-interface">
+						<div class="jp-progress">
+							<div class="jp-seek-bar">
+								<div class="jp-play-bar"></div>
+							</div>
+						</div>
+						<div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+						<div class="xg">|</div>
+						<div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+						<div class="jp-controls-holder">
+							<div class="jp-controls">
+								<button class="jp-previous" role="button" tabindex="0">上一部</button>
+								<button class="jp-play" role="button" tabindex="0">播放</button>
+								<button class="jp-next" role="button" tabindex="0">下一部</button>
+								<button class="jp-stop" role="button" tabindex="0">暂停</button>
+							</div>
+							<div class="jp-volume-controls">
+								<button class="jp-mute" role="button" tabindex="0">mute</button>
+								<button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+								<div class="jp-volume-bar">
+									<div class="jp-volume-bar-value"></div>
+								</div>
+							</div>
+							<div class="jp-toggles">
+								<button class="jp-repeat" role="button" tabindex="0">循环</button>
+								<button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
+								<button class="jp-full-screen" role="button" tabindex="0">full screen</button>
+							</div>
+						</div>
+						<div class="jp-details">
+							<div class="jp-title" aria-label="title">&nbsp;</div>
+						</div>
+					</div>
+				</div>
+				<div class="jp-no-solution">
+					<span>Update Required</span>
+					要播放媒体，您将需要更新您的浏览器到最近的版本或更新您的 <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash插件</a>.
+				</div>
+			</div>
+			<div class="jp-playlist">
+				<ul>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="video-container fn-text-overflow">
+			<div class="myVideo">
+				<div class="left" id="showmodel1">
+				</div>
+				<div class="right">
+					<h3 style="padding-left: 10px">最新视频</h3>
+					<ul class="vul-right" id="newRedio">
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="video-container fn-text-overflow">
+			<div class="myVideo">
+				<div class="left" id="showmodel2">
+				</div>
+				<div class="right">
+					<h3 style="padding-left: 10px">附件</h3>
+					<ul class="vul-right" id="Fj">
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 描述：尾部 -->
+		<div class="footer">
+			<div class="container">
+				<p class="text-muted">微识官方提供</p>
+			</div>
+		</div>
+		
+		<script id="select-Top" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li class="fn-text-overflow"><a href="javascript:;" rowId="{{id}}">{{#compareIndex @index option_title}}{{/compareIndex}}</a></li>
+		{{/each}}
+		</script>
+		
+		<script id="select-Fj" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li class="fn-text-overflow"><a title="文件类型：{{option_type}},文件大小：{{option_size}}" href="{{#compareUrl option_path}}{{/compareUrl}}" rowId="{{id}}" download="w3logo">{{option_name}}.{{option_type}}</a></li>
+		{{/each}}
+		</script>
+		
+		<script id="vedio-model" type="text/x-handlebars-template"> 
+		{{#each rows}}
+			<dl class="fn-clear">
+				<dd><img src="{{#vedioPic option_pic_path}}{{/vedioPic}}" title="{{option_title}}" style="width:100%;height:100%"/></dd>
+				<dt><a href="javascript:;" rowId="{{id}}" title="{{option_title}}">标题：{{option_title}}</a></dt>
+				<dt>上传人：<font style="color:red">{{#vedioUploadUser no}}{{/vedioUploadUser}}</font></dt>
+				<dt>上传日期：<font style="color:red">{{#vadioUploadTime option_time}}{{/vadioUploadTime}}</font></dt>
+			</dl>
+		{{/each}}
+		</script>
+
+		<script type="text/javascript" src="../../../js/jquery.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+		<!--[if lt IE 9]>
+			<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script src="../../../js/bootstrap/qiao.js"></script>
+		<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+		<script type="text/javascript" src="../../../js/jPlayer-2.9.2/dist/jplayer/jquery.jplayer.min.js"></script>
+		<script type="text/javascript" src="../../../js/jPlayer-2.9.2/dist/add-on/jplayer.playlist.min.js"></script>
+		
+		<script type="text/javascript" src="../../js/util/main.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/login.js"></script>
+		<script src="../../js/util/handlebars-v4.0.5.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/vedio.js"></script>
+	</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link rel="icon" href="../../../images/admTsy.png" type="image/x-icon" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel2.css" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<title>微识系统</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">切换导航</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+					<a class="navbar-brand" href="#">网页主题</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					
+				</div>
+			</div>
+		</nav>
+		<!-- 描述：滚动图片 -->
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators" id="scllorId">
+			</ol>
+			<div class="carousel-inner" id="scllor" role="listbox">
+			</div>
+			<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+		
+		<div class="container ml-r-10">
+			<div class="jumbotron" style="width: 100%;height: 500px;">
+				<h1>免费学习网</h1>
+				<p>你就是下一个程序猿或者程序媛</p>
+				<p>
+					<a class="btn btn-primary btn-lg" role="button"> 了解更多</a>
+				</p>
+			</div>
+			<div class="suiyi2">
+				<div class="first">
+					<div class="all-content" id="content">
+						<ul class="tab" id="vedioTab">
+							
+						</ul>
+						<div class="fn-clear"></div>
+					</div>
+				</div>
+				<div class="second">
+					<div class="left">
+						<ul class="left-ul" id="randVedio">
+						</ul>
+					</div>
+					<div class="right">
+						<h4>评分最高-文章</h4>
+						<ul class="list-one">
+							
+						</ul>
+					</div>
+				</div>
+				<div class="third">
+					
+				</div>
+			</div>
+		</div>
+		<div style="width: 100%;height: 50px"></div>
+		<!-- 描述：尾部 -->
+		<div class="footer">
+			<div class="container">
+				<p class="text-muted">微识官方提供</p>
+			</div>
+		</div>
+		
+		<script id="select-temp" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<div class="item {{#compare1 @index}}{{/compare1}}">
+				<img src="{{#compare2 scollor_pic_path}}{{/compare2}}" alt="Third slide">
+				<div class="container">
+					<div class="carousel-caption">
+						<h1>{{scollor_pic_name}}</h1>
+						<p>{{scollor_pic_introduce}}</p>
+						<p>
+							<a class="btn btn-lg btn-primary xiang-q" href="javaScript:;" role="button" Sc_id="scId{{id}}">详细了解</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		{{/each}}
+		</script>
+		
+		<script id="select-ol" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li data-target="#myCarousel" data-slide-to="{{#compare3 @index}}{{/compare3}}" {{#compare4 @index}}{{/compare4}}></li>
+		{{/each}}
+		</script>
+		
+		<script id="select-img" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<a href="javascript:;" title="{{mh_user_number}}" uId="{{id}}" style="width: 70px;height: 70px;position:absolute;"><img style="width: 70px;height: 70px;" class="img-circle" src="{{#conpareImg headpiont}}{{/conpareImg}}" /></a>
+		{{/each}}
+		</script>
+		
+		<script id="select-Top" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li class="fn-text-overflow"><a href="javaScript:;" title="{{name}}" rowId="{{id}}" fatherId="{{fatherid}}">{{#compareIndex @index name}}{{/compareIndex}}</a></li>
+		{{/each}}
+		</script>
+		
+		<script id="vedio-tab" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li class="{{#compareClass @index}}{{/compareClass}}">{{classTitle}}</li>
+		{{/each}}
+		<div class="last"></div>
+		</script>
+		
+		<script id="vedio-content" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<div class="{{#compareContentClass @index}}{{/compareContentClass}}" {{#compareShowClass @index}}{{/compareShowClass}}>
+				{{#each vedio}}
+					<dl>
+						<dd>
+							<img src="{{#vedioPic vedioPic}}{{/vedioPic}}" title="{{optionTitle}}" />
+						</dd>
+						<dt>
+							<p><a href="javascript:;" vedioId="{{optionId}}" title="{{optionTitle}}">标题：{{optionTitle}}</a></p>
+							<p>上传人：<span>{{#vedioUploadUser uploadUserNum}}{{/vedioUploadUser}}</span></p>
+							<p>上传日期：<span>{{#vadioUploadTime uploadTime}}{{/vadioUploadTime}}</span></p>
+						</dt>
+					</dl>
+				{{/each}}
+			</div>
+		{{/each}}
+		</script>
+		
+		<script id="vedio-rand" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<li class="{{#compareIndexVedio @index}}{{/compareIndexVedio}}">
+				<div class="sponsor" title="Click to flip">
+					<div class="sponsorFlip">
+						<img src="{{#compareImg option_pic_path}}{{/compareImg}}" />
+					</div>
+					<div class="sponsorData" style="width:100%;height:100%">
+						<div class="sponsorDescription">
+							<a>标题：{{option_title}}</a>
+						</div>
+						<div class="sponsorURL">
+							<a style="font-size:10px">创建人：{{#vedioUploadUser no}}{{/vedioUploadUser}}</a>
+							<br/><a style="font-size:10px">创建时间：{{#vadioUploadTime option_time}}{{/vadioUploadTime}}</a>
+						</div>
+					</div>
+				</div>
+			</li>
+		{{/each}}
+		<div class="last"></div>
+		</script>
+
+		<script type="text/javascript" src="../../../js/jquery.js"></script>
+		<script type="text/javascript" src="../../../js/jquery.flip.min.js"></script>
+		<!--[if lt IE 9]>
+			<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script src="../../../js/bootstrap/qiao.js"></script>
+		<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+		
+		<script type="text/javascript" src="../../js/util/main.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/login.js"></script>
+		<script src="../../js/util/handlebars-v4.0.5.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/index.js"></script>
+	</body>
+</html>

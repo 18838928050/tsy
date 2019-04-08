@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link rel="icon" href="../../../images/admTsy.png" type="image/x-icon" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet"/>
+		<title>微识系统</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">切换导航</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				    </button>
+					<a class="navbar-brand" href="#">网页主题</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					
+				</div>
+			</div>
+		</nav>
+		<div class="container ml-r-10">
+			<table class="staff">
+			 <thead>
+			 	<tr>
+			 		<td colspan="7">管理员角色信息表</td>
+			 		<td>
+			 			<button id="edit" type="button" class="btn btn-default">编辑</button>
+			 			<button id="cancle" type="button" class="btn btn-default">取消</button>
+			 			<button id="save" type="button" class="btn btn-default">保存</button>
+			 		</td>
+			 	</tr>
+			 </thead>
+			 <tbody id="mationTbody">
+			 	
+			 </tbody>
+			
+			</table>
+			 <!--  <div class="checkbox">
+			    <label>
+			      <input type="checkbox"> Check me out
+			    </label>
+			  </div> -->
+			  <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+		</div>
+		<!-- 描述：尾部 -->
+		<div class="footer">
+			<div class="container">
+				<p class="text-muted">微识官方提供</p>
+			</div>
+		</div>
+		
+		<script id="select-ol" type="text/x-handlebars-template"> 
+				<tr>
+			 		<td rowspan="7">&nbsp;个人信息&nbsp;</td>
+					<td>编号</td>
+					<td>
+						<div class="form-group">
+						   <label>{{bean.id}}</label>
+						</div>
+					</td>
+					<td>账号</td>
+					<td>
+						<div class="form-group">
+						   <label>{{bean.username}}</label>
+						</div>
+					</td>
+					<td>真实姓名</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{bean.realname}}</label>
+						   <input class="form-control" id="realname" value="{{bean.realname}}" placeholder="真实姓名" />
+						</div>
+					</td>
+					<td rowspan="3">&nbsp;上传照片&nbsp;</td>
+				</tr>
+				<tr>
+					<td>性别</td>
+					<td>
+						<div class="form-group">
+						    <label class="change">{{#compareSex bean.sex}}{{/compareSex}}</label>
+							<select id="sex">
+								<option value=""></option>								
+								<option value="1">男</option>
+								<option value="0">女</option>
+							</select>
+						</div>
+					</td>
+					<td>年龄</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{bean.age}}</label>
+						   <input class="form-control" id="age" value="{{bean.age}}" placeholder="年龄" />
+						</div>
+					</td>
+					<td>入职时间</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{bean.work_time}}</label>
+						   <input class="form-control" id="work_time" onClick="laydate()" readonly value="{{bean.work_time}}" placeholder="入职时间" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>出生日期</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{bean.csri}}</label>
+						   <input class="form-control" id="csri" value="{{bean.csri}}" onClick="laydate()" readonly placeholder="出生日期" />
+						</div>
+					</td>
+					<td>学历</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{bean.education}}</label>
+						   <input class="form-control" id="education" value="{{bean.education}}" placeholder="学历" />
+						</div>
+					</td>
+					<td>专业</td>
+					<td >
+						<div class="form-group">
+						   <label class="change">{{bean.major}}</label>
+						   <input class="form-control" id="major" value="{{bean.major}}" placeholder="专业" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>电子邮箱</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{bean.email}}</label>
+						   <input class="form-control" id="email" value="{{bean.email}}" placeholder="电子邮箱" />
+						</div>
+					</td>
+					<td>是否毕业</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{#compareSfby bean.whether_graduate}}{{/compareSfby}}</label>
+						   <select id="whether_graduate">
+								<option value=""></option>								
+								<option value="1">是</option>
+								<option value="0">否</option>
+							</select>
+						</div>
+					</td>
+					<td>毕业时间</td>
+					<td colspan="2">
+						<div class="form-group">
+						   <label class="change">{{bean.bysj}}</label>
+						   <input class="form-control" id="bysj" value="{{bean.bysj}}" onClick="laydate()" readonly placeholder="毕业时间" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>民族</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{bean.nation}}</label>
+						   <input class="form-control" id="nation" value="{{bean.nation}}" placeholder="民族" />
+						</div>
+					</td>
+					<td>政治面貌</td>
+					<td>
+						<div class="form-group">
+						   <label class="change">{{bean.political_landscape}}</label>
+						   <input class="form-control" id="political_landscape" value="{{bean.political_landscape}}" placeholder="政治面貌" />
+						</div>
+					</td>
+					<td>QQ</td>
+					<td colspan="2">
+						<div class="form-group">
+						   <label class="change">{{bean.qq}}</label>
+						   <input class="form-control" id="qq" value="{{bean.qq}}" placeholder="QQ" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>身份证号</td>
+					<td colspan="2">
+						<div class="form-group">
+						   <label class="change">{{bean.idcard}}</label>
+						   <input class="form-control" id="idcard" value="{{bean.idcard}}" placeholder="身份证号" />
+						</div>
+					</td>
+					<td>现居住地</td>
+					<td colspan="3">
+						<div class="form-group">
+						   <label class="change">{{bean.now_address}}</label>
+						   <input class="form-control" id="now_address" value="{{bean.now_address}}" placeholder="现居住地" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>户籍地址</td>
+					<td colspan="2">
+						<div class="form-group">
+						   <label class="change">{{bean.home_address}}</label>
+						   <input class="form-control" id="home_address" value="{{bean.home_address}}" placeholder="户籍地址" />
+						</div>
+					</td>
+					<td>工作地点</td>
+					<td colspan="3">
+						<div class="form-group">
+						   <label class="change">{{bean.work_address}}</label>
+						   <input class="form-control" id="work_address" value="{{bean.work_address}}" placeholder="工作地点" />
+						</div>
+					</td>
+				</tr>
+				<tr class="myinfo">
+					<td>个人简介</td>
+					<td colspan="7">
+						<div class="form-group">
+						   <label class="change">{{bean.message}}</label>
+						   <textarea class="form-control" id="message" cols="30" rows="10">{{bean.message}}</textarea>
+						</div>
+					</td>
+				</tr>
+		</script>
+
+		<script type="text/javascript" src="../../../js/jquery.js"></script>
+		<script src="../../../js/bootstrap/bootstrap-datetimepicker/laydate/laydate.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+		<!--[if lt IE 9]>
+			<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script src="../../../js/bootstrap/qiao.js"></script>
+		<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+		
+		<script type="text/javascript" src="../../js/util/main.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/login.js"></script>
+		<script src="../../js/util/handlebars-v4.0.5.js"></script>
+		<script type="text/javascript" src="../../js/admTsy/mation.js"></script>
+	</body>
+</html>

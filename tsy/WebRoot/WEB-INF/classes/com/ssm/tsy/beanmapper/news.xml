@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.NewsDao">
+	<resultMap type="com.ssm.tsy.bean.NewsBean" id="NewsBean">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="realtype" property="realtype" jdbcType="VARCHAR"></id>
+		<id column="title" property="title" jdbcType="VARCHAR"></id>
+		<id column="thumbnail_pic_s03" property="thumbnail_pic_s03" jdbcType="VARCHAR"></id>
+		<id column="uniquekey" property="uniquekey" jdbcType="VARCHAR"></id>
+		<id column="thumbnail_pic_s02" property="thumbnail_pic_s02" jdbcType="VARCHAR"></id>
+		<id column="author_name" property="author_name" jdbcType="VARCHAR"></id>
+		<id column="thumbnail_pic_s" property="thumbnail_pic_s" jdbcType="VARCHAR"></id>
+		<id column="type" property="type" jdbcType="VARCHAR"></id>
+		<id column="date" property="date" jdbcType="VARCHAR"></id>
+		<id column="url" property="url" jdbcType="VARCHAR"></id>
+		<id column="shifoufasong" property="shifoufasong" jdbcType="INTEGER"></id>
+		<id column="fasongdata" property="fasongdata" jdbcType="VARCHAR"></id>
+	</resultMap>
+
+	<!-- 查询所有的新闻列表 -->
+	<select id="SelectAll" resultType="com.ssm.tsy.bean.NewsBean">
+		select * from news ORDER BY id desc;
+	</select>
+	
+	<!-- 查询新闻分类 -->
+	<select id="queryRealType" resultType="java.util.Map">
+		SELECT
+			realtype
+		FROM
+			news
+		GROUP BY
+			realtype;
+	</select>
+	
+	<!-- 根据内容查找新闻列表 -->
+	<select id="queryMyList" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from news 
+		where 1=1
+		<if test="title != null and title != ''">
+			AND title like "%"#{title}"%"
+		</if>
+		<if test="realtype != null and realtype != ''">
+			AND realtype = #{realtype}
+		</if> ORDER BY id desc
+	</select>
+
+	<!-- 添加新的新闻 -->
+	<insert id="Add" parameterType="com.ssm.tsy.bean.NewsBean">
+		insert into news
+		(realtype,title,thumbnail_pic_s03,uniquekey,thumbnail_pic_s02,author_name,thumbnail_pic_s,type,date,url,shifoufasong,fasongdata)
+		value(#{realtype},#{title},#{thumbnail_pic_s03},#{uniquekey},#{thumbnail_pic_s02},#{author_name},#{thumbnail_pic_s},#{type},#{date},#{url},#{shifoufasong},#{fasongdata});
+	</insert>
+
+</mapper>          

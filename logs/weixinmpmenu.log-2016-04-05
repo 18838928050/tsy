@@ -1,0 +1,5 @@
+[INFO ] 2016-04-05 14:43:07,033 org.springframework.context.support.FileSystemXmlApplicationContext     - Refreshing org.springframework.context.support.FileSystemXmlApplicationContext@693a317a: display name [org.springframework.context.support.FileSystemXmlApplicationContext@693a317a]; startup date [Tue Apr 05 14:43:07 CST 2016]; root of context hierarchy
+  [INFO ] 2016-04-05 14:43:07,119 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from file [E:\MyeclipseWorkPase\testa\src\spring\resource\baidu.xml]
+  [INFO ] 2016-04-05 14:43:07,679 org.springframework.context.support.FileSystemXmlApplicationContext     - Bean factory for application context [org.springframework.context.support.FileSystemXmlApplicationContext@693a317a]: org.springframework.beans.factory.support.DefaultListableBeanFactory@6da28362
+  [INFO ] 2016-04-05 14:43:07,687 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@6da28362: defining beans [baidu]; root of factory hierarchy
+  

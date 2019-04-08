@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.WeChatKnowledgeDao">
+	<resultMap type="com.ssm.tsy.bean.WeChatKnowledge" id="WeChatKnowledge">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="name" property="name" jdbcType="VARCHAR"></id>
+		<id column="jieshao" property="jieshao" jdbcType="VARCHAR"></id>
+		<id column="jibie" property="jibie" jdbcType="INTEGER"></id>
+		<id column="content" property="content" jdbcType="VARCHAR"></id>
+		<id column="fatherid" property="fatherid" jdbcType="INTEGER"></id>
+		<id column="upordown" property="upordown" jdbcType="INTEGER"></id>
+	</resultMap>
+	
+	<select id="queryKnowledge" resultType="java.util.Map" parameterType="java.util.Map" >
+		SELECT
+			b.id,
+			b.`name`,
+			b.fatherid,
+			(
+				SELECT
+					avg(a.evaluate_start) star
+				FROM
+					tys_options_evaluate a
+				WHERE
+					a.evaluate_start != '0'
+				AND a.options_id = b.id
+			) star
+		FROM
+			wechatknowledge b
+		WHERE
+			fatherid = (
+				SELECT
+					c.id
+				FROM
+					wechatknowledge c
+				WHERE
+					c.upordown = #{upordown}
+				AND c.id = #{type}
+			);
+	</select>
+	
+	<select id="queryKnowledgeById" resultType="java.util.Map" parameterType="java.util.Map" >
+		SELECT
+			id,
+			content,
+			name
+		FROM
+			wechatknowledge
+		WHERE
+			id = #{id}
+	</select>
+
+	<!-- 根据id查询 -->
+	<select id="SelectById" resultType="com.ssm.tsy.bean.WeChatKnowledge">
+		select * from
+		WeChatKnowledge
+		where id = #{id};
+	</select>
+	
+	<!-- 根据fatherid查询 -->
+	<select id="SelectByFatherid" resultType="com.ssm.tsy.bean.WeChatKnowledge">
+		select * from
+		WeChatKnowledge
+		where fatherid = #{fatherid} ORDER BY id;
+	</select>
+
+	<!-- 查询所有一级知识列表 -->
+	<select id="SelectAllIsOne" resultType="com.ssm.tsy.bean.WeChatKnowledge">
+		select * from
+		WeChatKnowledge where jibie = 1;
+	</select>
+
+	<!-- 查询所有二级知识列表 -->
+	<select id="SelectAllIsTwo" resultType="com.ssm.tsy.bean.WeChatKnowledge">
+		select * from
+		WeChatKnowledge where jibie = 2;
+	</select>
+	
+	<!-- 查询目前上线的个数 -->
+	<select id="SelectUpSize" resultType="String">
+		select count(upordown) from WeChatKnowledge WHERE upordown=1 group by upordown;
+	</select>
+
+	<!-- 根据名称和所属一级只是列表查询 -->
+	<select id="SelectAllByNameAndFatherid" resultType="com.ssm.tsy.bean.WeChatKnowledge">
+		select * from
+		WeChatKnowledge
+		where name = #{param1} and fatherid = #{param2};
+	</select>
+
+	<!-- 插入新列表 -->
+	<insert id="add" parameterType="com.ssm.tsy.bean.WeChatKnowledge">
+		insert into WeChatKnowledge
+		(name,jieshao,jibie,content,fatherid,upordown)
+		value(#{name},#{jieshao},#{jibie},#{content},#{fatherid},#{upordown});
+	</insert>
+
+	<!-- 修改列表菜单 -->
+	<update id="update" parameterType="com.ssm.tsy.bean.WeChatKnowledge">
+		update WeChatKnowledge
+		<set>
+			<if test="name != null and name != ''">name = #{name},</if>
+			jieshao = #{jieshao},
+			<if test="jibie != null and jibie != ''">jibie = #{jibie},</if>
+			content = #{content},
+			<if test="fatherid != null and fatherid != ''">fatherid = #{fatherid},</if>
+			upordown = #{upordown}
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 删除列表菜单 -->
+	<delete id="delete" parameterType="Integer">
+		delete from WeChatKnowledge
+		where id =
+		#{id}
+	</delete>
+
+
+</mapper>          

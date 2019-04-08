@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.WeChatAPPDao">
+	<resultMap type="com.ssm.tsy.bean.WeChatAPP" id="wechatapp">
+		<id column="id" property="id" jdbcType="INTEGER"></id>
+		<id column="appid" property="appid" jdbcType="VARCHAR"></id>
+		<id column="appSecret" property="appSecret" jdbcType="VARCHAR"></id>
+		<id column="appclass" property="appclass" jdbcType="VARCHAR"></id>
+	</resultMap>
+
+	<!-- 查询微信安全码 -->
+	<select id="Select" resultType="com.ssm.tsy.bean.WeChatAPP">
+		select * from wechatapp where appclass = 1 and id = #{appId};
+	</select>
+	
+	<!-- 查询微信安全码 -->
+	<select id="SelectAll" resultType="com.ssm.tsy.bean.WeChatAPP">
+		select * from wechatapp where appclass = 1;
+	</select>
+
+	<!-- 插入微信安全码 -->
+	<insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="com.ssm.tsy.bean.WeChatAPP">
+		insert into wechatapp
+		(appid,appSecret,appclass)
+		value(#{appid},#{appSecret},'1');
+	</insert>
+
+	<!-- 修改微信安全码 -->
+	<update id="update" parameterType="com.ssm.tsy.bean.WeChatAPP">
+		update wechatapp
+		<set>
+			<if test="appid != null and appid != ''">appid = #{appid},</if>
+			<if test="appSecret != null and appSecret != ''">appSecret = #{appSecret},</if>
+			<if test="appclass != null and appclass != ''">appclass = #{appclass},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+</mapper>          

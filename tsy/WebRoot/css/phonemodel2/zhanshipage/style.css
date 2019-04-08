@@ -1,0 +1,93 @@
+li {
+	list-style-type: none;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+}
+
+.sq-head {
+	height: 50px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 100;
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+}
+
+.sq-head .am-icon-trash {
+	color: #999;
+}
+
+.sq-head .am-header-left a {
+	border: 1px solid #ddd;
+	color: #999;
+	padding: 0 8px;
+	height: 35px;
+	line-height: 35px;
+	border-radius: 8px;
+}
+
+.content-list {
+	border-top: 1px solid #ddd;
+	margin-top: -1px;
+	width: 100%;
+}
+
+.list-content {
+	position: relative;
+	overflow: hidden;
+}
+
+.list-left {
+	width: 30%;
+	position: fixed;
+	height: 90%;
+	top: 50px;
+	overflow: auto;
+	border-right: 1px solid #ddd;
+}
+
+.list-left li {
+	width: 100%;
+	font-size: 1.4rem;
+	height: 4rem;
+	line-height: 4rem;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	overflow: hidden;
+}
+
+.list-left li a {
+	color: #666;
+}
+
+.list-left .current {
+	border-left: 3px solid #39b867;
+}
+
+.list-left .current a {
+	color: #39b867;
+}
+
+.list-right {
+	float:right;
+	margin-left:30%;
+	width: 70%;
+	position: fixed;
+	height: 90%;
+	top: 50px;
+	overflow-y: auto;
+	border-right: 1px solid #ddd;
+}
+
+.list-pro li {
+	position: relative;
+	border-bottom: 1px solid #ddd;
+	margin: 0px 3%;
+	padding: 15px 0;
+}
+
+

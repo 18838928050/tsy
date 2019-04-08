@@ -1,0 +1,9 @@
+diff a/WebRoot/pclogin.jsp b/WebRoot/pclogin.jsp	(rejected hunks)
+@@ -35,6 +35,7 @@
+ <script>
+ 	function login() {
+ 		var no = $.trim($("#no").val());
++		//$.trim() 去掉空格
+ 		var password = $.trim($("#password").val());
+ 		$.ajax({
+ 			type : "post",

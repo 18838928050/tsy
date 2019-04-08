@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>微信公众号开发</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link href="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.css" rel="stylesheet" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+		<link href="../../../css/checkradio/magic-check.css" rel="stylesheet">
+	</head>
+<body>
+	<section class="rt_wrap content mCustomScrollbar">
+		<div class="rt_content">
+			<div class="page_title">
+				<h2 class="fl">投票内容</h2>
+			</div>
+			<div style="margin-top: 50px;">
+				<div style="width: 80%;margin-left: 15%">
+					<div style="height: 50px;width: 100%;">
+						<img alt="提示" src="../../../images/gantanhao.png" style="line-height: 50px;height: 32px"/>
+						<font style="font-size: 20px;line-height: 50px;">投票设置后，必须通过设置自定义菜单链接才可生效。投票将统计该投票在各个渠道的综合结果总和。</font>
+					</div>
+					<div class="div-H60"></div>
+					<div style="height: 50px;width: 100%;">
+						<font style="font-size: 15px;line-height: 50px;float: left;margin-left: 35px;">投票名称</font>
+						<input type="text" class="form-control" whethersave="0" placeholder="请输入名称" id="voteTitle" style="float: left;margin-left: 2%; margin-top: 9px;width: 73%"/>
+					</div>
+					<div style="height: 50px;width: 100%;">
+						<font style="font-size: 15px;line-height: 50px;float: left;margin-left: 35px;">投票权限</font>
+						<font style="font-size: 15px;line-height: 50px;float: left;margin-left: 2%;">所有人都可参与</font>
+					</div>
+					<div id="questionPanel" style="margin-left: 35px;width: 80%;">
+					
+					</div>
+					<button id="addQuestion" type="button" class="btn btn-default" style="margin-left: 35px;width: 80%;">+添加问题</button>
+					<button type="button" id="saveMessage" style="margin-top: 50px; float: left; position: absolute; margin-left: -33%;" class="btn btn-success">保存</button>
+					<div class="div-H60"></div>
+				</div>
+			</div>
+		</div>
+		<div class="div-H60"></div>
+	</section>
+	
+	<script id="select-temp" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				     <h3 class="panel-title">
+				     	<a href="javascript:;">问题{{#compareIndex @index}}{{/compareIndex}}</a>
+				     	<a style="float: right;color: blue;font-size: 15px;margin-right: 5px" href="javascript:;" class="Stop">收起</a>
+				     	<a style="float: right;color: blue;font-size: 15px;display:none;margin-right: 5px" href="javascript:;" class="stopedit">编辑</a>
+						{{#compareDelete @index id }}{{/compareDelete}}
+				     </h3>
+				</div>
+			   	<div class="panel-body">
+			     	<ul class="list-group">
+			    		<li class="list-group-item" style="height: 50px">
+							<font style="font-size: 15px;float: left;margin-left: 35px;line-height: 30px;">标题</font>
+							<input type="text" whethersave="{{id}}" lx="questionName" class="form-control questionName" value="{{investigation_name}}" placeholder="请输入标题" style="float: left;margin-left: 2%;width: 73%;margin-top: -3px;"/>
+						</li>
+						<li class="list-group-item" style="height: 50px">
+							<font style="font-size: 15px;float: left;margin-left: 35px;line-height: 30px;">类型</font>
+							<div class="opt" style="width: 10%;float: left;margin-left: 22px;margin-top: 5px;">
+								<input class="magic-radio questionType" whethersave="{{#compareChoose id investigation_type}}{{/compareChoose}}" {{#compareChooseCheck id investigation_type 'danx'}}{{/compareChooseCheck}} lx="questionType" value="1" type="radio" name="radio{{#compareIndexSome @index}}{{/compareIndexSome}}" id="fr{{#compareIndexSome @index}}{{/compareIndexSome}}">
+								<label for="fr{{#compareIndexSome @index}}{{/compareIndexSome}}" style="font-size: 15px;">单选</label>
+							</div>
+							<div class="opt" style="width: 10%;float: left;margin-top: 5px;">
+								<input class="magic-radio questionType" whethersave="{{#compareChoose id investigation_type}}{{/compareChoose}}" {{#compareChooseCheck id investigation_type 'duox'}}{{/compareChooseCheck}} lx="questionType" value="2" type="radio" name="radio{{#compareIndexSome @index}}{{/compareIndexSome}}" id="fd{{#compareIndexSome @index}}{{/compareIndexSome}}">
+								<label for="fd{{#compareIndexSome @index}}{{/compareIndexSome}}" style="font-size: 15px;">多选</label>
+							</div>
+						</li>
+						{{#each options}}
+							<li class="list-group-item optionsItem" style="height: 50px">
+								<font style="font-size: 15px;float: left;margin-left: 35px;line-height: 30px;">选项{{#cpmpareOptionIndex @index}}{{/cpmpareOptionIndex}}</font>
+								<input type="text" whethersave="{{id}}" lx="questionOptions" class="form-control optionsName" value="{{tsy_investigation_option_name}}" placeholder="请输入选项" style="float: left;margin-left: 2%;width: 73%;margin-top: -3px;"/>
+							{{#optionDelete @index optionsSize}}
+							{{/optionDelete}}
+							</li>
+						{{/each}}
+						{{#eachSize options}}
+						{{/eachSize}}
+						<li class="list-group-item" style="height: 50px">
+							<a style="font-size: 13px;float: left;margin-left: 35px;line-height: 30px;color: blue;" class="addQuestionOptionsItem" href="javascript:;">添加选项</a>
+						</li>
+					</ul>
+			  	 </div>
+			</div> 
+		{{/each}}
+	</script>
+	
+	<script src="../../../js/jquery.js"></script>
+	<script src="../../../js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../../js/bootstrap/qiao.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-select/js/bootstrap-multiselect.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.js"></script>
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/locale/bootstrap-table-zh-CN.js"></script>
+	
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/investigationQuestion/addVote.js"></script>
+</body>
+</html>

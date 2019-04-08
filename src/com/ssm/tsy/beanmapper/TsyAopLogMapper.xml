@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyAopLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.tsy.bean.TsyAopLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="browse_data" property="browseData" jdbcType="VARCHAR" />
+    <result column="browse_ip" property="browseIp" jdbcType="VARCHAR" />
+    <result column="browse_num" property="browseNum" jdbcType="INTEGER" />
+    <result column="browse_num_success" property="browseNumSuccess" jdbcType="INTEGER" />
+    <result column="browse_place" property="browsePlace" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, browse_data, browse_ip, browse_num, browse_num_success, browse_place
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tsy_aop_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tsy_aop_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.tsy.bean.TsyAopLog" >
+    insert into tsy_aop_log (id, browse_data, browse_ip, 
+      browse_num, browse_num_success, browse_place
+      )
+    values (#{id,jdbcType=INTEGER}, #{browseData,jdbcType=VARCHAR}, #{browseIp,jdbcType=VARCHAR}, 
+      #{browseNum,jdbcType=INTEGER}, #{browseNumSuccess,jdbcType=INTEGER}, #{browsePlace,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.tsy.bean.TsyAopLog" >
+    insert into tsy_aop_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="browseData != null" >
+        browse_data,
+      </if>
+      <if test="browseIp != null" >
+        browse_ip,
+      </if>
+      <if test="browseNum != null" >
+        browse_num,
+      </if>
+      <if test="browseNumSuccess != null" >
+        browse_num_success,
+      </if>
+      <if test="browsePlace != null" >
+        browse_place,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="browseData != null" >
+        #{browseData,jdbcType=VARCHAR},
+      </if>
+      <if test="browseIp != null" >
+        #{browseIp,jdbcType=VARCHAR},
+      </if>
+      <if test="browseNum != null" >
+        #{browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="browseNumSuccess != null" >
+        #{browseNumSuccess,jdbcType=INTEGER},
+      </if>
+      <if test="browsePlace != null" >
+        #{browsePlace,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.tsy.bean.TsyAopLog" >
+    update tsy_aop_log
+    <set >
+      <if test="browseData != null" >
+        browse_data = #{browseData,jdbcType=VARCHAR},
+      </if>
+      <if test="browseIp != null" >
+        browse_ip = #{browseIp,jdbcType=VARCHAR},
+      </if>
+      <if test="browseNum != null" >
+        browse_num = #{browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="browseNumSuccess != null" >
+        browse_num_success = #{browseNumSuccess,jdbcType=INTEGER},
+      </if>
+      <if test="browsePlace != null" >
+        browse_place = #{browsePlace,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.tsy.bean.TsyAopLog" >
+    update tsy_aop_log
+    set browse_data = #{browseData,jdbcType=VARCHAR},
+      browse_ip = #{browseIp,jdbcType=VARCHAR},
+      browse_num = #{browseNum,jdbcType=INTEGER},
+      browse_num_success = #{browseNumSuccess,jdbcType=INTEGER},
+      browse_place = #{browsePlace,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

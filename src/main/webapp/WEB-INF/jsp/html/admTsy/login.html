@@ -1,0 +1,250 @@
+
+<style type="text/css">
+dl,dd,dt{margin:0;padding:0;}
+a{ text-decoration:none;}
+.floating_ck{position:fixed;right:10px;top:30%;}
+.floating_ck dl dd{position:relative;width:80px;height:80px;background-color:#646577;border-bottom:solid 1px #555666;text-align:center;background-repeat:no-repeat;background-position:center 20%;cursor:pointer;}
+.floating_ck dl dd:hover{background-color:#e40231;border-bottom:solid 1px #a40324;}
+.floating_ck dl dd:hover .floating_left{display:block;}
+.consult,.words{background-image:url(../../../images/icon0701/zxicon.png);}
+.quote{background-image:url(../../../images/icon0701/kficon.png);}
+.qrcord{background-image:url(../../../images/icon0701/erweima.png);}
+.return{background-image:url(../../../images/icon0701/fanhui.png);}
+.floating_ck dd span{color:#fff;display:block;padding-top:54px;}
+.floating_left{position:absolute;left:-160px;top:0px;width:160px;height:80px;background-color:#e40231;border-bottom:solid 1px #a40324;display:none;}
+.floating_left a{color:#fff;line-height:80px;}
+.floating_ewm{height:260px;top:-180px;}
+.floating_ewm i{background-image:url(../../../images/ewm.jpg);display:block;width:145px;height:145px;margin:auto;margin-top:7px;background-size:145px 145px;}
+.floating_ewm p{color:#fff;margin-top:5px;}
+.floating_ewm .qrcord_p01{font-size:12px;line-height:20px;}
+.floating_ewm .qrcord_p02{font-size:18px;}
+</style>
+<link rel="stylesheet" type="text/css" href="../../../js/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+<ul class="nav navbar-nav">
+	<li>
+		<a href="javascript:;" class="menuBar" id="menuzy">主页</a>
+	</li>
+	<li>
+		<a href="javascript:;" class="menuBar" id="menuabout">关于</a>
+	</li>
+	<li>
+		<a href="javascript:;" class="menuBar" id="menuvedio">视频</a>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">框架 <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuspring">Spring</a>
+			</li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuStruts">Struts 2.0</a>
+			</li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuHibernate">Hibernate</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuKjAll">整合框架</a>
+			</li>
+		</ul>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">前台 <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuhtml">HTML</a>
+			</li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuJavaScript">JavaScript</a>
+			</li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuCSS">CSS</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuJquery">Jquery</a>
+			</li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuBootStrap">BootStrap</a>
+			</li>
+		</ul>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">后台 <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="javascript:;" class="menuBar" id="menujava">Java</a>
+			</li>
+		</ul>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">微信专区 <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuRz">微信认证</a>
+			</li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuDt">微信动态</a>
+			</li>
+			<li>
+				<a href="javascript:;" class="menuBar" id="menuOther">微信其他</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+<form class="navbar-form navbar-left" role="search">
+	<div class="form-group">
+		<input type="text" class="form-control" id="searchContent" placeholder="Search">
+	</div>
+	<div class="btn-group-vertical">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      	搜索
+    	<span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+		<li><a href="javascript:" id="wechatSearch">微识系统搜索</a></li>
+		<li><a href="javascript:" id="netSearch">网络资源搜索</a></li>
+    </ul>
+  </div>
+
+</form>
+<ul class="nav navbar-nav navbar-right">
+	<li class="menulogin">
+		<a href="javascript:;" id="menulogin">登陆/注册</a>
+	</li>
+	<li style="margin-top: 10px;" class="menumation">
+		<img src="../../../images/icon/DefaultAvatar.jpg" alt="..." class="img-circle" style="width: 30px" />
+	</li>
+	<li class="dropdown menumation">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">个人信息 <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="javascript:;" id="menumation">我的资料</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="javascript:;" id="menuexit">退出</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="width: 100%;height: 50px">
+		    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		    	<h4 class="modal-title" id="myModalLabel">登陆/注册</h4>
+			</div>
+		    <div class="modal-body" style="width: 100%;height: 450px">
+		    	<ul id="myTab" class="nav nav-tabs">
+					<li class="active">
+						<a href="#Prv" data-toggle="tab">登陆</a>
+					</li>
+					<li>
+						<a href="#CPrv" data-toggle="tab">注册</a>
+					</li>
+				</ul>
+				<div id="myTabContent" class="tab-content">
+					<div class="tab-pane fade in active" id="Prv" style="margin-top: 20px">
+						<div class="panel-body">
+							<form name="LoginG" id="LoginG" action="Admin_ChkLogin_G.asp" method="post" target="_parent">
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon">账号</span>
+										<input id="Username" name="Username" type="text" class="form-control" placeholder="用户名">
+									</div><br />
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon">密码</span>
+										<input id="Password" name="Password" type="Password" class="form-control" placeholder="请输入密码">
+									</div>
+								</div>
+								<h5>请将如下计算结果填入文本框内：</h5>
+								<div class="form-group form-horizontal">
+									<label class="col-lg-3 control-label " id="captchaOperation"></label>
+									<div class="col-lg-9">
+										<input type="text" class="form-control " name="captcha" />
+									</div>
+								</div><br /><br /> <br />
+								<div class="form-group">
+									<input class="btn  btn-primary btn-block" type="submit" value="登　　录" />
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="CPrv" style="margin-top: 20px">
+						<div class="panel-body">
+							<form name="LoginS" id="LoginS" action="Admin_ChkLogin_S.asp" method="post" target="_parent">
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</span>
+										<input id="Username2" name="Username2" type="text" class="form-control" placeholder="用户名">
+									</div><br />
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
+										<input id="Password2" name="Password2" type="Password" class="form-control" placeholder="请输入密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon">确认密码</span>
+										<input id="Password3" name="Password3" type="Password" class="form-control" placeholder="确认密码">
+									</div>
+								</div>
+								<h5>请将如下计算结果填入文本框内：</h5>
+								<div class="form-group form-horizontal">
+									<label class="col-lg-3 control-label " id="captchaOperation2"></label>
+									<div class="col-lg-9">
+										<input type="text" class="form-control " name="captcha2" />
+									</div>
+								</div><br /><br /> <br />
+								<div class="form-group">
+									<input class="btn  btn-primary btn-block" type="submit" value="注　　册" />
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+		    </div>
+		</div>
+ 	</div>
+</div>
+
+<div class="floating_ck">
+	<dl>
+    	<dt></dt>
+        <dd class="consult">
+        	<span>了解我们</span>
+        	<div class="floating_left"><a href="about.html">了解我们的团队</a></div>
+        </dd>
+        <dd class="words">
+        	<span>在线留言</span>
+            <div class="floating_left"><a href="message.html">问题在线留言</a></div>
+        </dd>
+        <dd class="quote">
+        	<span>学习视频</span>
+            <div class="floating_left"><a href="vedioList.html">官方学习视频</a></div>
+        </dd>
+        <dd class="qrcord">
+        	<span>扫一扫</span>
+            <div class="floating_left floating_ewm">
+            	<i></i>
+                <p class="qrcord_p01">扫一扫<br>关注公众号</p>
+                <p class="qrcord_p02">免费学习资源<br><b>等你拿<b></p>
+            </div>
+        </dd>
+        <dd class="return">
+        	<span onClick="gotoTop();return false;">返回顶部</span>
+        </dd>
+    </dl>
+</div>
+
+<script type="text/javascript" src="../../../js/top.js"></script>
+<script type="text/javascript" src="../../../js/jquery.qrcode.min.js"></script>
+<script src="../../../js/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+
+

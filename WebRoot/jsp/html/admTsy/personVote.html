@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>微信公众号开发</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="text/css" rel="stylesheet" href="../../../css/index.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../../../js/bootstrap/docs/examples/carousel/carousel.css" />
+		<link href="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.css" rel="stylesheet" />
+		<link href="../../../js/bootstrap/docs/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+		<link href="../../../css/checkradio/magic-check.css" rel="stylesheet">
+	</head>
+<body style="overflow: scroll;">
+	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+		        <a class="navbar-brand" href="javascript:;">微识投票系统</a>
+			</div>
+		</div>
+	</nav>
+	
+	<ul class="list-group" style="margin-top: 100px">
+   		<li class="list-group-item" style="height: 150px">
+			<div style="width: 100%;height: 70px;text-align: center;">
+				<img id="headImg" alt="" src="" style="width: 50px;height: 50px;text-align: center;margin-top: 10px" class="img-circle" />
+			</div>
+			<div style="width: 100%;height: 70px;margin-top: 5px;text-align: center;">
+				<font id="nickName" style="height: 50px;text-align: center;margin-top: 10px;line-height: 50px;" >用户名</font>
+			</div>
+		</li>
+	</ul>
+	<div id="question">
+		
+	</div>
+	
+	<ul id="submitBtn" class="list-group" style="margin-top: 50px">
+   		<li class="list-group-item" style="height: 50px">
+			<div style="width: 100%;height: 0px;text-align: center;">
+				<button type="button" id="saveMessage" class="btn btn-success">提交</button>
+			</div>
+		</li>
+	</ul>
+	
+	<script id="select" type="text/x-handlebars-template"> 
+		<li class="list-group-item" style="height: 250px">
+			<div style="width: 100%;height: 150px;text-align: center;">
+				<img alt="" src="../../../images/se.png" style="width: 130px;height: 130px;text-align: center;margin-top: 10px" class="img-circle" />
+			</div>
+			<div style="width: 100%;height: 70px;margin-top: 5px;text-align: center;">
+				<font style="height: 50px;text-align: center;margin-top: 10px;line-height: 50px;" >您已完成此调查问卷！</font>
+			</div>
+		</li>
+	</script>
+	
+	<script id="select1" type="text/x-handlebars-template"> 
+		<li class="list-group-item" style="height: 250px">
+			<div style="width: 100%;height: 150px;text-align: center;">
+				<img alt="" src="../../../images/se.png" style="width: 130px;height: 130px;text-align: center;margin-top: 10px" class="img-circle" />
+			</div>
+			<div style="width: 100%;height: 70px;margin-top: 5px;text-align: center;">
+				<font style="height: 50px;text-align: center;margin-top: 10px;line-height: 50px;" >此次调查问卷已结束！！</font>
+			</div>
+		</li>
+	</script>
+	
+	<script id="select-temp" type="text/x-handlebars-template"> 
+ 		{{#each rows}}
+			<div class="panel panel-default">
+				<div class="panel-heading">
+			    	 <h3 class="panel-title">
+				     	<a href="javascript:;" class="questionAll" rowNameId="{{id}}">问题{{#compareIndex @index id}}{{/compareIndex}}:{{investigation_name}}</a>
+						<a style="float: right;color: blue;font-size: 15px;margin-right: 5px" href="javascript:;" class="Stop">收起</a>
+				     	<a style="float: right;color: blue;font-size: 15px;display:none;margin-right: 5px" href="javascript:;" class="stopedit">编辑</a>				     
+					</h3>
+				</div>
+			   	<div class="panel-body">
+			     	<ul class="list-group">
+　　　　					{{#compare investigation_type}}
+							{{#each options}}
+								<li class="list-group-item" style="height: 70px">
+		   	 						<input type="radio" rowId="{{questionId}}@@{{id}}" name="radio{{questionId}}" style="float: left;margin-top: 10px;" id="{{questionId}}fr{{id}}"/>
+									<font for="{{questionId}}fr{{id}}" style="font-size: 15px;float: left;margin-left: 15px;line-height: 30px;word-break:break-all;width:85%">{{tsy_investigation_option_name}}</font>
+								</li>
+							{{/each}}
+　　　　							{{else}}
+							{{#each options}}
+								<li class="list-group-item" style="height: 70px">
+		    						<input type="checkbox" rowId="{{questionId}}@@{{id}}" name="radio{{questionId}}" style="float: left;margin-top: 10px;" id="{{questionId}}fr{{id}}"/>
+									<font for="{{questionId}}fr{{id}}" style="font-size: 15px;float: left;margin-left: 15px;line-height: 30px;word-break:break-all;width:85%">{{tsy_investigation_option_name}}</font>
+								</li>
+							{{/each}}
+　　						{{/compare}}
+					</ul>
+		  		 </div>
+			</div> 
+		{{/each}}
+	</script>
+	
+	<script src="../../../js/jquery.js"></script>
+	<script src="../../../js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="../../../js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../../js/bootstrap/qiao.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-select/js/bootstrap-multiselect.js"></script>
+	<script src="../../../js/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../../js/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond/1.4.2/respond.min.js"></script>
+		<script src="../../../js/bootstrap/assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/bootstrap-table.js"></script>
+    <script src="../../../js/bootstrap/bootstrap-table-develop/src/locale/bootstrap-table-zh-CN.js"></script>
+	
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/admTsy/personVote.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.LeavingMessageDao">
+	
+
+	 <insert id="insertLeavingMessage" parameterType="java.util.Map">
+       insert into leaving_message (name,phone,message,message_time) values(#{firstname},#{lastname},#{liuyan},#{messageTime})
+     </insert>
+	
+	<select id="queryLeavingMessage" resultType="java.util.Map" parameterType="java.util.Map" >
+		SELECT
+			a.id,
+			a.phone,
+			a.`name`,
+			a.message,
+			a.message_time
+		FROM
+			leaving_message a
+		ORDER BY
+			a.message_time DESC
+	</select>
+
+</mapper>          
+ 

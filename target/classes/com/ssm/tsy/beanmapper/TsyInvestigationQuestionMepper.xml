@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tsy.dao.TsyInvestigationQuestionDao">
+	
+	<select id="queryinvestigationQuestionList" resultType="java.util.Map" parameterType="java.util.Map" >
+		SELECT
+			a.id,
+			a.wechat_user_sign_time,
+			a.wechat_user_sign_integral,
+			b.nickname,
+			b.sex,
+			b.headimgurl
+		FROM
+			tsy_wechat_user_sign a,
+			wechat_user b
+		WHERE
+			a.wechat_user_openid = b.openid
+		<if test="endTime != null and endTime != '' and startTime != null and startTime != ''" >
+			AND a.wechat_user_sign_time BETWEEN #{startTime}
+			AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != ''" >
+			AND a.wechat_user_sign_time &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''" >
+			AND a.wechat_user_sign_time &lt; #{endTime}
+		</if>
+		<if test="nickName != null and nickName != ''" >
+			AND b.nickname LIKE '%' #{nickName} '%'
+		</if>
+		ORDER BY a.wechat_user_sign_time DESC
+	</select>
+	
+	<select id="queryinvestigationQuestionListByContent" resultType="java.util.Map" parameterType="java.util.Map" >
+		SELECT
+			a.id,
+			a.wechat_user_sign_time,
+			a.wechat_user_sign_integral,
+			b.nickname,
+			b.sex,
+			b.headimgurl
+		FROM
+			tsy_wechat_user_sign a,
+			wechat_user b
+		WHERE
+			a.wechat_user_openid = b.openid
+		AND to_days(a.wechat_user_sign_time) = to_days(now())
+		AND a.wechat_user_openid = #{userOpenId}
+	</select>
+	
+	<insert id="insertinvestigationQuestionListByContent" parameterType="java.util.Map" >
+	 	INSERT INTO tsy_wechat_user_sign (`wechat_user_openid`, `wechat_user_sign_time`, `wechat_user_sign_integral`) VALUES (#{userOpenId},#{wechatUserSignTime},'1');
+	</insert>
+<!-- 上述内容为签到内容，以下内容为投票内容 -->
+	
+	<!-- 创建每个投票的答案表 -->
+	<insert id="CopyAnswerTable" parameterType="java.util.Map">
+		CREATE TABLE ${answer} like tsy_investigation_answer;
+	</insert>
+	
+	<!-- 根据id查询投票相关信息，用于开始投票和回复投票查询状态使用 -->
+	<select id="queryVoteMationById" resultType="java.util.Map" parameterType="java.util.Map" >
+		SELECT
+			a.id,
+			a.tsy_investigation_general tsyVoteTitle,
+			a.tsy_investigation_general_starttime tsyVoteStartTime,
+			a.tsy_investigation_general_endtime tsyVoteEndTime,
+			a.tsy_investigation_general_table tsyVoteTable,
+			a.tsy_investigation_general_whethersave tsyVoteWhetherSave,
+			a.tsy_investigation_general_state tsyVoteState
+		FROM
+			tsy_investigation_general a
+		WHERE
+			a.id = #{id}
+	</select>
+	
+	<!-- 修改投票内容信息 -->
+	<update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+	    update tsy_investigation_general
+	    <set >
+	      <if test="tsyVoteTitle != null and tsyVoteTitle != ''" >
+	        tsy_investigation_general = #{tsyVoteTitle},
+	      </if>
+	      <if test="tsyVoteStartTime != null and tsyVoteStartTime != ''" >
+	        tsy_investigation_general_starttime = #{tsyVoteStartTime},
+	      </if>
+	      <if test="tsyVoteEndTime != null and tsyVoteEndTime != ''" >
+	        tsy_investigation_general_endtime = #{tsyVoteEndTime},
+	      </if>
+	      <if test="tsyVoteTable != null and tsyVoteTable != ''" >
+	        tsy_investigation_general_table = #{tsyVoteTable},
+	      </if>
+	      <if test="tsyVoteWhetherSave != null and tsyVoteWhetherSave != ''" >
+	        tsy_investigation_general_whethersave = #{tsyVoteWhetherSave},
+	      </if>
+	      <if test="tsyVoteState != null and tsyVoteState != ''" >
+	        tsy_investigation_general_state = #{tsyVoteState},
+	      </if>
+	      <if test="tsyVoteUpdateTime != null and tsyVoteUpdateTime != ''" >
+	        tsy_investigation_general_updatetime = #{tsyVoteUpdateTime},
+	      </if>
+	    </set>
+	    where id = #{id}
+	  </update>
+	  
+	  <!-- 根据用户权限查询投票信息 -->
+	  <select id="queryVoteList" resultType="java.util.Map" parameterType="java.util.Map" >
+	  	SELECT
+			a.id,
+			a.tsy_investigation_general tsyVoteTitle,
+			a.tsy_investigation_general_starttime tsyVoteStartTime,
+			a.tsy_investigation_general_endtime tsyVoteEndTime,
+			a.tsy_investigation_general_table tsyVoteTable,
+			a.tsy_investigation_general_whethersave tsyVoteWhetherSave,
+			a.tsy_investigation_general_state tsyVoteState,
+			b.`name` createName,
+			b.`no` createNo,
+			'1' belongToMain
+		FROM
+			tsy_investigation_general a,
+			`user` b
+		WHERE a.tsy_investigation_general_adduserid = #{userId}
+		AND a.tsy_investigation_general_adduserid = b.id
+		AND a.tsy_investigation_general_whethersave = '1'
+		AND a.tsy_investigation_general_state != #{noStateDelete}
+		<if test="SelectAll != null and SelectAll != '' and SelectAll == '1'" >
+			UNION ALL
+			SELECT
+				a.id,
+				a.tsy_investigation_general tsyVoteTitle,
+				a.tsy_investigation_general_starttime tsyVoteStartTime,
+				a.tsy_investigation_general_endtime tsyVoteEndTime,
+				a.tsy_investigation_general_table tsyVoteTable,
+				a.tsy_investigation_general_whethersave tsyVoteWhetherSave,
+				a.tsy_investigation_general_state tsyVoteState,
+				b.`name` createName,
+				b.`no` createNo,
+				'0' belongToMain
+			FROM
+				tsy_investigation_general a,
+				`user` b
+			WHERE a.tsy_investigation_general_adduserid != #{userId}
+			AND a.tsy_investigation_general_adduserid = b.id
+			AND a.tsy_investigation_general_whethersave = '1'
+			AND a.tsy_investigation_general_state != #{noStateDelete}
+		</if>
+	  </select>
+	  
+	  <!-- 查询投票标题信息 -->
+	  <select id="queryVoteByGeneralId" resultType="java.util.Map" parameterType="java.util.Map" >
+	  SELECT
+			a.id,
+			a.tsy_investigation_general tsyVoteTitle,
+			a.tsy_investigation_general_starttime tsyVoteStartTime,
+			a.tsy_investigation_general_endtime tsyVoteEndTime,
+			a.tsy_investigation_general_table tsyVoteTable,
+			a.tsy_investigation_general_whethersave tsyVoteWhetherSave,
+			a.tsy_investigation_general_state tsyVoteState
+		FROM
+			tsy_investigation_general a
+		WHERE
+			a.id = #{id}
+	  </select>
+	  
+	  <!-- 查询投票问题信息 -->
+	  <select id="queryVoteQuestionByGeneralId" resultType="java.util.Map" parameterType="java.util.Map" >
+	    SELECT
+			a.id,
+			a.investigation_name,
+			a.investigation_type,
+			a.investigation_generalid
+		FROM
+			tsy_investigation_question a
+		WHERE
+			a.investigation_generalid = #{id}
+	  </select>
+	  
+	  <!-- 查询投票问题选项信息 -->
+	  <select id="queryVoteOptionByQuestionlId" resultType="java.util.Map" parameterType="java.util.Map" >
+	  	SELECT
+			a.id,
+			a.tsy_investigation_option_name,
+			a.tsy_investigation_option_questionid,
+			a.tsy_investigation_option_type
+		FROM
+			tsy_investigation_option a
+		WHERE
+			a.tsy_investigation_option_questionid = #{questionId}
+	  </select>
+	  
+	  <!-- 查询未保存的投票信息的id -->
+	  <select id="queryVoteListByNoSave" resultType="java.util.Map" parameterType="java.util.Map" >
+	  	SELECT
+			a.id
+		FROM
+			tsy_investigation_general a
+		WHERE
+			a.tsy_investigation_general_adduserid = #{userId}
+		AND a.tsy_investigation_general_adduserappid = #{appId}
+		AND a.tsy_investigation_general_whethersave = '0'
+		AND a.tsy_investigation_general_state != #{noStateDelete}
+	  </select>
+	  
+	  <!-- 删除选项 -->
+	  <delete id="deleteVoteListByNoSaveOption" parameterType="java.util.Map" >
+	    DELETE
+		FROM
+			tsy_investigation_option
+		WHERE
+			tsy_investigation_option.tsy_investigation_option_questionid in (
+				SELECT
+					tsy_investigation_question.id
+				FROM
+					tsy_investigation_question
+				WHERE
+					tsy_investigation_question.investigation_generalid = #{id}
+			)
+	  </delete>
+	  
+	  <!-- 删除问题 -->
+	  <delete id="deleteVoteListByNoSaveQuestion" parameterType="java.util.Map" >
+	  	DELETE
+		FROM
+			tsy_investigation_question
+		WHERE
+			tsy_investigation_question.investigation_generalid = #{id}
+	  </delete>
+	
+	  <!-- 删除标题 -->
+	  <delete id="deleteVoteListByNoSaveGeneral" parameterType="java.util.Map" >
+	   DELETE 
+		FROM 
+			tsy_investigation_general
+		WHERE tsy_investigation_general.id = #{id}
+	  </delete>
+	  
+	  <!-- 添加选项信息 -->
+	  <insert id="insertOptionsMation" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map" >
+	  insert into tsy_investigation_option
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="optionName != null" >
+	        tsy_investigation_option_name,
+	      </if>
+	      <if test="optionQuestionId != null" >
+	        tsy_investigation_option_questionid,
+	      </if>
+	      <if test="optionAddTime != null" >
+	        tsy_investigation_option_name_addtime,
+	      </if>
+	      <if test="optionType != null" >
+	        tsy_investigation_option_type
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="optionName != null" >
+	        #{optionName},
+	      </if>
+	      <if test="optionQuestionId != null" >
+	        #{optionQuestionId},
+	      </if>
+	      <if test="optionAddTime != null" >
+	        #{optionAddTime},
+	      </if>
+	      <if test="optionType != null" >
+	        #{optionType}
+	      </if>
+	    </trim>
+	  </insert>
+	  
+	  <!-- 添加问题信息 -->
+	  <insert id="insertQuestionMation" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map" >
+	  insert into tsy_investigation_question
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="questionName != null" >
+	        investigation_name,
+	      </if>
+	      <if test="questionType != null" >
+	        investigation_type,
+	      </if>
+	      <if test="questionGeneralId != null" >
+	        investigation_generalid,
+	      </if>
+	      <if test="questionAddTime != null" >
+	        investigation_addtime
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="questionName != null" >
+	        #{questionName},
+	      </if>
+	      <if test="questionType != null" >
+	        #{questionType},
+	      </if>
+	      <if test="questionGeneralId != null" >
+	        #{questionGeneralId},
+	      </if>
+	      <if test="questionAddTime != null" >
+	        #{questionAddTime}
+	      </if>
+	    </trim>
+	  </insert>
+	  
+	  <!-- 添加标题信息 -->
+	  <insert id="insertGeneralMation" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map" >
+	  insert into tsy_investigation_general
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="generalTitle != null" >
+	        tsy_investigation_general,
+	      </if>
+	      <if test="generalAddTime != null" >
+	        tsy_investigation_general_addtime,
+	      </if>
+	      <if test="generalAddUserId != null" >
+	        tsy_investigation_general_adduserid,
+	      </if>
+	      <if test="generalAddAppId != null" >
+	        tsy_investigation_general_adduserappid,
+	      </if>
+	      <if test="generalWhetherSave != null" >
+	        tsy_investigation_general_whethersave,
+	      </if>
+	      <if test="generalState != null" >
+	        tsy_investigation_general_state
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="generalTitle != null" >
+	        #{generalTitle},
+	      </if>
+	      <if test="generalAddTime != null" >
+	        #{generalAddTime},
+	      </if>
+	      <if test="generalAddUserId != null" >
+	        #{generalAddUserId},
+	      </if>
+	      <if test="generalAddAppId != null" >
+	        #{generalAddAppId},
+	      </if>
+	      <if test="generalWhetherSave != null" >
+	        #{generalWhetherSave},
+	      </if>
+	      <if test="generalState != null" >
+	        #{generalState}
+	      </if>
+	    </trim>
+	  </insert>
+	  
+	  <!-- 修改选项信息 -->
+	  <update id="updateOptionsMation" parameterType="java.util.Map" >
+	    update tsy_investigation_option
+	    <set >
+	      <if test="optionName != null" >
+	        tsy_investigation_option_name = #{optionName},
+	      </if>
+	      <if test="optionType != null" >
+	        tsy_investigation_option_type = #{optionType},
+	      </if>
+	    </set>
+	    where id = #{id}
+	  </update>
+	  
+	  <!-- 修改问题信息 -->
+	  <update id="updateQuestionMation" parameterType="java.util.Map" >
+	    update tsy_investigation_question
+	    <set >
+	      <if test="questionName != null" >
+	        investigation_name = #{questionName},
+	      </if>
+	      <if test="questionType != null" >
+	        investigation_type = #{questionType},
+	      </if>
+	    </set>
+	    where id = #{id}
+	  </update>
+	  
+	  <!-- 修改标题信息 -->
+	  <update id="updateGeneralMation" parameterType="java.util.Map" >
+	    update tsy_investigation_general
+	    <set >
+	      <if test="generalTitle != null" >
+	        tsy_investigation_general = #{generalTitle},
+	      </if>
+	      <if test="generalUpdateTime != null" >
+	        tsy_investigation_general_updatetime = #{generalUpdateTime},
+	      </if>
+	      <if test="generalwehetherSave != null" >
+	        tsy_investigation_general_whethersave = #{generalwehetherSave},
+	      </if>
+	      <if test="generalStartTime != null" >
+	        tsy_investigation_general_starttime = #{generalStartTime},
+	      </if>
+	      <if test="generalEndTime != null" >
+	        tsy_investigation_general_endtime = #{generalEndTime},
+	      </if>
+	      <if test="generalState != null" >
+	        tsy_investigation_general_state = #{generalState},
+	      </if>
+	      <if test="generalTable != null" >
+	        tsy_investigation_general_table = #{generalTable},
+	      </if>
+	    </set>
+	    where id = #{id}
+	  </update>
+	  
+	  <delete id="deleteOptionsMation" parameterType="java.util.Map" >
+	    delete from tsy_investigation_option
+	    where id = #{id}
+	  </delete>
+	  
+	  <delete id="deleteOptionsMationByQuestionId" parameterType="java.util.Map" >
+	    delete from tsy_investigation_option
+	    where tsy_investigation_option_questionid = #{id}
+	  </delete>
+	  
+	  <delete id="deleteQuestionMation" parameterType="java.util.Map" >
+	    delete from tsy_investigation_question
+	    where id = #{id}
+	  </delete>
+	  
+	  <select id="queryVoteByIdAndOpenId" resultType="java.util.Map" parameterType="java.util.Map" >
+	  	select a.id,a.quertion_id,a.question_answer,a.answer_user from ${tsyVoteTable} a where a.answer_user = #{openId};
+	  </select>
+	  
+	  <!-- 批量插入生成的兑换码 -->
+     <insert id ="tsyInvestigationQuestionDao" parameterType="java.util.List" >
+           insert into ${tsyVoteTable}
+           (quertion_id,question_answer,answer_user)
+           values
+            <foreach collection ="list" item="reddemCode" index= "index" separator =",">
+                (
+                #{reddemCode.questionId}, #{reddemCode.answerId},#{reddemCode.openId}
+                )
+            </foreach>
+     </insert>
+     
+     <select id="queryOptionsByQuestionId" resultType="java.util.Map" parameterType="java.util.Map" >
+	  	SELECT
+			a.tsy_investigation_option_name name,
+			COUNT(b.question_answer) value
+		FROM
+			tsy_investigation_option a,
+			${tsyVoteTable} b
+		WHERE
+			a.tsy_investigation_option_questionid = #{questionId}
+		AND a.id = b.question_answer
+		GROUP BY b.question_answer
+	 </select>
+	 
+	 <select id="queryZongrenshu" resultType="java.util.Map" parameterType="java.util.Map" >
+	 	SELECT COUNT(DISTINCT c.answer_user) cyrs FROM ${tsyVoteTable} c
+	 </select>
+	 
+	 <select id="queryEndDateSmallNow" resultType="java.util.Map" parameterType="java.util.Map" >
+	 	SELECT
+			a.id,
+			a.tsy_investigation_general tsyVoteTitle,
+			a.tsy_investigation_general_starttime tsyVoteStartTime,
+			a.tsy_investigation_general_endtime tsyVoteEndTime,
+			a.tsy_investigation_general_table tsyVoteTable,
+			a.tsy_investigation_general_whethersave tsyVoteWhetherSave,
+			a.tsy_investigation_general_state tsyVoteState
+		FROM
+			tsy_investigation_general a
+		WHERE 
+			a.tsy_investigation_general_endtime &lt; NOW()
+		AND a.tsy_investigation_general_state = '1'
+	 </select>
+	
+</mapper>          
+ 

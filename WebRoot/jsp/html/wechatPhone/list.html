@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lange="ZH">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-touch-fullscreen" content="yes"> <!--  一会试验下是否有必要存在 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>首页</title>
+    <link rel="stylesheet" href="../../../css/wechatPhone/widget.css">
+    <link rel="stylesheet" href="../../../css/wechatPhone/index.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="page_hd">
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="list.html" class="onclick">查找</a></li>
+                    <li><a href="about.html">关于</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section class="content">
+            <div class="search">
+                <form action="" class="src_frm">
+                    <input type="text" id="searchContent" placeholder="输入名称、关键字" class="src">
+                    <input id="search" type="button" class="btn_src" value="搜索">
+                </form>
+            </div>
+            <section>
+                <ul class="strategy">
+                    
+                </ul>
+            </section>
+        </section>
+    </div>
+    <footer class="footbottom">
+        <p>
+            <a href="javascript:;">微识</a>
+            <a href="javascript:;">系统</a>
+        </p>
+        <p>Copyright &copy; 2017 微识</p>
+    </footer>
+    
+    <script id="select-Top" type="text/x-handlebars-template"> 
+	{{#each rows}}
+		<li>
+           <a href="javascript:;" class="con" rowId="{{id}}">
+                <div class="g_con">
+                   <h3 class="tt">{{name}}</h3>
+                </div>
+                <span class="rightclick">
+                    <em>总评分</em>
+                    <i>{{#compareZf integar}}{{/compareZf}}</i>
+                </span>
+            </a>
+        </li>
+	{{/each}}
+	<li id="loadMore" style="text-align:center;">
+		<input id="loadM" type="button" value="加载更多" style="background-color: darkgray;border: 1px solid;color: cornsilk;border-color: bisque;width: 90px;height: 35px;margin: 5px 0px;border-radius:10px"/>
+	</li>
+	</script>
+    
+    <script type="text/javascript" src="../../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/util/main.js"></script>
+	<script src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/wechatPhone/list.js"></script>
+</body>
+</html>
